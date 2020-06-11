@@ -17,8 +17,9 @@
 <body>
 
 	<div id="commaction">
-		<button id="create-user">新增商品</button>
-		<div style="display:inline">收尋商品:<form method="post" action="<%= request.getContextPath()%>/Mall/MallServlet" style="display:inline"><input type="text" name="commName">
+		<button onclick="javascript:location.href='<%= request.getContextPath() %>/back-end/Mall/MallGetAll.jsp'">商品頁面</button>
+		<div style="display:inline">收尋商品:<form method="post" action="<%= request.getContextPath()%>/Mall/MallServlet" style="display:inline">
+		<input type="text" name="commName">
 		<input  type="hidden" name="action" value="selectone">
 		<input type="submit" value="搜尋">
 		</form>
@@ -47,23 +48,18 @@
 				<tbody>
 
 					<%	
-						//存在request讓incule 的網頁也可以拿到 
-						//分別是GmTypeService  MallService
 						GmTypeService gmTypeSer =new GmTypeService();
 						request.setAttribute("gmTypeSer", gmTypeSer);
 						MallService mallSer = new MallService();
 						request.setAttribute("mallSer", mallSer);
-						//存session是讓效能好一點不用每次查詢
-						if(session.getAttribute("mallVoList")==null){
-							List<MallVO> mallVoList = mallSer.getAll();
-							session.setAttribute("mallVoList", mallVoList);
-						}
+						//是forword過來的所以request裡有查詢的list
+						//el是由小到大所以前面的session不影響
 					%>
 						
 					<c:forEach var="mallVo" items="${mallVoList}">
 						<tr>
 							<td class="col-md-1">
-							<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetAll.jsp" method="post">
+							<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetOne.jsp" method="post">
 							<input id="upda" type="submit"value="修改">
 							<input type="hidden" name="commNo" value="${mallVo.commNo}">
 							<input type="hidden" name="showinsert" value="showinsert">
@@ -91,7 +87,7 @@
 		</div>
 
 
-<%@ include file="/back-end/Mall/MallAdd.jsp" %>
+
 <%@ include file="/back-end/Mall/MallUpdate.jsp" %>
 
 
@@ -118,12 +114,6 @@
 	<%= "<script>$(document).ready(function() {showinsert();});</script>"%>
 	<% pageContext.removeAttribute("action"); %>
 </c:if>
-<!-- 新增有錯誤訊息時啟動叫出新增介面 -->
-<c:if test="${not empty erroMsg}">
-	<%= "<script>$(document).ready(function() {$('#create-user').click()})</script>"%>
-	<%request.removeAttribute("erroMsg"); %>
-</c:if>
-
 <!-- 查詢時有錯誤啟動 -->
 <c:if test="${not empty selErroMsg}">
 	<script>swal({text:"${selErroMsg}" });</script>

@@ -40,7 +40,7 @@ public class MallServlet extends HttpServlet {
 
 		/*****************************************************/
 		/**													**/
-		/**						新增              					**/
+		/**						以下是新增              					**/
 		/**													**/
 		/**													**/
 		/*****************************************************/
@@ -158,7 +158,7 @@ public class MallServlet extends HttpServlet {
 
 		/*****************************************************/
 		/**													**/
-		/**						修改               					**/
+		/**						以下是修改               				**/
 		/**													**/
 		/**													**/
 		/*****************************************************/
@@ -284,7 +284,7 @@ public class MallServlet extends HttpServlet {
 		
 		/*****************************************************/
 		/**													**/
-		/**						查詢             						**/
+		/**						查詢單筆          					**/
 		/**													**/
 		/**													**/
 		/*****************************************************/
@@ -298,12 +298,10 @@ public class MallServlet extends HttpServlet {
 				List<MallVO> mallVoList=null;
 				if (commName.length() != 0 && commName.matches(commNameReg)){
 					mallVoList = mallSer.findByName(commName);
-					System.out.println("1");
 				}else {
 					selErroMsg="商品名稱格式輸入錯誤，請輸入20字以內，請不要有特殊字元。";
 					session.setAttribute("selErroMsg",selErroMsg);
 					res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
-					System.out.println("2");
 					return;
 				}
 		/*************************** 2.查詢完成,準備轉交(Send the Success view) ***********/	
@@ -311,12 +309,10 @@ public class MallServlet extends HttpServlet {
 					selErroMsg="查無此資料";
 					session.setAttribute("selErroMsg",selErroMsg);
 					res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
-					System.out.println("3");
 					return;
 				}else {
 					req.setAttribute("mallVoList", mallVoList);
 					req.getRequestDispatcher("/back-end/Mall/MallGetOne.jsp").forward(req, res);
-					System.out.println("4");
 					return;
 				}
 				
