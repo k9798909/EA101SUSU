@@ -339,7 +339,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 	
 	
 	@Override
-	public MallVO getOneByNo(String commno) {
+	public MallVO findOneByNo(String commno) {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement past = null;		

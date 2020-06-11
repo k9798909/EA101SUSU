@@ -10,7 +10,7 @@ public interface MallOrDtDao_interface {
 	public void update(MallOrDtVO mallOrDt);
 	public List<MallOrDtVO> getAll();
 	public List<MallOrDtVO> getByOrNo(String mallOrNo);
-	public MallOrDtVO getOneByFk(String mallOrNo,String commNo);
+	public MallOrDtVO findOneByFk(String mallOrNo,String commNo);
 	public Integer getTotal(String mallOrNo);
 	
 }

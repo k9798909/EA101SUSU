@@ -41,8 +41,8 @@ public class MallOrDtService {
 		return dao.getByOrNo(mallOrNo);
 	}
 	//ok
-	public MallOrDtVO getOneByFk(String mallOrNo,String commNo){
-		return dao.getOneByFk(mallOrNo, commNo);
+	public MallOrDtVO findOneByFk(String mallOrNo,String commNo){
+		return dao.findOneByFk(mallOrNo, commNo);
 	}
 	
 	public Integer getTotal(String mallOrNo){

@@ -53,16 +53,16 @@ private MallOrDAO_interface dao ;
 		return dao.getAll();
 	}
 	//ok
-	public List<MallOrVO> getByMbrNo(String mbrNo){
-		return dao.getByMbrNo(mbrNo);
+	public List<MallOrVO> findByMbrNo(String mbrNo){
+		return dao.findByMbrNo(mbrNo);
 	}
 	//ok
-	public List<MallOrVO> getByStatus(Integer status){
-		return dao.getByStatus(status);
+	public List<MallOrVO> findByStatus(Integer status){
+		return dao.findByStatus(status);
 	}
 	//ok
-	public MallOrVO getOneByOrNo(String mallOrNo) {
-		return dao.getOneByOrNo(mallOrNo);
+	public MallOrVO findOneByOrNo(String mallOrNo) {
+		return dao.findOneByOrNo(mallOrNo);
 	}
 	
 	/**測試

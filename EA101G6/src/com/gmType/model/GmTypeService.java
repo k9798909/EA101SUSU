@@ -26,8 +26,8 @@ public class GmTypeService {
 	public List<GmTypeVO> getAll(){
 		return dao.getAll();
 	};
-	public GmTypeVO getOneByNo(String typeNo){
-		return dao.getOneByNo(typeNo);
+	public GmTypeVO findOneByTypeNo(String typeNo){
+		return dao.findOneByTypeNo(typeNo);
 	};
 	/**
 	public static void main(String[] args) {

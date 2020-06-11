@@ -32,7 +32,7 @@ public class MallShowImg extends HttpServlet {
 				String commNo=req.getParameter("commNo");
 				if(session.getAttribute(commNo)==null) {
 					MallService ser = new MallService();
-					mallvo =ser.getOneByNo(commNo);
+					mallvo =ser.findOneByNo(commNo);
 					out.write(mallvo.getImg());
 					session.setAttribute(commNo,(Object)mallvo);
 				}else {

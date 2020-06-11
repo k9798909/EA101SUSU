@@ -225,7 +225,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 	}
 
 	@Override
-	public List<MallOrVO> getByMbrNo(String mbrNo) {
+	public List<MallOrVO> findByMbrNo(String mbrNo) {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement past = null;
@@ -272,7 +272,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 	}
 
 	@Override
-	public List<MallOrVO> getByStatus(Integer status) {
+	public List<MallOrVO> findByStatus(Integer status) {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement past = null;
@@ -319,7 +319,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 	}
 
 	@Override
-	public MallOrVO getOneByOrNo(String mallOrNo) {
+	public MallOrVO findOneByOrNo(String mallOrNo) {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement past = null;

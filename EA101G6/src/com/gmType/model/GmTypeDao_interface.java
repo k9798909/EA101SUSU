@@ -9,6 +9,6 @@ public interface GmTypeDao_interface {
 	public void delete(String typeNo);
 	public void update(GmTypeVO gmType);
 	public List<GmTypeVO> getAll();
-	public GmTypeVO getOneByNo(String typeNo);
+	public GmTypeVO findOneByTypeNo(String typeNo);
 	
 }

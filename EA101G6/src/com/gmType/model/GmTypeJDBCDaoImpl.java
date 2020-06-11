@@ -199,7 +199,7 @@ public class GmTypeJDBCDaoImpl implements GmTypeDao_interface {
 	}
 
 	@Override
-	public GmTypeVO getOneByNo(String typeNo) {
+	public GmTypeVO findOneByTypeNo(String typeNo) {
 		// TODO Auto-generated method stub
 		
 		Connection conn = null;

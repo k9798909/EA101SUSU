@@ -88,8 +88,8 @@ public class MallService {
 		
 	}
 	//ok
-	public MallVO getOneByNo(String commNo){
-		return dao.getOneByNo(commNo);
+	public MallVO findOneByNo(String commNo){
+		return dao.findOneByNo(commNo);
 		
 	}
 	

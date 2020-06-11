@@ -27,12 +27,12 @@ public class GmTypeDtService {
 		return dao.getAll();
 	}
 	//ok
-	public List<GmTypeDtVO> getByTypeNo(String typeNo){
-		return dao.getByTypeNo(typeNo);
+	public List<GmTypeDtVO> findByTypeNo(String typeNo){
+		return dao.findByTypeNo(typeNo);
 	}
 	//ok
-	public List<GmTypeDtVO> getByCommNo(String commNo){
-		return dao.getByCommNo(commNo);
+	public List<GmTypeDtVO> findByCommNo(String commNo){
+		return dao.findByCommNo(commNo);
 	}
 	/**
 	public static void main(String[] args) {

@@ -8,9 +8,9 @@ public interface MallOrDAO_interface {
 	public void update(MallOrVO mallor);
 	public void delete(String mallOrNo);
 	public List<MallOrVO> getAll();
-	public List<MallOrVO> getByMbrNo(String mbrNo);
-	public List<MallOrVO> getByStatus(Integer status);
-	public MallOrVO getOneByOrNo(String mallOrNo);
+	public List<MallOrVO> findByMbrNo(String mbrNo);
+	public List<MallOrVO> findByStatus(Integer status);
+	public MallOrVO findOneByOrNo(String mallOrNo);
 	
 	
 	

@@ -8,8 +8,8 @@ public interface GmTypeDtDao_interface {
 	public void delete(String typeNo,String commNo);
 	//public void update(GmTypeDtVO gmTypeDt);
 	public List<GmTypeDtVO> getAll();
-	public List<GmTypeDtVO> getByTypeNo(String typeNo);
-	public List<GmTypeDtVO> getByCommNo(String commNo);
+	public List<GmTypeDtVO> findByTypeNo(String typeNo);
+	public List<GmTypeDtVO> findByCommNo(String commNo);
 	//public GmTypeDtVO getOne(GmTypeDtVO gmTypeDt);
 	
 }

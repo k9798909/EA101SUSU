@@ -15,10 +15,17 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/back-end/css/mallcss.css">
 </head>
 <body>
+
 	<div id="commaction">
 		<button id="create-user">新增商品</button>
+		<div style="display:inline">收尋商品:<form method="post" action="<%= request.getContextPath()%>/Mall/MallServlet" style="display:inline"><input type="text" name="commName">
+		<input  type="hidden" name="action" value="selectone">
+		<input type="submit" value="搜尋">
+		</form>
+		
+		</div>
 	</div>
-
+	
 	
 		<div class="container ">
 			<table id="comm" class="table table-bordered ">
@@ -113,7 +120,13 @@
 <c:if test="${not empty erroMsg}">
 	<%= "<script>$(document).ready(function() {$('#create-user').click()})</script>"%>
 	<%request.removeAttribute("erroMsg"); %>
-</c:if>				
+</c:if>
+
+<!-- 新增有錯誤訊息時啟動叫出新增介面 -->
+<c:if test="${not empty selErroMsg}">
+	<script>swal({text:"${selErroMsg}" });</script>
+	<%session.removeAttribute("selErroMsg"); %>
+</c:if>							
 
 
 </body>

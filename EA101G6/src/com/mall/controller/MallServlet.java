@@ -281,6 +281,62 @@ public class MallServlet extends HttpServlet {
 
 
 		}
+		
+		/*****************************************************/
+		/**													**/
+		/**						查詢             						**/
+		/**													**/
+		/**													**/
+		/*****************************************************/
+		if ("selectone".equals(action)) {
+			try {
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				MallService mallSer = new MallService();
+				String selErroMsg="";
+				String commName = req.getParameter("commName").trim();
+				String commNameReg = "^[(\u4e00-\u9fa5) _\\w]{1,20}$";
+				List<MallVO> mallVoList=null;
+				if (commName.length() != 0 && commName.matches(commNameReg)){
+					mallVoList = mallSer.findByName(commName);
+					System.out.println("1");
+				}else {
+					selErroMsg="商品名稱格式輸入錯誤，請輸入20字以內，請不要有特殊字元。";
+					session.setAttribute("selErroMsg",selErroMsg);
+					res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+					System.out.println("2");
+					return;
+				}
+		/*************************** 2.查詢完成,準備轉交(Send the Success view) ***********/	
+				if(mallVoList.isEmpty()) {
+					selErroMsg="查無此資料";
+					session.setAttribute("selErroMsg",selErroMsg);
+					res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+					System.out.println("3");
+					return;
+				}else {
+					req.setAttribute("mallVoList", mallVoList);
+					req.getRequestDispatcher("/back-end/Mall/MallGetOne.jsp").forward(req, res);
+					System.out.println("4");
+					return;
+				}
+				
+			}catch (NullPointerException e) {
+				e.getStackTrace();
+			}	
+			
+			
+			
+			
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		
 
 	}
 

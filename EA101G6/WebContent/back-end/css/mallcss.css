@@ -34,9 +34,10 @@
 }
 
 #commaction {
-	width: 80px;
+	width: auto;
 	height: 40px;
 	margin: 5px auto;
+	text-align:center;
 }
 
 #commaction button {

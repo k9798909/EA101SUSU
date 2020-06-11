@@ -19,7 +19,7 @@ public interface MallDAO_interface {
 	//取得最新商品前五比
 	public List<MallVO> getNew();
 	
-	public MallVO getOneByNo(String commno);
+	public MallVO findOneByNo(String commno);
 	
 	public List<GmTypeVO> getType(String commno);
 	

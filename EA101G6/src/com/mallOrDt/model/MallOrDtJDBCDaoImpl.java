@@ -252,7 +252,7 @@ public class MallOrDtJDBCDaoImpl implements MallOrDtDao_interface {
 	}
 
 	@Override
-	public MallOrDtVO getOneByFk(String mallOrNo, String commNo) {
+	public MallOrDtVO findOneByFk(String mallOrNo, String commNo) {
 		// TODO Auto-generated method stub
 		Connection conn=null;
 		PreparedStatement past=null;

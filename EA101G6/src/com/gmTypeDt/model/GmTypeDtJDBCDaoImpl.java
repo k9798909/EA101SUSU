@@ -166,7 +166,7 @@ public class GmTypeDtJDBCDaoImpl implements GmTypeDtDao_interface {
 	}
 
 	@Override
-	public List<GmTypeDtVO> getByTypeNo(String typeNo) {
+	public List<GmTypeDtVO> findByTypeNo(String typeNo) {
 		// TODO Auto-generated method stub
 		Connection conn=null;
 		PreparedStatement past =null;
@@ -207,7 +207,7 @@ public class GmTypeDtJDBCDaoImpl implements GmTypeDtDao_interface {
 	}
 
 	@Override
-	public List<GmTypeDtVO> getByCommNo(String commNo) {
+	public List<GmTypeDtVO> findByCommNo(String commNo) {
 		// TODO Auto-generated method stub
 		Connection conn=null;
 		PreparedStatement past =null;
