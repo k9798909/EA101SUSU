@@ -22,7 +22,7 @@ import javax.servlet.http.Part;
 import com.mall.model.MallService;
 import com.mall.model.MallVO;
 
-@WebServlet("/MallServlet")
+@WebServlet("/Mall/MallServlet")
 @MultipartConfig
 public class MallServlet extends HttpServlet {
 
@@ -38,7 +38,12 @@ public class MallServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		String action = req.getParameter("action");
 
-		/*************************** 新增 **********************/
+		/*****************************************************/
+		/**													**/
+		/**						新增              					**/
+		/**													**/
+		/**													**/
+		/*****************************************************/
 		if ("mallAdd".equals(action)) {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			try {
@@ -99,9 +104,7 @@ public class MallServlet extends HttpServlet {
 					erroMsg.add("適合人數格式請輸入正確");
 				
 				//遊戲類型的部分
-				if(req.getParameterValues("typeNo")!=null) {
-					
-				}
+
 				
 
 				// status 有選中==on 沒=null
@@ -153,11 +156,13 @@ public class MallServlet extends HttpServlet {
 			}
 		}
 
+		/*****************************************************/
+		/**													**/
+		/**						修改               					**/
+		/**													**/
+		/**													**/
+		/*****************************************************/
 		
-		
-		
-		
-		/*************************** 修改 **********************/
 		if ("update".equals(action)) {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			try {
@@ -253,12 +258,12 @@ public class MallServlet extends HttpServlet {
 				}
 
 				// 如果錯誤訊息不等於空回到首頁
-				if (!erroMsg.isEmpty()) {
+				if (!erroMsg.isEmpty()) {					
 					req.setAttribute("showinsert", "showinsert");
 					req.setAttribute("updateerroMsg", erroMsg);
 					req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 				} else {
-					/*************************** 2.開始新增資料 ***************************************/
+					/*************************** 2.開始修改資料 ***************************************/
 						MallService mallSer = new MallService();
 						String msg=mallSer.update(commNo,commName, price, quantity, img, intro, age, player, status);
 					/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/

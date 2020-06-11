@@ -161,6 +161,8 @@ $(document).ready(function() {
 		$("#create-user").attr("disabled", false);
 		// 啟動事件
 		setTimeout(hov, 500);
+		
+		
 	})
 
 	$("#updateDiv .addtypebtn").click(function() {

@@ -59,7 +59,7 @@
 							<input type="hidden" name="commNo" value="${mallVo.commNo}">
 							<input type="hidden" name="showinsert" value="showinsert">
 							</form></td>
-							<td class="col-md-1"><img src="<%= request.getContextPath()%>/MallShowImg?commNo=${mallVo.commNo}"></td>
+							<td class="col-md-1"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></td>
 							<td class="col-md-2"><div>${mallVo.commName}</div></td>
 							<td class="col-md-1">${mallVo.price}</td>
 							<td class="col-md-1">${mallVo.quantity}</td>
@@ -104,12 +104,12 @@
 	<%session.removeAttribute("successMsg");%>
 </c:if>
 
-
+<!-- 點擊修改時會啟動傳回錯誤訊息時也會啟動 -->
 <c:if test="${'showinsert'==showinsert}">
 	<%= "<script>$(document).ready(function() {showinsert();});</script>"%>
 	<% pageContext.removeAttribute("action"); %>
 </c:if>
-
+<!-- 新增有錯誤訊息時啟動叫出新增介面 -->
 <c:if test="${not empty erroMsg}">
 	<%= "<script>$(document).ready(function() {$('#create-user').click()})</script>"%>
 	<%request.removeAttribute("erroMsg"); %>

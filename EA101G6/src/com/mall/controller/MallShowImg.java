@@ -18,7 +18,7 @@ import com.mall.model.MallVO;
 /**
  * Servlet implementation class mallshowimg
  */
-@WebServlet("/MallShowImg")
+@WebServlet("/Mall/MallShowImg")
 public class MallShowImg extends HttpServlet {
        
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

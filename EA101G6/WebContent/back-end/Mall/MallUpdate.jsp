@@ -15,9 +15,9 @@
 	<div id="updateDiv" title="mallAdd">
 
 
-		<form method="post"
-			action="<%=request.getContextPath()%>/MallServlet"
-			enctype="multipart/form-data">
+		<form method="post" 
+		action="<%=request.getContextPath()%>/Mall/MallServlet" 
+		enctype="multipart/form-data">
 			<fieldset>
 			
 				<div>--修改商品--</div>
@@ -75,7 +75,7 @@
 					class="upload" accept="image/*" value="${updateMallVo.img}"></label>(如無須變更圖片不用上傳)
 				<div class="showimg">
 					<img
-						src="<%= request.getContextPath()%>/MallShowImg?commNo=${updateMallVo.commNo}">
+						src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${updateMallVo.commNo}">
 				</div>
 
 				<input type="hidden" name="action" value="update"></input> <input

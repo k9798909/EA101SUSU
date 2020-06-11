@@ -13,7 +13,7 @@
 
 	<div id="addDiv" title="mallAdd">
 
-		<form method="post" action="<%= request.getContextPath()%>/MallServlet" enctype="multipart/form-data">
+		<form method="post" action="<%= request.getContextPath()%>/Mall/MallServlet" enctype="multipart/form-data">
 			<fieldset>		
 				<div>--新增商品--</div>
 				<%//有錯誤就自動展開 %>
