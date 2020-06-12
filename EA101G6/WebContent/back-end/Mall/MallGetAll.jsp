@@ -64,7 +64,7 @@
 						
 					<c:forEach var="mallVo" items="${mallVoList}">
 						<tr>
-							<td class="col-md-1">
+							<td class="">
 							<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetAll.jsp" method="post">
 							<input id="upda" type="submit"value="修改">
 							<input type="hidden" name="commNo" value="${mallVo.commNo}">
