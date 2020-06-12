@@ -22,6 +22,12 @@ public class GmTypeDtService {
 	public void delete(String typeNo,String commNo){
 		dao.delete(typeNo,commNo);
 	}
+	
+	//ok
+	public void deleteByCommNo(String commNo){
+		dao.deleteByCommNo(commNo);
+	}
+	
 	//ok
 	public List<GmTypeDtVO> getAll(){
 		return dao.getAll();

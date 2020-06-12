@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.gmType.model.GmTypeVO;
+import com.gmTypeDt.model.GmTypeDtService;
+import com.gmTypeDt.model.GmTypeDtVO;
 import com.mall.model.MallService;
 import com.mall.model.MallVO;
 
@@ -40,7 +43,7 @@ public class MallServlet extends HttpServlet {
 
 		/*****************************************************/
 		/**													**/
-		/**						以下是新增              					**/
+		/**						以下是新增              				**/
 		/**													**/
 		/**													**/
 		/*****************************************************/
@@ -48,6 +51,7 @@ public class MallServlet extends HttpServlet {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			try {
 				MallVO mallVo = new MallVO();
+				List<String> tampTypeNolist = new ArrayList<String>();
 				// commName部分
 				String commName = req.getParameter("commName").trim();
 				String commNameReg = "^[(\u4e00-\u9fa5) _\\w]{2,20}$";
@@ -55,7 +59,6 @@ public class MallServlet extends HttpServlet {
 					mallVo.setCommName(commName);
 				else
 					erroMsg.add("商品名稱格式輸入錯誤，請輸入20字以內，請不要有特殊字元。");
-
 				// price部分
 				Integer price = null;
 				try {
@@ -103,10 +106,6 @@ public class MallServlet extends HttpServlet {
 				} else
 					erroMsg.add("適合人數格式請輸入正確");
 				
-				//遊戲類型的部分
-
-				
-
 				// status 有選中==on 沒=null
 				int status = 0;
 				if (!(req.getParameter("status") == null)) {
@@ -132,27 +131,43 @@ public class MallServlet extends HttpServlet {
 					in.close();
 				} else
 					erroMsg.add("請傳入圖片或確認符合圖片格式");
-
+				//gmtypedt 遊戲類型部分 checkbox不是自己輸入
+					String[] typeNoArr=req.getParameterValues("typeNo");
+					if(typeNoArr==null) {
+						erroMsg.add("遊戲類型請至少勾選一個");
+					}else
+						for(int i=0;i<typeNoArr.length;i++) {
+							tampTypeNolist.add(typeNoArr[i]);
+						}
 				// 如果錯誤訊息不等於空回到首頁
 				if (!erroMsg.isEmpty()) {
 					req.setAttribute("tempmallVo", mallVo);
+					req.setAttribute("tampTypeNolist", tampTypeNolist);
 					req.setAttribute("erroMsg", erroMsg);
 					req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 				} else {
-					/*************************** 2.開始新增資料 ***************************************/
+					/*************************** 2.開始新增mall的資料 ***************************************/
 					MallService mallSer = new MallService();
-					String msg=mallSer.add(commName, price, quantity, img, intro, age, player, status);
+					MallVO addMall=mallSer.add(commName, price, quantity, img, intro, age, player, status);
+					/*************************** 2.開始新增gmtypedt的資料 ***************************************/
+					/************************因為必須先拿到mall自增鍵才能新增所以放到後面 ******************************/
+					GmTypeDtService GmTypeDtSer=new GmTypeDtService();
+					for(int i=0;i<typeNoArr.length;i++) {
+						System.out.println(typeNoArr[i]+"  "+addMall.getCommNo());
+						GmTypeDtSer.add(typeNoArr[i], addMall.getCommNo());
+					}
 					/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 					// 讓前台list能更新
 					session.removeAttribute("mallVoList");
-					session.setAttribute("successMsg", msg);
+					session.setAttribute("successMsg","新增成功");
 					res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
 					return;
 					// req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 				}
 
-			} catch (NullPointerException e) {
+			} catch (Exception e) {
 				e.getStackTrace();
+				res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
 			}
 		}
 
@@ -256,6 +271,10 @@ public class MallServlet extends HttpServlet {
 					// 因為沒有傳圖片拿出之前存在Showimg裡的 mallvo並拿出byte[]
 					img = ((MallVO) session.getAttribute(commNo)).getImg();
 				}
+				//gmtypedt 遊戲類型部分 checkbox不是自己輸入
+				String[] typeNoArr=req.getParameterValues("typeNo");
+				if(typeNoArr==null)
+					erroMsg.add("遊戲類型請至少勾選一個");
 
 				// 如果錯誤訊息不等於空回到首頁
 				if (!erroMsg.isEmpty()) {					
@@ -265,18 +284,31 @@ public class MallServlet extends HttpServlet {
 				} else {
 					/*************************** 2.開始修改資料 ***************************************/
 						MallService mallSer = new MallService();
-						String msg=mallSer.update(commNo,commName, price, quantity, img, intro, age, player, status);
-					/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+						MallVO updateMall=mallSer.update(commNo,commName, price, quantity, img, intro, age, player, status);
+					/*************************** 2.開始修改gmtypedt的資料 ***************************************/
+					/************************因為必須先拿到mall自增鍵才能新增所以放到後面 ******************************/
+						GmTypeDtService GmTypeDtSer=new GmTypeDtService();
+						GmTypeDtSer.deleteByCommNo(commNo);
+						for(int i=0;i<typeNoArr.length;i++) {
+							GmTypeDtSer.add(typeNoArr[i], commNo);
+						}
+					/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
 					// 讓前台list能更新
 					session.removeAttribute("mallVoList");
-					session.removeAttribute(commNo);
-					session.setAttribute("successMsg", msg);
-					res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+					session.setAttribute(commNo,updateMall);
+					session.setAttribute("successMsg", "更新成功");
+					//確認他是哪個頁面傳的是空字串就傳到getall
+					if(req.getParameter("isGetOne").trim().length()!=0) {
+						res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetOne.jsp");
+					}else{
+						res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+					}
 					return;
 					// req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 				}
-			} catch (NullPointerException e) {
+			} catch (Exception e) {
 				e.getStackTrace();
+				res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
 			}
 
 
@@ -293,11 +325,11 @@ public class MallServlet extends HttpServlet {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				MallService mallSer = new MallService();
 				String selErroMsg="";
-				String commName = req.getParameter("commName").trim();
-				String commNameReg = "^[(\u4e00-\u9fa5) _\\w]{1,20}$";
-				List<MallVO> mallVoList=null;
-				if (commName.length() != 0 && commName.matches(commNameReg)){
-					mallVoList = mallSer.findByName(commName);
+				String selName = req.getParameter("selName").trim();
+				String selNameReg = "^[(\u4e00-\u9fa5) _\\w]{1,20}$";
+				List<MallVO> selMallVoList=null;
+				if (selName.length() != 0 && selName.matches(selNameReg)){
+					selMallVoList = mallSer.findByName(selName);
 				}else {
 					selErroMsg="商品名稱格式輸入錯誤，請輸入20字以內，請不要有特殊字元。";
 					session.setAttribute("selErroMsg",selErroMsg);
@@ -305,19 +337,20 @@ public class MallServlet extends HttpServlet {
 					return;
 				}
 		/*************************** 2.查詢完成,準備轉交(Send the Success view) ***********/	
-				if(mallVoList.isEmpty()) {
+				if(selMallVoList.isEmpty()) {
 					selErroMsg="查無此資料";
 					session.setAttribute("selErroMsg",selErroMsg);
 					res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
 					return;
 				}else {
-					req.setAttribute("mallVoList", mallVoList);
+					session.setAttribute("selMallVoList", selMallVoList);
 					req.getRequestDispatcher("/back-end/Mall/MallGetOne.jsp").forward(req, res);
 					return;
 				}
 				
-			}catch (NullPointerException e) {
+			}catch (Exception e) {
 				e.getStackTrace();
+				res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
 			}	
 			
 			

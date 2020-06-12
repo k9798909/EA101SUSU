@@ -18,13 +18,6 @@
 
 	<div id="commaction">
 		<button onclick="javascript:location.href='<%= request.getContextPath() %>/back-end/Mall/MallGetAll.jsp'">商品頁面</button>
-		<div style="display:inline">收尋商品:<form method="post" action="<%= request.getContextPath()%>/Mall/MallServlet" style="display:inline">
-		<input type="text" name="commName">
-		<input  type="hidden" name="action" value="selectone">
-		<input type="submit" value="搜尋">
-		</form>
-		
-		</div>
 	</div>
 	
 	
@@ -52,17 +45,20 @@
 						request.setAttribute("gmTypeSer", gmTypeSer);
 						MallService mallSer = new MallService();
 						request.setAttribute("mallSer", mallSer);
-						//是forword過來的所以request裡有查詢的list
+						// 是forword過來的所以request裡有查詢的list
 						//el是由小到大所以前面的session不影響
 					%>
 						
-					<c:forEach var="mallVo" items="${mallVoList}">
+					<c:forEach var="mallVo" items="${selMallVoList}">
 						<tr>
 							<td class="col-md-1">
 							<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetOne.jsp" method="post">
 							<input id="upda" type="submit"value="修改">
 							<input type="hidden" name="commNo" value="${mallVo.commNo}">
+							<!-- 叫出修改介面 -->
 							<input type="hidden" name="showinsert" value="showinsert">
+							<!-- 讓update確認是getone -->
+							<input  type="hidden" name="isGetOne" value="isGetOne">
 							</form></td>
 							<td class="col-md-1"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></td>
 							<td class="col-md-2"><div>${mallVo.commName}</div></td>

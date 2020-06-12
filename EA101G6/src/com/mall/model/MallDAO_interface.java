@@ -7,7 +7,7 @@ import com.gmType.model.GmTypeVO;
 
 public interface MallDAO_interface {
 	//新增
-	public void add(MallVO mall);
+	public String add(MallVO mall);
 	//刪除
 	public void delete(String commno);
 	//修改
@@ -20,6 +20,8 @@ public interface MallDAO_interface {
 	public List<MallVO> getNew();
 	
 	public MallVO findOneByNo(String commno);
+	
+	public String findSeq();
 	
 	public List<GmTypeVO> getType(String commno);
 	

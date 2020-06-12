@@ -24,13 +24,14 @@ public class MallOrDtService {
 		dao.delete(mallOrNo, commNo);
 	}
 	//ok
-	public void update(String mallOrNo, String commNo, Integer quantity, Integer price){
+	public MallOrDtVO update(String mallOrNo, String commNo, Integer quantity, Integer price){
 		MallOrDtVO vo =new MallOrDtVO();
 		vo.setMallOrNo(mallOrNo);
 		vo.setCommNo(commNo);
 		vo.setQuantity(quantity);
 		vo.setPrice(price);
 		dao.update(vo);
+		return vo;
 	}
 	//ok
 	public List<MallOrDtVO> getAll(){

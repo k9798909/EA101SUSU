@@ -31,7 +31,7 @@ private MallOrDAO_interface dao ;
 		return "刪除成功";
 	}
 	//修改
-	public String update(String mallOrNo, String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
+	public MallOrVO update(String mallOrNo, String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
 			Integer payStatus, Integer boxStatus){
 		MallOrVO vo = new MallOrVO();
 		vo.setMallOrNo(mallOrNo);
@@ -44,7 +44,7 @@ private MallOrDAO_interface dao ;
 		vo.setBoxStatus(boxStatus);
 		dao.update(vo);
 		
-		return "修改成功";
+		return vo;
 		
 		
 	}

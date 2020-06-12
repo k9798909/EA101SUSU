@@ -19,9 +19,8 @@ public class MallService {
 	}
 	
 	//新增ok
-	public String add(String commName, Integer price, Integer quantity, byte[] img, String intro,
+	public MallVO add(String commName, Integer price, Integer quantity, byte[] img, String intro,
 			String age, String player, Integer status) {
-		try {
 			MallVO mall = new MallVO();
 			mall.setCommName(commName);
 			mall.setPrice(price);
@@ -31,15 +30,10 @@ public class MallService {
 			mall.setAge(age);
 			mall.setPlayer(player);
 			mall.setStatus(status);
-			dao.add(mall);
-		}catch(Exception e) {
-			System.out.println("malladd錯了");
-			e.getStackTrace();
-			return "新增失敗";
-		}
-		return "新增成功";
-		
-		
+			mall.setCommNo(dao.add(mall));
+			
+			
+			return mall;
 	}
 	//刪除ok
 	public String delete(String commno){
@@ -49,9 +43,9 @@ public class MallService {
 		return "刪除成功";
 	}
 	//修改ok
-	public String update(String commNo, String commName, Integer price, Integer quantity, byte[] img, String intro,
+	public MallVO update(String commNo, String commName, Integer price, Integer quantity, byte[] img, String intro,
 			String age, String player, Integer status){
-		try {
+
 			MallVO mall = new MallVO();
 			mall.setCommNo(commNo);
 			mall.setCommName(commName);
@@ -63,12 +57,8 @@ public class MallService {
 			mall.setPlayer(player);
 			mall.setStatus(status);
 			dao.update(mall);
-		}catch(Exception e) {
-			System.out.println("mallupdate錯了");
-			e.getStackTrace();
-			return "修改失敗";
-		}
-		return "修改成功";
+
+		return mall;
 		
 		
 	}
@@ -96,10 +86,14 @@ public class MallService {
 	public List<GmTypeVO> getType(String commNo){
 		return dao.getType(commNo);
 	}
+	
+
+	
 	/**
 	public static void main(String[] args) {
 		MallService ser = new MallService();
-		以下為test
+
+		
 		byte[] img =null ;
 		try {
 			FileInputStream in =new FileInputStream(new File("C:\\Users\\Java\\Desktop\\WORKSQL\\MALLIMG\\1.jpg"));
@@ -118,6 +112,7 @@ public class MallService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		add ok delete ok update ok findbyname ok
 		ser.add("大富翁", 1000, 20, img, "大家一起來玩吧","4-6","8歲以上", 0);
 		ser.delete("11");
@@ -130,6 +125,7 @@ public class MallService {
 		List<String> list =ser.getType("ZM00009");
 		for(String x : list)
 			System.out.println(x);
+		System.out.println(ser.add("大富翁", 1000, 20, null, "大家一起來玩吧","4-6","8歲以上", 0));
 		
 	}**/
 	

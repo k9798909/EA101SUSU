@@ -6,7 +6,7 @@ public interface GmTypeDtDao_interface {
 	
 	public void add(GmTypeDtVO gmTypeDt);
 	public void delete(String typeNo,String commNo);
-	//public void update(GmTypeDtVO gmTypeDt);
+	public void deleteByCommNo(String commNo);
 	public List<GmTypeDtVO> getAll();
 	public List<GmTypeDtVO> findByTypeNo(String typeNo);
 	public List<GmTypeDtVO> findByCommNo(String commNo);

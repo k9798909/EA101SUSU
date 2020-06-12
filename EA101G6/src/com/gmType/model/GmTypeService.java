@@ -17,11 +17,12 @@ public class GmTypeService {
 	public void delete(String typeNo){
 		dao.delete(typeNo);
 	};
-	public void update(String typeNo, String typeName) {
+	public GmTypeVO update(String typeNo, String typeName) {
 		GmTypeVO vo = new GmTypeVO();
 		vo.setTypeNo(typeNo);
 		vo.setTypeName(typeName);
 		dao.update(vo);
+		return vo;
 	};
 	public List<GmTypeVO> getAll(){
 		return dao.getAll();

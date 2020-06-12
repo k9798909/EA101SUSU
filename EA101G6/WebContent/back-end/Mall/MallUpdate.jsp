@@ -77,7 +77,9 @@
 					<img
 						src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${updateMallVo.commNo}">
 				</div>
-
+				<!-- 確認是getone還是getall -->
+				<% pageContext.setAttribute("isGetOne",request.getParameter("isGetOne"));%>
+				<input type="hidden" name="isGetOne" value="${isGetOne}">
 				<input type="hidden" name="action" value="update"></input> <input
 					type="submit" value="修改" class="btn">
 				

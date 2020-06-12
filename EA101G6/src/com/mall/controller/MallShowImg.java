@@ -24,7 +24,6 @@ public class MallShowImg extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
-		HttpSession session1 =req.getSession();
 		try {	
 				//讀一次之後存到session裡讓效能好一點
 				HttpSession session =req.getSession();

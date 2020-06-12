@@ -49,17 +49,22 @@ public class MallJDBCDAO implements MallDAO_interface {
 			+ " JOIN GMTYPEDT ON mall.commno=gmtypedt.commno"
 			+ " JOIN GMTYPE ON gmtypedt.typeno=gmtype.typeno"
 			+ " WHERE MALL.COMMNO=?";
-	
+	private static final String SQLSELSEQ="SELECT 'ZM'||LPAD(TO_CHAR(COMMNO_SEQ.CURRVAL),5, '0') FROM DUAL";
 	
 	@Override
-	public void add(MallVO mall) {
+	public String add(MallVO mall) {
 		// TODO Auto-generated method stub
 		Connection conn =null;
 		PreparedStatement past=null;
+		ResultSet rs = null;
+		String seq="";
 		try {
 			conn=DriverManager.getConnection(URL,NAME,PSW);
 			
+			
+			
 			conn.setAutoCommit(false);
+			
 			past = conn.prepareStatement(SQLADD);
 			past.setString(1,mall.getCommName());
 			past.setInt(2,mall.getPrice());
@@ -69,9 +74,15 @@ public class MallJDBCDAO implements MallDAO_interface {
 			past.setString(6,mall.getAge());
 			past.setString(7,mall.getPlayer());
 			past.setInt(8,mall.getStatus());
-			
 			past.executeUpdate();
 			conn.commit();
+			
+			past.close();
+			
+			past= conn.prepareStatement(SQLSELSEQ);
+			rs=past.executeQuery();
+			if(rs.next()) 
+				seq=rs.getString(1);
 			
 		}catch(SQLException e){
 			e.getMessage();
@@ -87,6 +98,8 @@ public class MallJDBCDAO implements MallDAO_interface {
 			
 			try {
 				conn.setAutoCommit(true);
+				if(rs!=null)
+					rs.close();
 				if(past!=null)
 					past.close();
 				if(conn!=null)
@@ -96,6 +109,8 @@ public class MallJDBCDAO implements MallDAO_interface {
 			}
 			
 		}
+		
+		return seq;
 		
 	}
 	
@@ -433,6 +448,44 @@ public class MallJDBCDAO implements MallDAO_interface {
 		
 		return list;
 	}
+	
+	public String findSeq() {
+		
+		Connection conn = null;
+		PreparedStatement past = null;		
+		ResultSet rs = null;
+		String seq="";
+
+		try {
+			conn=DriverManager.getConnection(URL,NAME,PSW);
+			past = conn.prepareStatement(SQLSELSEQ);
+			rs=past.executeQuery();
+			if(rs.next()) 
+				seq=rs.getString(1);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			
+			try {
+				if(rs!=null)
+					rs.close();
+				if(past!=null)
+					past.close();
+				if(conn!=null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return seq;
+		
+	}
+	
+	
 
 
 //	public static void main(String[] args) {

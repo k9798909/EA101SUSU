@@ -18,7 +18,7 @@
 
 	<div id="commaction">
 		<button id="create-user">新增商品</button>
-		<div style="display:inline">收尋商品:<form method="post" action="<%= request.getContextPath()%>/Mall/MallServlet" style="display:inline"><input type="text" name="commName">
+		<div style="display:inline">收尋商品:<form method="post" action="<%= request.getContextPath()%>/Mall/MallServlet" style="display:inline"><input type="text" name="selName">
 		<input  type="hidden" name="action" value="selectone">
 		<input type="submit" value="搜尋">
 		</form>
@@ -58,6 +58,8 @@
 							List<MallVO> mallVoList = mallSer.getAll();
 							session.setAttribute("mallVoList", mallVoList);
 						}
+						
+
 					%>
 						
 					<c:forEach var="mallVo" items="${mallVoList}">
@@ -66,6 +68,7 @@
 							<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetAll.jsp" method="post">
 							<input id="upda" type="submit"value="修改">
 							<input type="hidden" name="commNo" value="${mallVo.commNo}">
+							<!-- 叫出修改介面 -->
 							<input type="hidden" name="showinsert" value="showinsert">
 							</form></td>
 							<td class="col-md-1"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></td>
@@ -77,10 +80,12 @@
 							<td class="col-md-1">${mallVo.player}人</td>
 							<td class="col-md-1"><div>
 							
-							<c:forEach var="typeVo" items="${mallSer.getType(mallVo.commNo)}">
-							${typeVo.typeName} 
-							</c:forEach>
+								<c:forEach var="typeVo" items="${mallSer.getType(mallVo.commNo)}">
+								${typeVo.typeName} 
+								</c:forEach>
+							
 							</div></td>
+							
 							<td class="col-md-1">${(mallVo.status=="1")?"上架中":"下架中" }</td>
 
 						</tr>
