@@ -72,6 +72,11 @@ public class MallService {
 		return dao.getAll();
 		
 	}
+	//拿全部ok
+	public List<MallVO> getAllUp(){
+		return dao.getAllUp();
+		
+	}
 	//取得最新商品前五比 ok
 	public List<MallVO> getNew(){
 		return dao.getNew();

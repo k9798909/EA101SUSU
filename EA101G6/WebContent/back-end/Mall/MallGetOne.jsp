@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="BIG5"%>
 <%@ page import="com.mall.model.*"%>
 <%@ page import="com.gmTypeDt.model.*"%>
 <%@ page import="com.gmType.model.*"%>
@@ -17,7 +17,7 @@
 <body>
 
 	<div id="commaction">
-		<button onclick="javascript:location.href='<%= request.getContextPath() %>/back-end/Mall/MallGetAll.jsp'">å•†å“é é¢</button>
+		<button onclick="javascript:location.href='<%= request.getContextPath() %>/back-end/Mall/MallGetAll.jsp'">°Ó«~­¶­±</button>
 	</div>
 	
 	
@@ -26,15 +26,15 @@
 				<thead>
 					<tr class="">
 						<th class="col-md-1"></th>
-						<th class="col-md-1">åœ–ç‰‡</th>
-						<th class="col-md-2">å•†å“åç¨±</th>
-						<th class="col-md-1">å”®åƒ¹</th>
-						<th class="col-md-1">æ•¸é‡</th>
-						<th class="col-md-2">å•†å“è©³æƒ…</th>
-						<th class="col-md-1">é©åˆå¹´é½¡</th>
-						<th class="col-md-1">å»ºè­°äººæ•¸</th>
-						<th class="col-md-1">éŠæˆ²é¡å‹</th>
-						<th class="col-md-1">ä¸Šæ¶ç‹€æ…‹</th>
+						<th class="col-md-1">¹Ï¤ù</th>
+						<th class="col-md-2">°Ó«~¦WºÙ</th>
+						<th class="col-md-1">°â»ù</th>
+						<th class="col-md-1">¼Æ¶q</th>
+						<th class="col-md-2">°Ó«~¸Ô±¡</th>
+						<th class="col-md-1">¾A¦X¦~ÄÖ</th>
+						<th class="col-md-1">«ØÄ³¤H¼Æ</th>
+						<th class="col-md-1">¹CÀ¸Ãş«¬</th>
+						<th class="col-md-1">¤W¬[ª¬ºA</th>
 
 					</tr>
 				</thead>
@@ -45,19 +45,19 @@
 						request.setAttribute("gmTypeSer", gmTypeSer);
 						MallService mallSer = new MallService();
 						request.setAttribute("mallSer", mallSer);
-						// æ˜¯forwordéä¾†çš„æ‰€ä»¥requestè£¡æœ‰æŸ¥è©¢çš„list
-						//elæ˜¯ç”±å°åˆ°å¤§æ‰€ä»¥å‰é¢çš„sessionä¸å½±éŸ¿
+						// ¬Oforword¹L¨Óªº©Ò¥Hrequest¸Ì¦³¬d¸ßªºlist
+						//el¬O¥Ñ¤p¨ì¤j©Ò¥H«e­±ªºsession¤£¼vÅT
 					%>
 						
 					<c:forEach var="mallVo" items="${selMallVoList}">
 						<tr>
 							<td class="col-md-1">
 							<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetOne.jsp" method="post">
-							<input id="upda" type="submit"value="ä¿®æ”¹">
+							<input id="upda" type="submit"value="­×§ï">
 							<input type="hidden" name="commNo" value="${mallVo.commNo}">
-							<!-- å«å‡ºä¿®æ”¹ä»‹é¢ -->
+							<!-- ¥s¥X­×§ï¤¶­± -->
 							<input type="hidden" name="showinsert" value="showinsert">
-							<!-- è®“updateç¢ºèªæ˜¯getone -->
+							<!-- Åıupdate½T»{¬Ogetone -->
 							<input  type="hidden" name="isGetOne" value="isGetOne">
 							</form></td>
 							<td class="col-md-1"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></td>
@@ -65,15 +65,15 @@
 							<td class="col-md-1">${mallVo.price}</td>
 							<td class="col-md-1">${mallVo.quantity}</td>
 							<td class="col-md-2"><div>${mallVo.intro}</div></td>
-							<td class="col-md-1">${mallVo.age}æ­²ä»¥ä¸Š</td>
-							<td class="col-md-1">${mallVo.player}äºº</td>
+							<td class="col-md-1">${mallVo.age}·³¥H¤W</td>
+							<td class="col-md-1">${mallVo.player}¤H</td>
 							<td class="col-md-1"><div>
 							
 							<c:forEach var="typeVo" items="${mallSer.getType(mallVo.commNo)}">
 							${typeVo.typeName} 
 							</c:forEach>
 							</div></td>
-							<td class="col-md-1">${(mallVo.status=="1")?"ä¸Šæ¶ä¸­":"ä¸‹æ¶ä¸­" }</td>
+							<td class="col-md-1">${(mallVo.status=="1")?"¤W¬[¤¤":"¤U¬[¤¤" }</td>
 
 						</tr>
 					</c:forEach>
@@ -99,18 +99,18 @@
 
 
 
-<!-- æœ‰æˆåŠŸè¨Šæ¯å°±å•Ÿå‹• -->
+<!-- ¦³¦¨¥\°T®§´N±Ò°Ê -->
 <c:if test="${not empty successMsg}">
 	<script>swal({text:"${successMsg}" });</script>
 	<%session.removeAttribute("successMsg");%>
 </c:if>
 
-<!-- é»æ“Šä¿®æ”¹æ™‚æœƒå•Ÿå‹•å‚³å›éŒ¯èª¤è¨Šæ¯æ™‚ä¹Ÿæœƒå•Ÿå‹• -->
+<!-- ÂIÀ»­×§ï®É·|±Ò°Ê¶Ç¦^¿ù»~°T®§®É¤]·|±Ò°Ê -->
 <c:if test="${'showinsert'==showinsert}">
 	<%= "<script>$(document).ready(function() {showinsert();});</script>"%>
 	<% pageContext.removeAttribute("action"); %>
 </c:if>
-<!-- æŸ¥è©¢æ™‚æœ‰éŒ¯èª¤å•Ÿå‹• -->
+<!-- ¬d¸ß®É¦³¿ù»~±Ò°Ê -->
 <c:if test="${not empty selErroMsg}">
 	<script>swal({text:"${selErroMsg}" });</script>
 	<%session.removeAttribute("selErroMsg"); %>

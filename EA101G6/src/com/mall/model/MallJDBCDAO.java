@@ -42,6 +42,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 	private static final String SQLDELETE="DELETE FROM MALL MALL WHERE COMMNO = ?";
 	private static final String SQLSELNAME="SELECT * FROM MALL WHERE COMMNAME LIKE ?";
 	private static final String SQLSELALL="SELECT * FROM MALL ORDER BY COMMNO";
+	private static final String SQLSELALLUP="SELECT * FROM MALL WHERE STATUS=1 ORDER BY COMMNO ";
 	//查詢編號最後五筆等於最新五筆
 	private static final String SQLSELNEW="SELECT * FROM (SELECT * FROM MALL ORDER BY COMMNO DESC) WHERE ROWNUM <= 5";
 	private static final String SQLSELONE="SELECT * FROM MALL WHERE COMMNO=? ";
@@ -303,6 +304,57 @@ public class MallJDBCDAO implements MallDAO_interface {
 		return list;
 	}
 
+	
+	@Override
+	public List<MallVO> getAllUp() {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement past = null;		
+		ResultSet rs = null;
+		List<MallVO> list = new ArrayList<MallVO>();
+		try {
+			conn=DriverManager.getConnection(URL,NAME,PSW);
+			past = conn.prepareStatement(SQLSELALLUP);
+			rs=past.executeQuery();
+			while(rs.next()) {
+				MallVO mall = new MallVO();	
+				mall.setCommNo(rs.getString("COMMNO"));
+				mall.setCommName(rs.getString("COMMNAME"));
+				mall.setPrice(rs.getInt("PRICE"));
+				mall.setQuantity(rs.getInt("QUANTITY"));
+				mall.setImg(rs.getBytes("IMG"));
+				mall.setIntro(rs.getString("INTRO"));
+				mall.setAge(rs.getString("AGE"));
+				mall.setPlayer(rs.getString("PLAYER"));
+				mall.setStatus(rs.getInt("STATUS"));
+				list.add(mall);
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			
+			try {
+				if(rs!=null)
+					rs.close();
+				if(past!=null)
+					past.close();
+				if(conn!=null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return list;
+	}
+	
+	
 	@Override
 	public List<MallVO> getNew() {
 		// TODO Auto-generated method stub

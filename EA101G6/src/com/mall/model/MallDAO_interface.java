@@ -16,6 +16,8 @@ public interface MallDAO_interface {
 	public List<MallVO> findByName(String name);
 	//拿全部
 	public List<MallVO> getAll();
+	//拿全部上架的
+	public List<MallVO> getAllUp();
 	//取得最新商品前五比
 	public List<MallVO> getNew();
 	

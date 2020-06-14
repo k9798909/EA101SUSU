@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="BIG5"%>
 <%@ page import="com.mall.model.*"%>
 <%@ page import="com.gmTypeDt.model.*"%>
 <%@ page import="com.gmType.model.*"%>
@@ -17,10 +17,10 @@
 <body>
 
 	<div id="commaction">
-		<button id="create-user">æ–°å¢å•†å“</button>
-		<div style="display:inline">æ”¶å°‹å•†å“:<form method="post" action="<%= request.getContextPath()%>/Mall/MallServlet" style="display:inline"><input type="text" name="selName">
+		<button id="create-user">·s¼W°Ó«~</button>
+		<div style="display:inline">¦¬´M°Ó«~:<form method="post" action="<%= request.getContextPath()%>/Mall/MallServlet" style="display:inline"><input type="text" name="selName">
 		<input  type="hidden" name="action" value="selectone">
-		<input type="submit" value="æœå°‹">
+		<input type="submit" value="·j´M">
 		</form>
 		
 		</div>
@@ -32,28 +32,28 @@
 				<thead>
 					<tr class="">
 						<th class="col-md-1"></th>
-						<th class="col-md-1">åœ–ç‰‡</th>
-						<th class="col-md-2">å•†å“åç¨±</th>
-						<th class="col-md-1">å”®åƒ¹</th>
-						<th class="col-md-1">æ•¸é‡</th>
-						<th class="col-md-2">å•†å“è©³æƒ…</th>
-						<th class="col-md-1">é©åˆå¹´é½¡</th>
-						<th class="col-md-1">å»ºè­°äººæ•¸</th>
-						<th class="col-md-1">éŠæˆ²é¡å‹</th>
-						<th class="col-md-1">ä¸Šæ¶ç‹€æ…‹</th>
+						<th class="col-md-1">¹Ï¤ù</th>
+						<th class="col-md-2">°Ó«~¦WºÙ</th>
+						<th class="col-md-1">°â»ù</th>
+						<th class="col-md-1">¼Æ¶q</th>
+						<th class="col-md-2">°Ó«~¸Ô±¡</th>
+						<th class="col-md-1">¾A¦X¦~ÄÖ</th>
+						<th class="col-md-1">«ØÄ³¤H¼Æ</th>
+						<th class="col-md-1">¹CÀ¸Ãş«¬</th>
+						<th class="col-md-1">¤W¬[ª¬ºA</th>
 
 					</tr>
 				</thead>
 				<tbody>
 
 					<%	
-						//å­˜åœ¨requestè®“incule çš„ç¶²é ä¹Ÿå¯ä»¥æ‹¿åˆ° 
-						//åˆ†åˆ¥æ˜¯GmTypeService  MallService
+						//¦s¦brequestÅıincule ªººô­¶¤]¥i¥H®³¨ì 
+						//¤À§O¬OGmTypeService  MallService
 						GmTypeService gmTypeSer =new GmTypeService();
 						request.setAttribute("gmTypeSer", gmTypeSer);
 						MallService mallSer = new MallService();
 						request.setAttribute("mallSer", mallSer);
-						//å­˜sessionæ˜¯è®“æ•ˆèƒ½å¥½ä¸€é»ä¸ç”¨æ¯æ¬¡æŸ¥è©¢
+						//¦ssession¬OÅı®Ä¯à¦n¤@ÂI¤£¥Î¨C¦¸¬d¸ß
 						if(session.getAttribute("mallVoList")==null){
 							List<MallVO> mallVoList = mallSer.getAll();
 							session.setAttribute("mallVoList", mallVoList);
@@ -66,9 +66,9 @@
 						<tr>
 							<td class="">
 							<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetAll.jsp" method="post">
-							<input id="upda" type="submit"value="ä¿®æ”¹">
+							<input id="upda" type="submit"value="­×§ï">
 							<input type="hidden" name="commNo" value="${mallVo.commNo}">
-							<!-- å«å‡ºä¿®æ”¹ä»‹é¢ -->
+							<!-- ¥s¥X­×§ï¤¶­± -->
 							<input type="hidden" name="showinsert" value="showinsert">
 							</form></td>
 							<td class="col-md-1"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></td>
@@ -76,8 +76,8 @@
 							<td class="col-md-1">${mallVo.price}</td>
 							<td class="col-md-1">${mallVo.quantity}</td>
 							<td class="col-md-2"><div>${mallVo.intro}</div></td>
-							<td class="col-md-1">${mallVo.age}æ­²ä»¥ä¸Š</td>
-							<td class="col-md-1">${mallVo.player}äºº</td>
+							<td class="col-md-1">${mallVo.age}·³¥H¤W</td>
+							<td class="col-md-1">${mallVo.player}¤H</td>
 							<td class="col-md-1"><div>
 							
 								<c:forEach var="typeVo" items="${mallSer.getType(mallVo.commNo)}">
@@ -86,7 +86,7 @@
 							
 							</div></td>
 							
-							<td class="col-md-1">${(mallVo.status=="1")?"ä¸Šæ¶ä¸­":"ä¸‹æ¶ä¸­" }</td>
+							<td class="col-md-1">${(mallVo.status=="1")?"¤W¬[¤¤":"¤U¬[¤¤" }</td>
 
 						</tr>
 					</c:forEach>
@@ -112,24 +112,24 @@
 
 
 
-<!-- æœ‰æˆåŠŸè¨Šæ¯å°±å•Ÿå‹• -->
+<!-- ¦³¦¨¥\°T®§´N±Ò°Ê -->
 <c:if test="${not empty successMsg}">
 	<script>swal({text:"${successMsg}" });</script>
 	<%session.removeAttribute("successMsg");%>
 </c:if>
 
-<!-- é»æ“Šä¿®æ”¹æ™‚æœƒå•Ÿå‹•å‚³å›éŒ¯èª¤è¨Šæ¯æ™‚ä¹Ÿæœƒå•Ÿå‹• -->
+<!-- ÂIÀ»­×§ï®É·|±Ò°Ê¶Ç¦^¿ù»~°T®§®É¤]·|±Ò°Ê -->
 <c:if test="${'showinsert'==showinsert}">
 	<%= "<script>$(document).ready(function() {showinsert();});</script>"%>
 	<% pageContext.removeAttribute("action"); %>
 </c:if>
-<!-- æ–°å¢æœ‰éŒ¯èª¤è¨Šæ¯æ™‚å•Ÿå‹•å«å‡ºæ–°å¢ä»‹é¢ -->
+<!-- ·s¼W¦³¿ù»~°T®§®É±Ò°Ê¥s¥X·s¼W¤¶­± -->
 <c:if test="${not empty erroMsg}">
 	<%= "<script>$(document).ready(function() {$('#create-user').click()})</script>"%>
 	<%request.removeAttribute("erroMsg"); %>
 </c:if>
 
-<!-- æŸ¥è©¢æ™‚æœ‰éŒ¯èª¤å•Ÿå‹• -->
+<!-- ¬d¸ß®É¦³¿ù»~±Ò°Ê -->
 <c:if test="${not empty selErroMsg}">
 	<script>swal({text:"${selErroMsg}" });</script>
 	<%session.removeAttribute("selErroMsg"); %>
