@@ -39,12 +39,15 @@
 					</tr>
 				</thead>
 				<tbody>
-
+					
+					<jsp:useBean id="gmTypeSer" class="com.gmType.model.GmTypeService" scope="request"/>
+					<jsp:useBean id="mallSer" class="com.mall.model.MallService" scope="request"/>
+					
 					<%	
-						GmTypeService gmTypeSer =new GmTypeService();
-						request.setAttribute("gmTypeSer", gmTypeSer);
-						MallService mallSer = new MallService();
-						request.setAttribute("mallSer", mallSer);
+						//GmTypeService gmTypeSer =new GmTypeService();
+						//request.setAttribute("gmTypeSer", gmTypeSer);
+						//MallService mallSer = new MallService();
+						//request.setAttribute("mallSer", mallSer);
 						// 是forword過來的所以request裡有查詢的list
 						//el是由小到大所以前面的session不影響
 					%>
