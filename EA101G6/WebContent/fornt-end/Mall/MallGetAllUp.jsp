@@ -125,8 +125,11 @@
 
 	<main class="mall">
 		<div class="seldiv">
-			<input placeholder="請輸入商品名稱" type="text" class="selinput"><input
-				type="submit" value="搜尋商品">
+			<form action="<%=request.getContextPath()%>/Mall/ForntMallServlet" method="post">
+				<input placeholder="請輸入商品名稱" type="text" name="selName" class="selinput">
+				<input type="hidden" name="action" value="selName">
+				<input type="submit" value="搜尋商品">
+			</form>
 		</div>
 
 
@@ -155,7 +158,7 @@
 				
 				<c:forEach var="mallVo" items="${mallVoList}">
 					<div class="col-lg-3 col-6 comm">
-						<a href="<%=request.getContextPath()%>/fornt-end/MallGetOne.jsp?commNo=${mallVo.commNo}">
+						<a href="<%=request.getContextPath()%>/fornt-end/Mall/MallGetOne.jsp?commNo=${mallVo.commNo}">
 							<div class="imgdiv"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></div>
 							<p> ${mallVo.commName} </p>
 							<div class="dt"><p><b>$${mallVo.price}</b></p></div>
@@ -193,6 +196,12 @@
 	<!-- 重要廣告界面 -->
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/aos.js"></script>
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- 查詢時有錯誤啟動 -->
+<c:if test="${not empty selErroMsg}">
+	<script>swal({text:"${selErroMsg}" });</script>
+	<%session.removeAttribute("selErroMsg"); %>
+</c:if>	
 
 
 

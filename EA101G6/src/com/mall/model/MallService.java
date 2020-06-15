@@ -67,6 +67,11 @@ public class MallService {
 		return dao.findByName(name);
 		
 	}
+	//用商品名稱查詢上架版，因為我查的可能不只一項回傳list
+	public List<MallVO> findByNameUp(String name){
+		return dao.findByNameUp(name);
+		
+	}
 	//拿全部ok
 	public List<MallVO> getAll(){
 		return dao.getAll();

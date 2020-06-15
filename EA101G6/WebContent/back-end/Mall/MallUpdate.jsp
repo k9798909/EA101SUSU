@@ -96,7 +96,7 @@
 			</fieldset>
 		</form>
 	</div>
-	<%request.removeAttribute("tampTypeNolist"); %>
+	<%request.removeAttribute("updateTampTypeNolist"); %>
 	<%request.removeAttribute("updateMallVo"); %>
 </body>
 </html>

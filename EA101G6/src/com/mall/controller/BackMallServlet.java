@@ -31,7 +31,7 @@ import com.mall.model.MallVO;
 public class BackMallServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+		doPost(req,res);
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -311,19 +311,25 @@ public class BackMallServlet extends HttpServlet {
 						}
 					/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
 					// 讓前台list能更新
-					session.removeAttribute("mallVoList");
+					
 					session.setAttribute(commNo,updateMall);
 					session.setAttribute("successMsg", "更新成功");
-					//確認他是哪個頁面傳的，是空字串就傳到getall
+					//確認他是哪個頁面傳的，是空字串就傳到getall，並把session.remove掉讓他更新，
+					//如果不是把action="selectone"在搜尋一次讓頁面更新
+					session.removeAttribute("mallVoList");
 					if(req.getParameter("isGetOne").trim().length()!=0) {
-						res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetOne.jsp");
+						String selName=(String)session.getAttribute("selName");
+						List<MallVO> selMallVoList = mallSer.findByName(selName);
+						session.setAttribute("selMallVoList", selMallVoList);
+						req.getRequestDispatcher("/back-end/Mall/MallGetOne.jsp").forward(req, res);
 					}else{
 						res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+						return;
 					}
-					return;
-					// req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
+					
 				}
 			} catch (Exception e) {
+				e.getStackTrace();
 				req.setAttribute("showupdate", "showupdate");
 				req.setAttribute("updateerroMsg", "目前系統忙碌中，請稍後!");
 				req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
@@ -344,6 +350,7 @@ public class BackMallServlet extends HttpServlet {
 				MallService mallSer = new MallService();
 				String selErroMsg="";
 				String selName = req.getParameter("selName").trim();
+				session.setAttribute("selName", selName);
 				String selNameReg = "^[(\u4e00-\u9fa5) _\\w]{1,20}$";
 				List<MallVO> selMallVoList=null;
 				if (selName.length() != 0 && selName.matches(selNameReg)){

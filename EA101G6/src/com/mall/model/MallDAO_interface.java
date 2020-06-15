@@ -18,6 +18,8 @@ public interface MallDAO_interface {
 	public List<MallVO> getAll();
 	//拿全部上架的
 	public List<MallVO> getAllUp();
+	//用商品名稱查詢，因為我查的可能不只一項回傳list 上架版
+	public List<MallVO> findByNameUp(String name);
 	//取得最新商品前五比
 	public List<MallVO> getNew();
 	

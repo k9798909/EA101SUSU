@@ -46,11 +46,11 @@
         <div class="row">
           <div class="col-12">
             
-            <a href="#" class="text-white"><span class="d-md-inline-block"><img class="icon" src="images/add-icon.png">註冊</span></a>
+            <a href="#" class="text-white"><span class="d-md-inline-block"><img class="icon" src="<%=request.getContextPath()%>/fornt-end/images/add-icon.png">註冊</span></a>
             
             <div class="float-right">
-            <a href="#" class="text-white"><span class="d-md-inline-block"><img class="icon" src="images/User-icon.png">會員登入</span></a>
-            <a href="#" class="text-white"><span class="d-md-inline-block"><img class="icon" src="images/man-icon.png" >店家登入</span></a>
+            <a href="#" class="text-white"><span class="d-md-inline-block"><img class="icon" src="<%=request.getContextPath()%>/fornt-end/images/User-icon.png">會員登入</span></a>
+            <a href="#" class="text-white"><span class="d-md-inline-block"><img class="icon" src="<%=request.getContextPath()%>/fornt-end/images/man-icon.png" >店家登入</span></a>
             </div>
 
           </div>
