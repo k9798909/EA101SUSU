@@ -137,15 +137,15 @@
 		<%
 			//存在request讓incule 的網頁也可以拿到 
 			//分別是GmTypeService  MallService
-			GmTypeService gmTypeSer = new GmTypeService();
-			request.setAttribute("gmTypeSer", gmTypeSer);
-			MallService mallSer = new MallService();
-			request.setAttribute("mallSer", mallSer);
+			GmTypeService gmTypeSvc = new GmTypeService();
+			request.setAttribute("gmTypeSvc", gmTypeSvc);
+			MallService mallSvc = new MallService();
+			request.setAttribute("mallSvc", mallSvc);
 			
 			//存session是讓效能好一點不用每次查詢
 			
 			if (session.getAttribute("mallVoList") == null) {
-				List<MallVO> mallVoList = mallSer.getAllUp();
+				List<MallVO> mallVoList = mallSvc.getAllUp();
 				session.setAttribute("mallVoList", mallVoList);
 			}
 		%>

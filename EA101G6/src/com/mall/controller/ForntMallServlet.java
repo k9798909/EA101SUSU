@@ -32,13 +32,13 @@ public class ForntMallServlet extends HttpServlet {
 		if ("selName".equals(action)) {
 			try {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				MallService mallSer = new MallService();
+				MallService mallSvc = new MallService();
 				String selErroMsg="";
 				String selName = req.getParameter("selName").trim();
 				String selNameReg = "^[(\u4e00-\u9fa5) _\\w]{1,20}$";
 				List<MallVO> selMallVoList=null;
 				if (selName.length() != 0 && selName.matches(selNameReg)){
-					selMallVoList = mallSer.findByNameUp(selName);
+					selMallVoList = mallSvc.findByNameUp(selName);
 				}else {
 					System.out.println(selName);
 					selErroMsg="商品名稱格式輸入錯誤，請輸入20字以內，請不要有特殊字元。";

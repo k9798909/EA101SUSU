@@ -45,18 +45,18 @@
 					</tr>
 				</thead>
 				<tbody>
-				<jsp:useBean id="gmTypeSer" class="com.gmType.model.GmTypeService" scope="request"/>
-				<jsp:useBean id="mallSer" class="com.mall.model.MallService" scope="request"/>
+				<jsp:useBean id="gmTypeSvc" class="com.gmType.model.GmTypeService" scope="request"/>
+				<jsp:useBean id="mallSvc" class="com.mall.model.MallService" scope="request"/>
 					<%	
 						//存在request讓incule 的網頁也可以拿到 
 						//分別是GmTypeService  MallService
-						//GmTypeService gmTypeSer =new GmTypeService();
-						//request.setAttribute("gmTypeSer", gmTypeSer);
-						//MallService mallSer = new MallService();
-						//request.setAttribute("mallSer", mallSer);
+						//GmTypeService gmTypeSvc =new GmTypeService();
+						//request.setAttribute("gmTypeSvc", gmTypeSvc);
+						//MallService mallSvc = new MallService();
+						//request.setAttribute("mallSvc", mallSvc);
 						//存session是讓效能好一點不用每次查詢
 						if(session.getAttribute("mallVoList")==null){
-							List<MallVO> mallVoList = mallSer.getAll();
+							List<MallVO> mallVoList = mallSvc.getAll();
 							session.setAttribute("mallVoList", mallVoList);
 						}
 					%>
@@ -80,7 +80,7 @@
 							<td class="col-md-1">${mallVo.player}人</td>
 							<td class="col-md-1">
 								<div>
-									<c:forEach var="typeVo" items="${mallSer.getType(mallVo.commNo)}">
+									<c:forEach var="typeVo" items="${mallSvc.getType(mallVo.commNo)}">
 										${typeVo.typeName} 
 									</c:forEach>
 								</div>

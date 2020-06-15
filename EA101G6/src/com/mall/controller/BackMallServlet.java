@@ -121,12 +121,12 @@ public class BackMallServlet extends HttpServlet {
 				if (part.getSize() != 0 && getFileNameFromPart(part).matches(imgReg)) {
 					InputStream in = part.getInputStream();
 					// 如果大於1MB
-					if (in.available() < 1000000) {
+					if (in.available() < 2000000) {
 						img = new byte[in.available()];
 						in.read(img);
 						mallVo.setImg(img);
 					} else
-						erroMsg.add("圖片請勿超過1MB");
+						erroMsg.add("圖片請勿超過2MB");
 
 					in.close();
 				} else
@@ -149,13 +149,13 @@ public class BackMallServlet extends HttpServlet {
 					req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 				} else {
 					/*************************** 2.開始新增mall的資料 ***************************************/
-					MallService mallSer = new MallService();
-					MallVO addMall=mallSer.add(commName, price, quantity, img, intro, age, player, status);
+					MallService mallSvc = new MallService();
+					MallVO addMall=mallSvc.add(commName, price, quantity, img, intro, age, player, status);
 					/*************************** 2.開始新增gmtypedt的資料 ***************************************/
 					/************************因為必須先拿到mall自增鍵才能新增所以放到後面 ******************************/
-					GmTypeDtService GmTypeDtSer=new GmTypeDtService();
+					GmTypeDtService GmTypeDtSvc=new GmTypeDtService();
 					for(int i=0;i<typeNoArr.length;i++) {
-						GmTypeDtSer.add(typeNoArr[i], addMall.getCommNo());
+						GmTypeDtSvc.add(typeNoArr[i], addMall.getCommNo());
 					}
 					/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 					// 讓前台list能更新
@@ -257,12 +257,12 @@ public class BackMallServlet extends HttpServlet {
 					if (getFileNameFromPart(part).matches(imgReg)) {
 						InputStream in = part.getInputStream();
 						// 如果大於1MB
-						if (in.available() < 1000000) {
+						if (in.available() < 2000000) {
 							img = new byte[in.available()];
 							in.read(img);
 							mallVo.setImg(img);
 						} else
-							erroMsg.add("圖片請勿超過1MB");
+							erroMsg.add("圖片請勿超過2MB");
 
 						in.close();
 					} else
@@ -300,14 +300,14 @@ public class BackMallServlet extends HttpServlet {
 					
 				} else {
 					/*************************** 2.開始修改資料 ***************************************/
-						MallService mallSer = new MallService();
-						MallVO updateMall=mallSer.update(commNo,commName, price, quantity, img, intro, age, player, status);
+						MallService mallSvc = new MallService();
+						MallVO updateMall=mallSvc.update(commNo,commName, price, quantity, img, intro, age, player, status);
 					/*************************** 2.開始修改gmtypedt的資料 ***************************************/
 					/************************因為必須先拿到mall自增鍵才能新增所以放到後面 ******************************/
-						GmTypeDtService GmTypeDtSer=new GmTypeDtService();
-						GmTypeDtSer.deleteByCommNo(commNo);
+						GmTypeDtService GmTypeDtSvc=new GmTypeDtService();
+						GmTypeDtSvc.deleteByCommNo(commNo);
 						for(int i=0;i<typeNoArr.length;i++) {
-							GmTypeDtSer.add(typeNoArr[i], commNo);
+							GmTypeDtSvc.add(typeNoArr[i], commNo);
 						}
 					/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
 					// 讓前台list能更新
@@ -319,7 +319,7 @@ public class BackMallServlet extends HttpServlet {
 					session.removeAttribute("mallVoList");
 					if(req.getParameter("isGetOne").trim().length()!=0) {
 						String selName=(String)session.getAttribute("selName");
-						List<MallVO> selMallVoList = mallSer.findByName(selName);
+						List<MallVO> selMallVoList = mallSvc.findByName(selName);
 						session.setAttribute("selMallVoList", selMallVoList);
 						req.getRequestDispatcher("/back-end/Mall/MallGetOne.jsp").forward(req, res);
 					}else{
@@ -347,14 +347,14 @@ public class BackMallServlet extends HttpServlet {
 		if ("selectone".equals(action)) {
 			try {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				MallService mallSer = new MallService();
+				MallService mallSvc = new MallService();
 				String selErroMsg="";
 				String selName = req.getParameter("selName").trim();
 				session.setAttribute("selName", selName);
 				String selNameReg = "^[(\u4e00-\u9fa5) _\\w]{1,20}$";
 				List<MallVO> selMallVoList=null;
 				if (selName.length() != 0 && selName.matches(selNameReg)){
-					selMallVoList = mallSer.findByName(selName);
+					selMallVoList = mallSvc.findByName(selName);
 				}else {
 					selErroMsg="商品名稱格式輸入錯誤，請輸入20字以內，請不要有特殊字元。";
 					session.setAttribute("selErroMsg",selErroMsg);

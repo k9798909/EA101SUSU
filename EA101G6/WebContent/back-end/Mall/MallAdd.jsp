@@ -37,10 +37,10 @@
 				<label class="player" >建議人數: 
 					<input  name="player" type="text" value="${tempmallVo.player}">人 格式:1-6 or 1~6</label>
 				
-				<!-- gmTypeSer在首頁已經創了 ，tampTypeNolist是在新增時有錯誤會回傳之前勾選的type -->
+				<!-- gmTypeSvc在首頁已經創了 ，tampTypeNolist是在新增時有錯誤會回傳之前勾選的type -->
 				<!-- 在用foreach如果tampTypeNolist的type=typeNo就checked -->
 				 <label class="d-block other">遊戲類型:</label>
-					<c:forEach var="gmTypeVo" items="${gmTypeSer.getAll()}">
+					<c:forEach var="gmTypeVo" items="${gmTypeSvc.getAll()}">
 						<div class="box">
 							<input  type="checkbox" name="typeNo" value="${gmTypeVo.typeNo}" 
 								<c:forEach var="typeNo" items="${tampTypeNolist}">

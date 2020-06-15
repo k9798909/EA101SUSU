@@ -30,8 +30,8 @@ public class MallShowImg extends HttpServlet {
 				MallVO mallvo=null;
 				String commNo=req.getParameter("commNo");
 				if(session.getAttribute(commNo)==null) {
-					MallService ser = new MallService();
-					mallvo =ser.findOneByNo(commNo);
+					MallService mallSvc = new MallService();
+					mallvo =mallSvc.findOneByNo(commNo);
 					out.write(mallvo.getImg());
 					session.setAttribute(commNo,(Object)mallvo);
 				}else {

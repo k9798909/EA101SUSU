@@ -40,14 +40,14 @@
 				</thead>
 				<tbody>
 					
-					<jsp:useBean id="gmTypeSer" class="com.gmType.model.GmTypeService" scope="request"/>
-					<jsp:useBean id="mallSer" class="com.mall.model.MallService" scope="request"/>
+					<jsp:useBean id="gmTypeSvc" class="com.gmType.model.GmTypeService" scope="request"/>
+					<jsp:useBean id="mallSvc" class="com.mall.model.MallService" scope="request"/>
 					
 					<%	
-						//GmTypeService gmTypeSer =new GmTypeService();
-						//request.setAttribute("gmTypeSer", gmTypeSer);
-						//MallService mallSer = new MallService();
-						//request.setAttribute("mallSer", mallSer);
+						//GmTypeService gmTypeSvc =new GmTypeService();
+						//request.setAttribute("gmTypeSvc", gmTypeSvc);
+						//MallService mallSvc = new MallService();
+						//request.setAttribute("mallSvc", mallSvc);
 						// 是forword過來的所以request裡有查詢的list
 						//el是由小到大所以前面的session不影響
 					%>
@@ -72,7 +72,7 @@
 							<td class="col-md-1">${mallVo.player}人</td>
 							<td class="col-md-1"><div>
 							
-							<c:forEach var="typeVo" items="${mallSer.getType(mallVo.commNo)}">
+							<c:forEach var="typeVo" items="${mallSvc.getType(mallVo.commNo)}">
 							${typeVo.typeName} 
 							</c:forEach>
 							</div></td>

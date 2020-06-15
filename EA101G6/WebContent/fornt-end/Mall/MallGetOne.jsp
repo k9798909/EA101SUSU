@@ -112,8 +112,8 @@
     	
     	<% 
     		String commNo=request.getParameter("commNo"); 
-    		MallService mallSer = new MallService();
-			request.setAttribute("mallSer", mallSer);	
+    		MallService mallSvc = new MallService();
+			request.setAttribute("mallSvc", mallSvc);	
     	   	if(commNo!=null){
     	   		MallVO mallVo = (MallVO)session.getAttribute(commNo);
     	   		request.setAttribute("mallVo", mallVo);
@@ -129,7 +129,7 @@
 				<div class="col-12 col-lg-6  comm">
 					<h1> ${mallVo.commName} </h1>
 				<div class="type">¹CÀ¸Ãþ«¬:<p class="d-inline-block">
-					<c:forEach var="typename" items="${mallSer.getType(mallVo.commNo)}">
+					<c:forEach var="typename" items="${mallSvc.getType(mallVo.commNo)}">
 						${typename.typeName}
 					</c:forEach>
 				</p></div>
