@@ -18,7 +18,7 @@
 
 	<div id="commaction">
 		<button id="create-user">新增商品</button>
-		<div style="display:inline">收尋商品:<form method="post" action="<%= request.getContextPath()%>/Mall/MallServlet" style="display:inline"><input type="text" name="selName">
+		<div style="display:inline">收尋商品:<form method="post" action="<%= request.getContextPath()%>/Mall/BackMallServlet" style="display:inline"><input type="text" name="selName">
 		<input  type="hidden" name="action" value="selectone">
 		<input type="submit" value="搜尋">
 		</form>
@@ -58,19 +58,18 @@
 							List<MallVO> mallVoList = mallSer.getAll();
 							session.setAttribute("mallVoList", mallVoList);
 						}
-						
-
 					%>
 						
 					<c:forEach var="mallVo" items="${mallVoList}">
 						<tr>
 							<td class="">
-							<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetAll.jsp" method="post">
-							<input id="upda" type="submit"value="修改">
-							<input type="hidden" name="commNo" value="${mallVo.commNo}">
-							<!-- 叫出修改介面 -->
-							<input type="hidden" name="showinsert" value="showinsert">
-							</form></td>
+								<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetAll.jsp" method="post">
+									<input id="upda" type="submit"value="修改">
+									<input type="hidden" name="commNo" value="${mallVo.commNo}">
+									<!-- 叫出修改介面 -->
+									<input type="hidden" name="showupdate" value="showupdate">
+								</form>
+							</td>
 							<td class="col-md-1"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></td>
 							<td class="col-md-2"><div>${mallVo.commName}</div></td>
 							<td class="col-md-1">${mallVo.price}</td>
@@ -78,16 +77,15 @@
 							<td class="col-md-2"><div>${mallVo.intro}</div></td>
 							<td class="col-md-1">${mallVo.age}歲以上</td>
 							<td class="col-md-1">${mallVo.player}人</td>
-							<td class="col-md-1"><div>
-							
-								<c:forEach var="typeVo" items="${mallSer.getType(mallVo.commNo)}">
-								${typeVo.typeName} 
-								</c:forEach>
-							
-							</div></td>
+							<td class="col-md-1">
+								<div>
+									<c:forEach var="typeVo" items="${mallSer.getType(mallVo.commNo)}">
+										${typeVo.typeName} 
+									</c:forEach>
+								</div>
+							</td>
 							
 							<td class="col-md-1">${(mallVo.status=="1")?"上架中":"下架中" }</td>
-
 						</tr>
 					</c:forEach>
 
@@ -106,11 +104,8 @@
 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="<%= request.getContextPath() %>/back-end/js/malljs.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<% pageContext.setAttribute("showinsert",request.getParameter("showinsert")); %>
-
-
-
+<!-- 當點擊修改時會傳的參數 有此參數會呼叫修改頁面 -->
+<% pageContext.setAttribute("showupdate",request.getParameter("showupdate")); %>
 
 <!-- 有成功訊息就啟動 -->
 <c:if test="${not empty successMsg}">
@@ -119,8 +114,8 @@
 </c:if>
 
 <!-- 點擊修改時會啟動傳回錯誤訊息時也會啟動 -->
-<c:if test="${'showinsert'==showinsert}">
-	<%= "<script>$(document).ready(function() {showinsert();});</script>"%>
+<c:if test="${'showupdate'==showupdate}">
+	<%= "<script>$(document).ready(function() {showupdate();});</script>"%>
 	<% pageContext.removeAttribute("action"); %>
 </c:if>
 <!-- 新增有錯誤訊息時啟動叫出新增介面 -->

@@ -56,7 +56,7 @@
 							<input id="upda" type="submit"value="修改">
 							<input type="hidden" name="commNo" value="${mallVo.commNo}">
 							<!-- 叫出修改介面 -->
-							<input type="hidden" name="showinsert" value="showinsert">
+							<input type="hidden" name="showupdate" value="showupdate">
 							<!-- 讓update確認是getone -->
 							<input  type="hidden" name="isGetOne" value="isGetOne">
 							</form></td>
@@ -94,10 +94,7 @@
 <script src="<%= request.getContextPath() %>/back-end/js/malljs.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<% pageContext.setAttribute("showinsert",request.getParameter("showinsert")); %>
-
-
-
+<% pageContext.setAttribute("showupdate",request.getParameter("showupdate")); %>
 
 <!-- 有成功訊息就啟動 -->
 <c:if test="${not empty successMsg}">
@@ -106,8 +103,8 @@
 </c:if>
 
 <!-- 點擊修改時會啟動傳回錯誤訊息時也會啟動 -->
-<c:if test="${'showinsert'==showinsert}">
-	<%= "<script>$(document).ready(function() {showinsert();});</script>"%>
+<c:if test="${'showupdate'==showupdate}">
+	<%= "<script>$(document).ready(function() {showupdate();});</script>"%>
 	<% pageContext.removeAttribute("action"); %>
 </c:if>
 <!-- 查詢時有錯誤啟動 -->

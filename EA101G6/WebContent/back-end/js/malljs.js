@@ -1,7 +1,7 @@
 //讀檔的全域變數
 var reader = new FileReader();
 
-function showinsert() {
+function showupdate() {
 	$("#comm").css({
 		"opacity" : "0.5"
 	});

@@ -16,22 +16,23 @@
 
 
 		<form method="post" 
-		action="<%=request.getContextPath()%>/Mall/MallServlet" 
+		action="<%=request.getContextPath()%>/Mall/BackMallServlet" 
 		enctype="multipart/form-data">
 			<fieldset>
 			
 				<div>--修改商品--</div>
-		<%//有錯誤就自動展開 %>
-			
+				
+			<!--有錯誤就自動展開 -->
 			<c:if test="${not empty updateerroMsg}">
 				<c:forEach var="msg" items="${updateerroMsg}">
 					<p class="erroMsg" style="color: red;">${msg}</p>
 					<%request.removeAttribute("updateerroMsg"); %>
 				</c:forEach>
 			</c:if>
+				
 				<!-- 之前再拿圖片的時候就存入session了 -->
 				<%
-					MallVO updateMallVo = (MallVO) session.getAttribute(request.getParameter("commNo"));
+				MallVO updateMallVo = (MallVO) session.getAttribute(request.getParameter("commNo"));
 				pageContext.setAttribute("updateMallVo", updateMallVo);
 				%>
 				
@@ -54,8 +55,7 @@
 
 				<label class="d-block other">遊戲類型:</label>
 				<!-- 拿出此vo所有遊戲類型 再用所有遊戲類型去比對如果是的話就選重，gmTypeSer在首頁已經創了-->
-				
-				
+				<!-- 雙foreach裡的布林是記錄類型如果一樣就是true三元運算是true就選中 -->
 				<c:forEach var="gmTypeVo" items="${gmTypeSer.getAll()}">
 					<c:set var="ischeck" value="false"/>
 					<c:forEach var="mallVoType" items="${mallSer.getType(updateMallVo.commNo)}">
@@ -74,11 +74,10 @@
 				</label> <label class="other">上傳商品圖片:<input type="file" name="img"
 					class="upload" accept="image/*" value="${updateMallVo.img}"></label>(如無須變更圖片不用上傳)
 				<div class="showimg">
-					<img
-						src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${updateMallVo.commNo}">
+					<img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${updateMallVo.commNo}" style="width:250px; height:250px;">
 				</div>
-				<!-- 確認是getone還是getall -->
-				<% pageContext.setAttribute("isGetOne",request.getParameter("isGetOne"));%>
+				<!-- 讓C確認是getone還是getall -->
+				<% pageContext.setAttribute("isGetOne",request.getParameter("isGetOne")); %>
 				<input type="hidden" name="isGetOne" value="${isGetOne}">
 				<input type="hidden" name="action" value="update"></input> <input
 					type="submit" value="修改" class="btn">

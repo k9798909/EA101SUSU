@@ -1,6 +1,7 @@
 package com.mall.controller;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,9 +26,9 @@ import com.gmTypeDt.model.GmTypeDtVO;
 import com.mall.model.MallService;
 import com.mall.model.MallVO;
 
-@WebServlet("/Mall/MallServlet")
+@WebServlet("/Mall/BackMallServlet")
 @MultipartConfig
-public class MallServlet extends HttpServlet {
+public class BackMallServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
@@ -66,7 +67,7 @@ public class MallServlet extends HttpServlet {
 					if (price > 0 && price < 1000000)
 						mallVo.setPrice(price);
 					else
-						erroMsg.add("價錢請不要小於0或大於1000000");
+						erroMsg.add("價錢請不要小於0或大於1000000元");
 				} catch (NumberFormatException e) {
 					erroMsg.add("價錢請輸入數字");
 				}
@@ -77,7 +78,7 @@ public class MallServlet extends HttpServlet {
 					if (quantity > 0 && quantity <= 100)
 						mallVo.setQuantity(quantity);
 					else
-						erroMsg.add("數量請不要小於0或大於100字");
+						erroMsg.add("數量請不要小於0或大於100");
 
 				} catch (NumberFormatException e) {
 					erroMsg.add("數量請輸入數字");
@@ -85,18 +86,18 @@ public class MallServlet extends HttpServlet {
 
 				// intro部分
 				String intro = req.getParameter("intro").trim();
-				if (intro.length() != 0 && intro.length() <= 100)
+				if (intro.length() != 0 && intro.length() <= 150)
 					mallVo.setIntro(intro);
 				else
-					erroMsg.add("商品介紹請不要輸入小於0或大於100");
+					erroMsg.add("商品介紹請不要輸入小於0或大於150");
 
 				// age部分
 				String age = req.getParameter("age").trim();
-				String ageReg = "[0-9]{1,2}";
+				String ageReg = "[0-2]{0,1}[0-9]{1}";
 				if (age.length() != 0 && age.matches(ageReg)) {
 					mallVo.setAge(age);
 				} else
-					erroMsg.add("適合年齡請勿輸入大於100或小於0");
+					erroMsg.add("適合年齡請勿輸入小於0歲或大於29歲");
 
 				// player部分
 				String player = req.getParameter("player").trim();
@@ -104,7 +105,7 @@ public class MallServlet extends HttpServlet {
 				if (player.length() != 0 && player.matches(playerRex)) {
 					mallVo.setPlayer(player);
 				} else
-					erroMsg.add("適合人數格式請輸入正確");
+					erroMsg.add("建議人數格式請輸入正確");
 				
 				// status 有選中==on 沒=null
 				int status = 0;
@@ -124,13 +125,13 @@ public class MallServlet extends HttpServlet {
 						img = new byte[in.available()];
 						in.read(img);
 						mallVo.setImg(img);
-						System.out.println();
 					} else
 						erroMsg.add("圖片請勿超過1MB");
 
 					in.close();
 				} else
 					erroMsg.add("請傳入圖片或確認符合圖片格式");
+				
 				//gmtypedt 遊戲類型部分 checkbox不是自己輸入
 					String[] typeNoArr=req.getParameterValues("typeNo");
 					if(typeNoArr==null) {
@@ -139,6 +140,7 @@ public class MallServlet extends HttpServlet {
 						for(int i=0;i<typeNoArr.length;i++) {
 							tampTypeNolist.add(typeNoArr[i]);
 						}
+					
 				// 如果錯誤訊息不等於空回到首頁
 				if (!erroMsg.isEmpty()) {
 					req.setAttribute("tempmallVo", mallVo);
@@ -153,7 +155,6 @@ public class MallServlet extends HttpServlet {
 					/************************因為必須先拿到mall自增鍵才能新增所以放到後面 ******************************/
 					GmTypeDtService GmTypeDtSer=new GmTypeDtService();
 					for(int i=0;i<typeNoArr.length;i++) {
-						System.out.println(typeNoArr[i]+"  "+addMall.getCommNo());
 						GmTypeDtSer.add(typeNoArr[i], addMall.getCommNo());
 					}
 					/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
@@ -167,7 +168,8 @@ public class MallServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				e.getStackTrace();
-				res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+				req.setAttribute("erroMsg","目前系統忙碌中，請稍後!");
+				req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 			}
 		}
 
@@ -199,7 +201,7 @@ public class MallServlet extends HttpServlet {
 					if (price > 0 && price < 1000000)
 						mallVo.setPrice(price);
 					else
-						erroMsg.add("價錢請不要小於0或大於1000000");
+						erroMsg.add("價錢請不要小於0或大於1000000元");
 				} catch (NumberFormatException e) {
 					erroMsg.add("價錢請輸入數字");
 				}
@@ -210,7 +212,7 @@ public class MallServlet extends HttpServlet {
 					if (quantity > 0 && quantity <= 100)
 						mallVo.setQuantity(quantity);
 					else
-						erroMsg.add("數量請不要小於0或大於100字");
+						erroMsg.add("數量請不要小於0或大於100");
 
 				} catch (NumberFormatException e) {
 					erroMsg.add("數量請輸入數字");
@@ -218,18 +220,18 @@ public class MallServlet extends HttpServlet {
 
 				// intro部分
 				String intro = req.getParameter("intro").trim();
-				if (intro.length() != 0 && intro.length() <= 100)
+				if (intro.length() != 0 && intro.length() <= 150)
 					mallVo.setIntro(intro);
 				else
-					erroMsg.add("商品介紹請不要輸入小於0或大於100");
+					erroMsg.add("商品介紹請不要輸入小於0或大於150字");
 
 				// age部分
 				String age = req.getParameter("age").trim();
-				String ageReg = "[0-9]{1,2}";
+				String ageReg = "[0-2]{0,1}[0-9]{1}";
 				if (age.length() != 0 && age.matches(ageReg)) {
 					mallVo.setAge(age);
 				} else
-					erroMsg.add("適合年齡請勿輸入大於100或小於0");
+					erroMsg.add("適合年齡請勿輸入小於0歲或大於29歲");
 
 				// player部分
 				String player = req.getParameter("player").trim();
@@ -237,7 +239,7 @@ public class MallServlet extends HttpServlet {
 				if (player.length() != 0 && player.matches(playerRex)) {
 					mallVo.setPlayer(player);
 				} else
-					erroMsg.add("適合人數格式請輸入正確");
+					erroMsg.add("建議人數格式請輸入正確");
 
 				// status 有選中==on 沒=null
 				int status = 0;
@@ -278,9 +280,14 @@ public class MallServlet extends HttpServlet {
 
 				// 如果錯誤訊息不等於空回到首頁
 				if (!erroMsg.isEmpty()) {					
-					req.setAttribute("showinsert", "showinsert");
+					req.setAttribute("showupdate", "showupdate");
 					req.setAttribute("updateerroMsg", erroMsg);
-					req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
+					if(req.getParameter("isGetOne").trim().length()!=0) {
+						req.getRequestDispatcher("/back-end/Mall/MallGetOne.jsp").forward(req, res);
+					}else{
+						req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
+					}
+					
 				} else {
 					/*************************** 2.開始修改資料 ***************************************/
 						MallService mallSer = new MallService();
@@ -297,7 +304,7 @@ public class MallServlet extends HttpServlet {
 					session.removeAttribute("mallVoList");
 					session.setAttribute(commNo,updateMall);
 					session.setAttribute("successMsg", "更新成功");
-					//確認他是哪個頁面傳的是空字串就傳到getall
+					//確認他是哪個頁面傳的，是空字串就傳到getall
 					if(req.getParameter("isGetOne").trim().length()!=0) {
 						res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetOne.jsp");
 					}else{
@@ -307,8 +314,9 @@ public class MallServlet extends HttpServlet {
 					// req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 				}
 			} catch (Exception e) {
-				e.getStackTrace();
-				res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+				req.setAttribute("showupdate", "showupdate");
+				req.setAttribute("updateerroMsg", "目前系統忙碌中，請稍後!");
+				req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 			}
 
 
@@ -352,21 +360,11 @@ public class MallServlet extends HttpServlet {
 				e.getStackTrace();
 				res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
 			}	
-			
-			
-			
-			
-			
-			
-			
+				
 			
 		}
 		
 		
-		
-		
-		
-
 	}
 
 	// 得到檔案名子

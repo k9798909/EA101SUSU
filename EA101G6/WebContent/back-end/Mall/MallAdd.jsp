@@ -13,10 +13,11 @@
 
 	<div id="addDiv" title="mallAdd">
 
-		<form method="post" action="<%= request.getContextPath()%>/Mall/MallServlet" enctype="multipart/form-data">
+		<form method="post" action="<%= request.getContextPath()%>/Mall/BackMallServlet" enctype="multipart/form-data">
 			<fieldset>		
 				<div>--新增商品--</div>
-				<%//有錯誤就自動展開 %>
+				
+				<!-- //有錯誤就自動展開  -->
 				<c:if test="${not empty erroMsg}">
 					<c:forEach var="msg" items="${erroMsg}">
 						<p class="erroMsg" style="color:red;"> ${msg} </p>
