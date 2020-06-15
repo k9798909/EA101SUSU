@@ -32,8 +32,13 @@
 				
 				<!-- 之前再拿圖片的時候就存入session了 -->
 				<%
-				MallVO updateMallVo = (MallVO) session.getAttribute(request.getParameter("commNo"));
-				pageContext.setAttribute("updateMallVo", updateMallVo);
+				if(request.getAttribute("updateMallVo")==null){
+					MallVO updateMallVo = (MallVO) session.getAttribute(request.getParameter("commNo"));
+					pageContext.setAttribute("updateMallVo", updateMallVo);
+				}
+				
+
+				
 				%>
 				
 				<input type="hidden" name="commNo" value="<%= request.getParameter("commNo") %>">
@@ -56,9 +61,13 @@
 				<label class="d-block other">遊戲類型:</label>
 				<!-- 拿出此vo所有遊戲類型 再用所有遊戲類型去比對如果是的話就選重，gmTypeSer在首頁已經創了-->
 				<!-- 雙foreach裡的布林是記錄類型如果一樣就是true三元運算是true就選中 -->
+				<!-- not empty那行是如果前一次有勾選會存入到updateTampTypeNolist裡，如果是第一次執行updateTampTypeNolist
+				沒有東西會執行mallSer.getType(updateMallVo.commNo)，updateTampTypeNolist是存在request
+				按取消時會藉由jquery特效收起update介面，這時updateTampTypeNolist還是存在request，不過沒關係再按一次修改時
+				他會重新導到此網頁會消失不過為了保險有手動remove，記得el的名子不要重複，add裡有一個TampTypeNolist取重複了怎麼死的都不知道-->
 				<c:forEach var="gmTypeVo" items="${gmTypeSer.getAll()}">
 					<c:set var="ischeck" value="false"/>
-					<c:forEach var="mallVoType" items="${mallSer.getType(updateMallVo.commNo)}">
+					<c:forEach var="mallVoType" items="${ not empty updateTampTypeNolist?updateTampTypeNolist:mallSer.getType(updateMallVo.commNo)}">
 						<c:if test="${gmTypeVo.typeNo==mallVoType.typeNo}">			
 							<c:set var="ischeck" value="true"/>	
 						</c:if>
@@ -87,7 +96,7 @@
 			</fieldset>
 		</form>
 	</div>
-
-
+	<%request.removeAttribute("tampTypeNolist"); %>
+	<%request.removeAttribute("updateMallVo"); %>
 </body>
 </html>

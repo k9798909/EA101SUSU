@@ -50,7 +50,7 @@ public class BackMallServlet extends HttpServlet {
 		/*****************************************************/
 		if ("mallAdd".equals(action)) {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			try {
+	
 				MallVO mallVo = new MallVO();
 				List<String> tampTypeNolist = new ArrayList<String>();
 				// commName部分
@@ -166,13 +166,9 @@ public class BackMallServlet extends HttpServlet {
 					// req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 				}
 
-			} catch (Exception e) {
-				e.getStackTrace();
-				req.setAttribute("erroMsg","目前系統忙碌中，請稍後!");
-				req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
-			}
-		}
 
+		}
+		
 		/*****************************************************/
 		/**													**/
 		/**						以下是修改               				**/
@@ -184,8 +180,11 @@ public class BackMallServlet extends HttpServlet {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			try {
 				MallVO mallVo = new MallVO();
+				//updateTampTypeNolist小心名稱不要重複會有bug
+				List<GmTypeVO> updateTampTypeNolist = new ArrayList<GmTypeVO>();
 				// commNo
 				String commNo = req.getParameter("commNo");
+				mallVo.setCommNo(commNo);
 				// commName部分
 				String commName = req.getParameter("commName").trim();
 				String commNameReg = "^[(\u4e00-\u9fa5) _\\w]{2,20}$";
@@ -273,13 +272,24 @@ public class BackMallServlet extends HttpServlet {
 					// 因為沒有傳圖片拿出之前存在Showimg裡的 mallvo並拿出byte[]
 					img = ((MallVO) session.getAttribute(commNo)).getImg();
 				}
-				//gmtypedt 遊戲類型部分 checkbox不是自己輸入
+				/**gmtypedt 遊戲類型部分 checkbox不是自己輸入，
+				因為修改頁面的list用的是gmTypeVo，所以new一個gmTypeVo
+				專門存gmTypeVo的no，好讓修改頁面輸入的值能站存並顯示**/
 				String[] typeNoArr=req.getParameterValues("typeNo");
-				if(typeNoArr==null)
+				if(typeNoArr==null) {
 					erroMsg.add("遊戲類型請至少勾選一個");
-
+				}else {
+					for(int i=0;i<typeNoArr.length;i++) {
+						GmTypeVO gmTypeVo = new GmTypeVO();
+						gmTypeVo.setTypeNo(typeNoArr[i]);
+						updateTampTypeNolist.add(gmTypeVo);
+					}
+				}
 				// 如果錯誤訊息不等於空回到首頁
-				if (!erroMsg.isEmpty()) {					
+				if (!erroMsg.isEmpty()) {
+					//可以拿到前一次輸入的值，並且傳到修改頁面並顯示
+					req.setAttribute("updateMallVo", mallVo);
+					req.setAttribute("updateTampTypeNolist", updateTampTypeNolist);
 					req.setAttribute("showupdate", "showupdate");
 					req.setAttribute("updateerroMsg", erroMsg);
 					if(req.getParameter("isGetOne").trim().length()!=0) {
