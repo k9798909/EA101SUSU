@@ -4,7 +4,7 @@
 <%@ page import="com.gmTypeDt.model.*"%>
 <%@ page import="com.gmType.model.*"%>
 <%@ page import="java.util.*"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,27 +14,35 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link href="https://fonts.googleapis.com/css?family=Rubik:300,400,700|Oswald:400,700" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Rubik:300,400,700|Oswald:400,700"
+	rel="stylesheet">
 <!-- 登入圖示 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/fonts/icomoon/style.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/model/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/model/jquery.fancybox.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/model/owl.carousel.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/model/owl.theme.default.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/model/aos.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/fornt-end/fonts/icomoon/style.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/fornt-end/css/model/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/fornt-end/css/model/jquery.fancybox.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/fornt-end/css/model/owl.carousel.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/fornt-end/css/model/owl.theme.default.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/fornt-end/css/model/aos.css">
 <!-- MAIN CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/model/style.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/fornt-end/css/model/style.css">
 <!-- 個人CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/mallCss/MallGetAllUpFornt.css">
-
-
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/mallOr/BuyCar.css">
 <style>
 .icon {
 	width: 20px;
 	height: 20px;
 }
 </style>
+
+
 
 </head>
 <body>
@@ -122,50 +130,59 @@
 			</div>
 		</div>
 	</header>
-
-	<main class="mall">
 	
-		<div class="seldiv">
-			<a href="<%=request.getContextPath()%>/fornt-end/Mall/MallGetAllUp.jsp"><button style="display:inline-block">回首頁</button></a>
-			<form style="display:inline-block" action="<%=request.getContextPath()%>/Mall/ForntMallServlet" method="post">
-				<input placeholder="請輸入商品名稱" type="text" name="selName" class="selinput">
-				<input type="hidden" name="action" value="selName">
-				<input type="submit" value="搜尋商品">
-			</form>
-		</div>
-
-
-
-		<%
-			//分別是GmTypeService  MallService
-			GmTypeService gmTypeSvc = new GmTypeService();
-			pageContext.setAttribute("gmTypeSvc", gmTypeSvc);
-			MallService mallSvc = new MallService();
-			pageContext.setAttribute("mallSvc", mallSvc);
-		%>
-
+	
+	<% 
 		
-		<div class="container commMain">
-			<div class="row">
-				
+	
+	
+	%>
+	
+	<main>
+		<div class="container">
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th scope="col"></th>
+						<th scope="col">商品名稱</th>
+						<th scope="col">數量</th>
+						<th scope="col">價錢</th>
+						<th scope="col">小計</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">1</th>
+						<td class="name"><img
+							src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}">${mallVo.commName}</td>
+						<td><div class="quantitydiv">
+								<select>
+								<% Integer buyQuantity=Integer.valueOf((String)request.getAttribute("buyQuantity")); 
+								   Integer Quantity=((MallVO)request.getAttribute("mallVo")).getQuantity();
+								%>
+								<%for(int i=1; i<=Quantity;i++){ %>
+									<option value=<%= i%> <%= i==buyQuantity?"selected":""%>><%= i%></option>
+								<%}%>
+								</select>
+								
+							</div></td>
+						<td>${mallVo.price}</td>
+						<td>${mallVo.price*buyQuantity}</td>
+						<th scope="row"><button class="cancel">取消</button></th>
+					</tr>
 
-				
-				<c:forEach var="mallVo" items="${selMallVoList}">
-					<div class="col-lg-3 col-6 comm">
-						<a href="<%=request.getContextPath()%>/fornt-end/Mall/MallGetOne.jsp?commNo=${mallVo.commNo}">
-							<div class="imgdiv"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></div>
-							<p> ${mallVo.commName} </p>
-							<div class="dt"><p><b>$${mallVo.price}</b></p></div>
-						</a>
-					</div>
-				</c:forEach>
-				
+				</tbody>
+			</table>
+
+
+			<div class="checkdiv">
+				<p>總金額:${mallVo.price*buyQuantity}</p>
+				<input type="submit" class="checkbtn" value="結帳">
 			</div>
 		</div>
 
-		<button class="shopcar">
-			<img src="<%=request.getContextPath()%>/fornt-end/images/supermarket.png">
-		</button>
+
 
 	</main>
 
@@ -174,27 +191,35 @@
 
 
 
-	<script src="<%=request.getContextPath()%>/fornt-end/js/model/jquery-3.3.1.min.js"></script>
+
+	<script
+		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery-3.3.1.min.js"></script>
 	<!-- 看起來沒屁用 -->
-	<script src="<%=request.getContextPath()%>/fornt-end/js/model/popper.min.js"></script>
-	<script src="<%=request.getContextPath()%>/fornt-end/js/model/bootstrap.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/fornt-end/js/model/popper.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/fornt-end/js/model/bootstrap.min.js"></script>
 	<!-- 重要廣告界面 -->
-	<script src="<%=request.getContextPath()%>/fornt-end/js/model/owl.carousel.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/fornt-end/js/model/owl.carousel.min.js"></script>
 	<!-- 看起來沒屁用 -->
-	<script src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.sticky.js"></script>
-	<script src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.waypoints.min.js"></script>
-	<script src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.animateNumber.min.js"></script>
-	<script src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.fancybox.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.sticky.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.waypoints.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.animateNumber.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.fancybox.min.js"></script>
 	<!-- 上介面連結動畫 -->
-	<script src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.easing.1.3.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.easing.1.3.js"></script>
 	<!-- 重要廣告界面 -->
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/aos.js"></script>
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/main.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- 查詢時有錯誤啟動 -->
-<c:if test="${not empty selErroMsg}">
-	<script>swal({text:"${selErroMsg}" });</script>
-</c:if>	
+
+
 
 
 </body>

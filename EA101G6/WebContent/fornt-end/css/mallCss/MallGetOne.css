@@ -93,7 +93,7 @@
 		height:40px;
 	}
 	
-	button.bybtn{
+	input.bybtn{
 		position:absolute;
 		bottom:20px;
 		left:100px;
@@ -102,12 +102,12 @@
 		border-radius: 4px;		
 	}
 	
-	button.bybtn:hover{
+	input.bybtn:hover{
 		background-color:#DDDDDD;
 		border:solid #000000;			
 	}
 	
-	button.carbtn{
+	input.carbtn{
 		position:absolute;
 		bottom:20px;
 		right:100px;
@@ -116,7 +116,7 @@
 		border-radius: 4px;
 	}
 	
-	button.carbtn:hover{
+	input.carbtn:hover{
 		background-color:#DDDDDD;
 		border:solid #000000;	
 	}

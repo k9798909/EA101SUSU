@@ -28,7 +28,6 @@ public class ForntMallServlet extends HttpServlet {
 		res.setContentType("text/html ; Charset:UTF-8");
 
 		String action=req.getParameter("action");
-		HttpSession session=req.getSession();
 		if ("selName".equals(action)) {
 			try {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/

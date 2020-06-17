@@ -25,7 +25,7 @@
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/model/style.css">
 <!-- 個人CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/MallGetAllUpFornt.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/mallCss/MallGetAllUpFornt.css">
 
 
 
@@ -135,19 +135,13 @@
 
 
 		<%
-			//存在request讓incule 的網頁也可以拿到 
 			//分別是GmTypeService  MallService
 			GmTypeService gmTypeSvc = new GmTypeService();
-			request.setAttribute("gmTypeSvc", gmTypeSvc);
+			pageContext.setAttribute("gmTypeSvc", gmTypeSvc);
 			MallService mallSvc = new MallService();
-			request.setAttribute("mallSvc", mallSvc);
-			
-			//存session是讓效能好一點不用每次查詢
-			
-			if (session.getAttribute("mallVoList") == null) {
-				List<MallVO> mallVoList = mallSvc.getAllUp();
-				session.setAttribute("mallVoList", mallVoList);
-			}
+			pageContext.setAttribute("mallSvc", mallSvc);
+			List<MallVO> mallVoList = mallSvc.getAllUp();
+			pageContext.setAttribute("mallVoList", mallVoList);
 		%>
 
 		
