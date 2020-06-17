@@ -31,21 +31,16 @@ public class MallService {
 			mall.setPlayer(player);
 			mall.setStatus(status);
 			mall.setCommNo(dao.add(mall));
-			
-			
 			return mall;
 	}
 	//刪除ok
 	public String delete(String commno){
-		
 		dao.delete(commno);
-		
 		return "刪除成功";
 	}
 	//修改ok
 	public MallVO update(String commNo, String commName, Integer price, Integer quantity, byte[] img, String intro,
 			String age, String player, Integer status){
-
 			MallVO mall = new MallVO();
 			mall.setCommNo(commNo);
 			mall.setCommName(commName);
@@ -57,7 +52,6 @@ public class MallService {
 			mall.setPlayer(player);
 			mall.setStatus(status);
 			dao.update(mall);
-
 		return mall;
 		
 		

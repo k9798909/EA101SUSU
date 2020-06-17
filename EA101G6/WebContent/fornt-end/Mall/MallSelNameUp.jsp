@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Gameing on Board</title>
 
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -82,7 +82,7 @@
 
 				<div class="site-logo">
 					<a href="index.html" class="text-black"><span
-						class="text-primary">Unearth</span></a>
+						class="text-primary">Gameing on Board</span></a>
 				</div>
 
 				<div class="col-12">
@@ -124,8 +124,10 @@
 	</header>
 
 	<main class="mall">
+	
 		<div class="seldiv">
-			<form action="<%=request.getContextPath()%>/Mall/ForntMallServlet" method="post">
+			<a href="<%=request.getContextPath()%>/fornt-end/Mall/MallGetAllUp.jsp"><button style="display:inline-block">回首頁</button></a>
+			<form style="display:inline-block" action="<%=request.getContextPath()%>/Mall/ForntMallServlet" method="post">
 				<input placeholder="請輸入商品名稱" type="text" name="selName" class="selinput">
 				<input type="hidden" name="action" value="selName">
 				<input type="submit" value="搜尋商品">
@@ -193,7 +195,6 @@
 <!-- 查詢時有錯誤啟動 -->
 <c:if test="${not empty selErroMsg}">
 	<script>swal({text:"${selErroMsg}" });</script>
-	<%session.removeAttribute("selErroMsg"); %>
 </c:if>	
 
 

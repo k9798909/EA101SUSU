@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Gameing on Board</title>
 
 <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,700|Oswald:400,700" rel="stylesheet">
 <!-- 登入圖示 -->
@@ -67,7 +67,7 @@
           
             
             <div class="site-logo">
-              <a href="index.html" class="text-black"><span class="text-primary">Unearth</span></a>
+              <a href="index.html" class="text-black"><span class="text-primary">Gameing on Board</span></a>
             </div>
             
             <div class="col-12">
@@ -172,19 +172,35 @@
 	<!-- 重要廣告界面 -->
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/aos.js"></script>
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	<!-- 查詢時有錯誤啟動 -->
+<c:if test="${not empty selErroMsg}">
+	<script>swal({text:"${selErroMsg}" });</script>
+	<%request.removeAttribute("selErroMsg"); %>
+</c:if>	
+	
 	<script>
 		$(document).ready(function(){
 			var quantity=1;
 			var maxquantity=parseInt("${mallVo.quantity}");
 			$("#minus").click(function(){
 				if(quantity>1)
-					$("#buyQuantity").attr("value",--quantity)	
+					$("#buyQuantity").attr("value",--quantity);	
 			})
 			
 			$("#plus").click(function(){
 				if(maxquantity>quantity)
-					$("#buyQuantity").attr("value",++quantity)
+					$("#buyQuantity").attr("value",++quantity);
 			})
+			
+			$("#buyQuantity").change(function(){
+				if($(this).val()>maxquantity){
+					$(this).val(1);
+					swal({text:"數量不夠"});
+				}
+			})
+			
 			
 		})
 	

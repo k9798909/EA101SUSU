@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Gameing on Board</title>
 
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -82,7 +82,7 @@
 
 				<div class="site-logo">
 					<a href="index.html" class="text-black"><span
-						class="text-primary">Unearth</span></a>
+						class="text-primary">Gameing on Board</span></a>
 				</div>
 
 				<div class="col-12">
@@ -197,11 +197,7 @@
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/aos.js"></script>
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/main.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- 查詢時有錯誤啟動 -->
-<c:if test="${not empty selErroMsg}">
-	<script>swal({text:"${selErroMsg}" });</script>
-	<%session.removeAttribute("selErroMsg"); %>
-</c:if>	
+
 
 
 

@@ -52,7 +52,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 			+ " JOIN GMTYPE ON gmtypedt.typeno=gmtype.typeno"
 			+ " WHERE MALL.COMMNO=?";
 	private static final String SQLSELSEQ="SELECT 'ZM'||LPAD(TO_CHAR(COMMNO_SEQ.CURRVAL),5, '0') FROM DUAL";
-	
+	//問題1
 	@Override
 	public String add(MallVO mall) {
 		// TODO Auto-generated method stub
@@ -62,8 +62,6 @@ public class MallJDBCDAO implements MallDAO_interface {
 		String seq="";
 		try {
 			conn=DriverManager.getConnection(URL,NAME,PSW);
-			
-			
 			
 			conn.setAutoCommit(false);
 			
@@ -116,7 +114,6 @@ public class MallJDBCDAO implements MallDAO_interface {
 		
 	}
 	
-
 	@Override
   	public void update(MallVO mall) {
 		// TODO Auto-generated method stub
@@ -163,8 +160,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		}
 		
 	}
-	
-	
+
 	@Override
 	public void delete(String commno) {
 		// TODO Auto-generated method stub
@@ -256,6 +252,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		return list;
 	}
 
+	
 	@Override
 	public List<MallVO> getAll() {
 		// TODO Auto-generated method stub
@@ -455,10 +452,6 @@ public class MallJDBCDAO implements MallDAO_interface {
 	}
 	
 	
-	
-	
-	
-	
 	@Override
 	public List<GmTypeVO> getType(String commno) {
 		// TODO Auto-generated method stub
@@ -502,43 +495,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		return list;
 	}
 	
-	public String findSeq() {
-		
-		Connection conn = null;
-		PreparedStatement past = null;		
-		ResultSet rs = null;
-		String seq="";
-
-		try {
-			conn=DriverManager.getConnection(URL,NAME,PSW);
-			past = conn.prepareStatement(SQLSELSEQ);
-			rs=past.executeQuery();
-			if(rs.next()) 
-				seq=rs.getString(1);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
-			
-			try {
-				if(rs!=null)
-					rs.close();
-				if(past!=null)
-					past.close();
-				if(conn!=null)
-					conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		return seq;
-		
-	}
-
-
+	
 	@Override
 	public List<MallVO> findByNameUp(String name) {
 		// TODO Auto-generated method stub

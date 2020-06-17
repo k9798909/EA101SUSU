@@ -22,11 +22,9 @@ public interface MallDAO_interface {
 	public List<MallVO> findByNameUp(String name);
 	//取得最新商品前五比
 	public List<MallVO> getNew();
-	
+	//找一筆
 	public MallVO findOneByNo(String commno);
-	
-	public String findSeq();
-	
+	//拿出遊戲類型
 	public List<GmTypeVO> getType(String commno);
 	
 }
