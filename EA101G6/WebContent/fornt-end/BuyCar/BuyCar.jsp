@@ -152,10 +152,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="buyCarVo" items="${buyCarList}" varStatus="count">
+					<c:forEach var="buyCarMall" items="${buyCarList}" varStatus="count">
 						<tr id="row${count.count}">
 							<th scope="row"></th>
-							<td class="name"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${buyCarVo.commNo}">${buyCarVo.commName}</td>
+							<td class="name"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${buyCarMall.commNo}">${buyCarMall.commName}</td>
 							<td><div class="quantitydiv">
 									<select>
 										<%
@@ -164,24 +164,24 @@
 												pageContext.setAttribute("mallSvc", mallSvc);
 										%>
 										<c:forEach var="i" begin="1"
-											end="${mallSvc.findOneByNo(buyCarVo.commNo).quantity}">
-											<option value="${i}" ${i==buyCarVo.buyQuantity?"selected":""}>${i}</option>
+											end="${mallSvc.findOneByNo(buyCarMall.commNo).quantity}">
+											<option value="${i}" ${i==buyCarMall.quantity?"selected":""}>${i}</option>
 										</c:forEach>
 									</select>
 								</div></td>
-							<td>${buyCarVo.buyPrice}</td>
-							<td class="buyPricePlus">${buyCarVo.buyPrice*buyCarVo.buyQuantity}</td>
+							<td>${buyCarMall.price}</td>
+							<td class="buyPricePlus">${buyCarMall.price*buyCarMall.quantity}</td>
 
 							<th scope="row"><button class="cancel">¨ú®ø</button></th>
 						</tr>
 
 
 						<input type="hidden" class="commName" name="commName"
-							value="${buyCarVo.commName}">
-						<input type="hidden" class="buyPrice" name="buyPrice"
-							value="${buyCarVo.buyPrice}">
-						<input type="hidden" class="buyQuantity" name="buyQuantity"
-							value="${buyCarVo.buyQuantity}">
+							value="${buyCarMall.commName}">
+						<input type="hidden" class="buyPrice" name="price"
+							value="${buyCarMall.price}">
+						<input type="hidden" class="buyQuantity" name="quantity"
+							value="${buyCarMall.quantity}">
 
 					</c:forEach>
 				</tbody>
@@ -239,18 +239,18 @@
 	<script>
 	$(document).ready(function() {
 		
-		<c:forEach var="buyCarVo" items="${buyCarList}" varStatus="count">
+		<c:forEach var="buyCarMall" items="${buyCarList}" varStatus="count">
 			
 			$("#row${count.count} select").change(function(){
-				let buyPrice=${buyCarVo.buyPrice};
+				let buyPrice=${buyCarMall.price};
 				$("#row${count.count} .buyPricePlus").text(buyPrice*$(this).val());
 				
 				$.post('<%=request.getContextPath()%>/BuyCar/BuyCarServlet',{
 					action:"update",
-					commNo:"${buyCarVo.commNo}",
-					commName:"${buyCarVo.commName}",
+					commNo:"${buyCarMall.commNo}",
+					commName:"${buyCarMall.commName}",
 					buyQuantity:$("#row${count.count} select").val(),
-					buyPrice:"${buyCarVo.buyPrice}"
+					buyPrice:"${buyCarMall.price}"
 					
 					},function(data,status){
 						if(status="success")
@@ -266,10 +266,10 @@
 				getTotal();
 				$.post('<%=request.getContextPath()%>/BuyCar/BuyCarServlet',{
 					action:"delete",
-					commNo:"${buyCarVo.commNo}",
-					commName:"${buyCarVo.commName}",
-					buyQuantity:"${buyCarVo.buyQuantity}",
-					buyPrice:"${buyCarVo.buyPrice}"
+					commNo:"${buyCarMall.commNo}",
+					commName:"${buyCarMall.commName}",
+					buyQuantity:"${buyCarMall.quantity}",
+					buyPrice:"${buyCarMall.price}"
 					
 					},function(data,status){
 						if(status="success")

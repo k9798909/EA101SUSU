@@ -155,23 +155,23 @@
 				<tbody>
 					<tr id="row1">
 						<th scope="row">1</th>
-						<td class="name"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${buyCarVo.commNo}"> ${buyCarVo.commName} </td>
+						<td class="name"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${buyCarMall.commNo}"> ${buyCarMall.commName} </td>
 						<td><div class="quantitydiv">
 								<select>
 								<% 
 									//最大值是此商品的庫存數量
-									BuyCarVO buyCarVo=(BuyCarVO)request.getAttribute("buyCarVo");
+									MallVO buyCarMall=(MallVO)request.getAttribute("buyCarMall");
 									MallService mallSvc =new MallService();
-									MallVO mallVo = mallSvc.findOneByNo(buyCarVo.getCommNo());
+									MallVO mallVo = mallSvc.findOneByNo(buyCarMall.getCommNo());
 									pageContext.setAttribute("mallVo", mallVo);
 								%>
 								<c:forEach var="i" begin="1" end="${mallVo.quantity}" >
-									<option value="${i}" ${i==buyCarVo.buyQuantity?"selected":""} >${i}</option>
+									<option value="${i}" ${i==buyCarMall.quantity?"selected":""} >${i}</option>
 								</c:forEach>
 								</select>
 							</div></td>
-						<td>${buyCarVo.buyPrice}</td>
-						<td class="buyPricePlus">${buyCarVo.buyPrice*buyCarVo.buyQuantity}</td>
+						<td>${buyCarMall.price}</td>
+						<td class="buyPricePlus">${buyCarMall.price*buyCarMall.quantity}</td>
 						
 						<th scope="row"><button class="cancel">取消</button></th>
 					</tr>
@@ -225,7 +225,7 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script>
 	$(document).ready(function() {
-		let buyPrice=${buyCarVo.buyPrice};
+		let buyPrice=${buyCarMall.price};
 		getTotal();
 
 		$("#row1 select").change(function(){
