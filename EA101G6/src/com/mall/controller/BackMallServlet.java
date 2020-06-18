@@ -35,7 +35,7 @@ public class BackMallServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		List<String> erroMsg = new ArrayList<String>();
+		List<String> erroMsg = new LinkedList<String>();
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html ; Charset=UTF-8");
 		PrintWriter out = res.getWriter();
