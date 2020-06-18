@@ -107,7 +107,7 @@
 		border:solid #000000;			
 	}
 	
-	input.carbtn{
+	button.carbtn{
 		position:absolute;
 		bottom:20px;
 		right:100px;
@@ -116,7 +116,7 @@
 		border-radius: 4px;
 	}
 	
-	input.carbtn:hover{
+	button.carbtn:hover{
 		background-color:#DDDDDD;
 		border:solid #000000;	
 	}

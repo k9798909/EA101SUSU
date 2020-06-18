@@ -3,6 +3,7 @@
 <%@ page import="com.mall.model.*"%>
 <%@ page import="com.gmTypeDt.model.*"%>
 <%@ page import="com.gmType.model.*"%>
+<%@ page import="com.buyCar.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -34,7 +35,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/fornt-end/css/model/style.css">
 <!-- 個人CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/fornt-end/css/mallOr/BuyCar.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/fornt-end/css/buyCarCss/BuyCar.css">
 <style>
 .icon {
 	width: 20px;
@@ -130,10 +132,12 @@
 			</div>
 		</div>
 	</header>
-	
-	
 
-	
+
+	<%
+		
+	%>
+
 	<main>
 		<div class="container">
 			<table class="table table-striped table-bordered">
@@ -148,36 +152,52 @@
 					</tr>
 				</thead>
 				<tbody>
-				
-				<c:forEach var="mallVo" items="${buyCarList}">
-					<tr>
-						<th scope="row">1</th>
-						<td class="name"><img
-							src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}">${mallVo.commName}</td>
-						<td><div class="quantitydiv">
-								<select>
-								<% //Integer buyQuantity=Integer.valueOf((String)request.getAttribute("buyQuantity")); 
-								   //Integer Quantity=((MallVO)request.getAttribute("mallVo")).getQuantity();
-								%>
-								<%for(int i=1; i<=Quantity;i++){ %>
-									<option value=<%= i%> <%= i==buyQuantity?"selected":""%>><%= i%></option>
-								<%}%>
-								</select>
-								
-							</div></td>
-						<td>${mallVo.price}</td>
-						<td>${mallVo.price*buyQuantity}</td>
-						<th scope="row"><button class="cancel">取消</button></th>
-					</tr>
-				</c:forEach>
+					<c:forEach var="buyCarVo" items="${buyCarList}" varStatus="count">
+						<tr id="row${count.count}">
+							<th scope="row"></th>
+							<td class="name"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${buyCarVo.commNo}">${buyCarVo.commName}</td>
+							<td><div class="quantitydiv">
+									<select>
+										<%
+											//最大值是此商品的庫存數量
+												MallService mallSvc = new MallService();
+												pageContext.setAttribute("mallSvc", mallSvc);
+										%>
+										<c:forEach var="i" begin="1"
+											end="${mallSvc.findOneByNo(buyCarVo.commNo).quantity}">
+											<option value="${i}" ${i==buyCarVo.buyQuantity?"selected":""}>${i}</option>
+										</c:forEach>
+									</select>
+								</div></td>
+							<td>${buyCarVo.buyPrice}</td>
+							<td class="buyPricePlus">${buyCarVo.buyPrice*buyCarVo.buyQuantity}</td>
+
+							<th scope="row"><button class="cancel">取消</button></th>
+						</tr>
+
+
+						<input type="hidden" class="commName" name="commName"
+							value="${buyCarVo.commName}">
+						<input type="hidden" class="buyPrice" name="buyPrice"
+							value="${buyCarVo.buyPrice}">
+						<input type="hidden" class="buyQuantity" name="buyQuantity"
+							value="${buyCarVo.buyQuantity}">
+
+					</c:forEach>
 				</tbody>
 			</table>
 
 
+
+
+
 			<div class="checkdiv">
-				<p>總金額:${mallVo.price*buyQuantity}</p>
+				<p id="total">總金額:</p>
 				<input type="submit" class="checkbtn" value="結帳">
+				<a href="<%=request.getContextPath()%>/fornt-end/Mall/MallGetAllUp.jsp" ><button class="back">繼續購物</button></a>
 			</div>
+			
+			
 		</div>
 
 
@@ -216,9 +236,75 @@
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/aos.js"></script>
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/main.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-
-
+	<script>
+	$(document).ready(function() {
+		
+		<c:forEach var="buyCarVo" items="${buyCarList}" varStatus="count">
+			
+			$("#row${count.count} select").change(function(){
+				let buyPrice=${buyCarVo.buyPrice};
+				$("#row${count.count} .buyPricePlus").text(buyPrice*$(this).val());
+				
+				$.post('<%=request.getContextPath()%>/BuyCar/BuyCarServlet',{
+					action:"update",
+					commNo:"${buyCarVo.commNo}",
+					commName:"${buyCarVo.commName}",
+					buyQuantity:$("#row${count.count} select").val(),
+					buyPrice:"${buyCarVo.buyPrice}"
+					
+					},function(data,status){
+						if(status="success")
+							swal({text:data });
+					})
+				
+				getTotal();
+			})
+		
+			$("#row${count.count} .cancel").click(function(){
+				$("#row${count.count}").remove();
+				reSetNo();
+				getTotal();
+				$.post('<%=request.getContextPath()%>/BuyCar/BuyCarServlet',{
+					action:"delete",
+					commNo:"${buyCarVo.commNo}",
+					commName:"${buyCarVo.commName}",
+					buyQuantity:"${buyCarVo.buyQuantity}",
+					buyPrice:"${buyCarVo.buyPrice}"
+					
+					},function(data,status){
+						if(status="success")
+							swal({text:data });
+					})
+				
+				
+			})
+		</c:forEach>
+		
+		
+		//標頭隨tr數量改變	
+		reSetNo();
+		function reSetNo(){
+			for(let i=1;i<=$("table.table tbody tr").length;i++){
+				$("#row"+i+" th:first-of-type").text(i);
+			}
+		}
+		//取得總金額
+		getTotal();
+		function getTotal(){
+			let total=0;
+			let buyPricePlus =document.getElementsByClassName("buyPricePlus");
+			for(let i=0;i<$(".buyPricePlus").length;i++){
+				total+=parseInt(buyPricePlus[i].innerText.trim());
+			}
+			$("#total").text("總金額:"+total);
+		}
+		
+	})
+	
+	
+	
+	
+	</script>
 
 </body>
 </html>

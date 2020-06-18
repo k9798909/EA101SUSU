@@ -170,21 +170,21 @@
 					</div>
 
 					<div class="left">剩餘數量: ${mallVo.quantity}</div>
-					<form method="post" action="<%=request.getContextPath()%>/BuyCar/BuyCarServlet">
+
 						<div class="quantity">
 							數量:
 							<button id="minus" type="button">-</button>
 							<input type="text" class="buyQuantity" name="buyQuantity" value="1" Readonly>
 							<button id="plus" type="button">+</button>
 						</div>
-						<input type="hidden" name="commNo" value="${mallVo.commNo}">
-						<input type="hidden" name="commName" value="${mallVo.commName}">
 						<input type="hidden" name="action" value="add">
-						<input type="submit" class="carbtn" value="加入購物車">
-					</form>
+						<button type="button" class="carbtn">加入購物車</button>
+					
 					<form method="post" action="<%=request.getContextPath()%>/BuyCar/BuyCarServlet">
-						<input type="hidden"  name="commNo" value="${mallVo.commNo}"> 
-						<input type="hidden" class="buyQuantity" name="buyQuantity" value="1">
+						<input type="hidden" id="commNo"  name="commNo" value="${mallVo.commNo}">
+						<input type="hidden" id="commName"  name="commName" value="${mallVo.commName}">
+						<input type="hidden" id="buyPrice"  name="buyPrice" value="${mallVo.price}">  
+						<input type="hidden" id="buyQuantity" class="buyQuantity" name="buyQuantity" value="1">
 						<input type="hidden" name="action" value="buyone"> 
 						<input type="submit" value="購買" class="bybtn">
 					</form>
@@ -194,10 +194,10 @@
 
 
 	</main>
-	<button class="shopcar">
+	<a href="<%=request.getContextPath()%>/fornt-end/BuyCar/BuyCar.jsp"><button class="shopcar">
 		<img
 			src="<%=request.getContextPath()%>/fornt-end/images/supermarket.png">
-	</button>
+	</button></a>
 
 
 
@@ -266,6 +266,21 @@
 				}
 				$(".buyQuantity").attr("value", quantity);
 
+			})
+			
+			$("button.carbtn").click(function(){
+				$.post('<%=request.getContextPath()%>/BuyCar/BuyCarServlet',{
+					action:"add",
+					commNo:$("#commNo").val(),
+					commName:$("#commName").val(),
+					buyQuantity:$("#buyQuantity").val(),
+					buyPrice:$("#buyPrice").val()
+					
+					},function(data,status){
+						if(status="success")
+							swal({text:data });
+					})
+			
 			})
 
 		})

@@ -163,9 +163,9 @@
 			</div>
 		</div>
 
-		<button class="shopcar">
+		<a href="<%=request.getContextPath()%>/fornt-end/BuyCar/BuyCar.jsp"><button class="shopcar" >
 			<img src="<%=request.getContextPath()%>/fornt-end/images/supermarket.png">
-		</button>
+		</button></a>
 
 	</main>
 
