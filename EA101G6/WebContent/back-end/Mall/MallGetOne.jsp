@@ -42,16 +42,7 @@
 					
 					<jsp:useBean id="gmTypeSvc" class="com.gmType.model.GmTypeService" scope="request"/>
 					<jsp:useBean id="mallSvc" class="com.mall.model.MallService" scope="request"/>
-					
-					<%	
-						//GmTypeService gmTypeSvc =new GmTypeService();
-						//request.setAttribute("gmTypeSvc", gmTypeSvc);
-						//MallService mallSvc = new MallService();
-						//request.setAttribute("mallSvc", mallSvc);
-						// 是forword過來的所以request裡有查詢的list
-						//el是由小到大所以前面的session不影響
-					%>
-						
+										
 					<c:forEach var="mallVo" items="${selMallVoList}">
 						<tr>
 							<td class="col-md-1">

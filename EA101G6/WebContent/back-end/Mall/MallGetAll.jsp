@@ -45,16 +45,12 @@
 					</tr>
 				</thead>
 				<tbody>
+				
+				<!-- 存request讓協同的能拿到 -->
 				<jsp:useBean id="gmTypeSvc" class="com.gmType.model.GmTypeService" scope="request"/>
 				<jsp:useBean id="mallSvc" class="com.mall.model.MallService" scope="request"/>
+					
 					<%	
-						//存在request讓incule 的網頁也可以拿到 
-						//分別是GmTypeService  MallService
-						//GmTypeService gmTypeSvc =new GmTypeService();
-						//request.setAttribute("gmTypeSvc", gmTypeSvc);
-						//MallService mallSvc = new MallService();
-						//request.setAttribute("mallSvc", mallSvc);
-						//存session是讓效能好一點不用每次查詢
 						if(session.getAttribute("mallVoList")==null){
 							List<MallVO> mallVoList = mallSvc.getAll();
 							session.setAttribute("mallVoList", mallVoList);

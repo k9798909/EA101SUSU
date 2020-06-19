@@ -25,19 +25,19 @@ public class MallShowImg extends HttpServlet {
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
 		try {	
-				//讀一次之後存到session裡讓效能好一點
-				HttpSession session =req.getSession();
+				
+				//HttpSession session =req.getSession();
 				MallVO mallvo=null;
 				String commNo=req.getParameter("commNo");
-				if(session.getAttribute(commNo)==null) {
+				//if(session.getAttribute(commNo)==null) {
 					MallService mallSvc = new MallService();
 					mallvo =mallSvc.findOneByNo(commNo);
 					out.write(mallvo.getImg());
-					session.setAttribute(commNo,(Object)mallvo);
+					/**session.setAttribute(commNo,(Object)mallvo);
 				}else {
 					mallvo=(MallVO)session.getAttribute(commNo);
 					out.write(mallvo.getImg());
-				}
+				}**/
 			}catch(NullPointerException e) {
 				//沒有圖片給他一張圖片
 				e.getStackTrace();

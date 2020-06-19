@@ -180,6 +180,7 @@ public class BackMallServlet extends HttpServlet {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			try {
 				MallVO mallVo = new MallVO();
+				MallService mallSvc=new MallService();
 				//updateTampTypeNolist小心名稱不要重複會有bug
 				List<GmTypeVO> updateTampTypeNolist = new ArrayList<GmTypeVO>();
 				// commNo
@@ -269,8 +270,7 @@ public class BackMallServlet extends HttpServlet {
 						erroMsg.add("確認符合圖片格式");
 
 				} else {
-					// 因為沒有傳圖片拿出之前存在Showimg裡的 mallvo並拿出byte[]
-					img = ((MallVO) session.getAttribute(commNo)).getImg();
+					img = mallSvc.findOneByNo(commNo).getImg();
 				}
 				/**gmtypedt 遊戲類型部分 checkbox不是自己輸入，
 				因為修改頁面的list用的是gmTypeVo，所以new一個gmTypeVo
@@ -300,7 +300,7 @@ public class BackMallServlet extends HttpServlet {
 					
 				} else {
 					/*************************** 2.開始修改資料 ***************************************/
-						MallService mallSvc = new MallService();
+						//mallSvc在最前面就宣告了
 						MallVO updateMall=mallSvc.update(commNo,commName, price, quantity, img, intro, age, player, status);
 					/*************************** 2.開始修改gmtypedt的資料 ***************************************/
 					/************************因為必須先拿到mall自增鍵才能新增所以放到後面 ******************************/
@@ -311,8 +311,6 @@ public class BackMallServlet extends HttpServlet {
 						}
 					/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
 					// 讓前台list能更新
-					
-					session.setAttribute(commNo,updateMall);
 					session.setAttribute("successMsg", "更新成功");
 					//確認他是哪個頁面傳的，是空字串就傳到getall，並把session.remove掉讓他更新，
 					//如果不是把action="selectone"在搜尋一次讓頁面更新
