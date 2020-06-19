@@ -14,15 +14,14 @@ public class MallOrVO implements Serializable{
 	private Integer status;
 	private Integer payStatus;
 	private Integer boxStatus;
+	private Integer price;
 	
 	public MallOrVO() {
 		
 	}
-	
-	
-	
+
 	public MallOrVO(String mallOrNo, String mbrNo, Timestamp orDate, String take, String address, Integer status,
-			Integer payStatus, Integer boxStatus) {
+			Integer payStatus, Integer boxStatus, Integer price) {
 		super();
 		this.mallOrNo = mallOrNo;
 		this.mbrNo = mbrNo;
@@ -32,8 +31,8 @@ public class MallOrVO implements Serializable{
 		this.status = status;
 		this.payStatus = payStatus;
 		this.boxStatus = boxStatus;
+		this.price = price;
 	}
-
 
 	public String getMallOrNo() {
 		return mallOrNo;
@@ -99,7 +98,13 @@ public class MallOrVO implements Serializable{
 		this.boxStatus = boxStatus;
 	}
 
+	public Integer getPrice() {
+		return price;
+	}
 
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
 
 	@Override
 	public int hashCode() {
@@ -109,8 +114,6 @@ public class MallOrVO implements Serializable{
 		result = prime * result + ((mbrNo == null) ? 0 : mbrNo.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -133,16 +136,6 @@ public class MallOrVO implements Serializable{
 			return false;
 		return true;
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

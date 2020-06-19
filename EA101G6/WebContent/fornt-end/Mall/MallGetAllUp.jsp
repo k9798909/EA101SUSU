@@ -175,7 +175,6 @@
 
 
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/jquery-3.3.1.min.js"></script>
-	<!-- 看起來沒屁用 -->
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/popper.min.js"></script>
 	<script src="<%=request.getContextPath()%>/fornt-end/js/model/bootstrap.min.js"></script>
 	<!-- 重要廣告界面 -->

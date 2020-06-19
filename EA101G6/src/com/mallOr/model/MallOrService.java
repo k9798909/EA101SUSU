@@ -13,7 +13,7 @@ private MallOrDAO_interface dao ;
 	
 	//新增 ok
 	public String add(String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
-			Integer payStatus, Integer boxStatus) {
+			Integer payStatus, Integer boxStatus,Integer price) {
 		MallOrVO vo = new MallOrVO();
 		vo.setMbrNo(mbrNo);
 		vo.setOrDate(orDate);
@@ -22,6 +22,7 @@ private MallOrDAO_interface dao ;
 		vo.setStatus(status);
 		vo.setPayStatus(payStatus);
 		vo.setBoxStatus(boxStatus);
+		vo.setPrice(price);
 		dao.add(vo);
 		return "新增成功";
 	}
@@ -32,7 +33,7 @@ private MallOrDAO_interface dao ;
 	}
 	//修改
 	public MallOrVO update(String mallOrNo, String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
-			Integer payStatus, Integer boxStatus){
+			Integer payStatus, Integer boxStatus,Integer price){
 		MallOrVO vo = new MallOrVO();
 		vo.setMallOrNo(mallOrNo);
 		vo.setMbrNo(mbrNo);
@@ -42,6 +43,7 @@ private MallOrDAO_interface dao ;
 		vo.setStatus(status);
 		vo.setPayStatus(payStatus);
 		vo.setBoxStatus(boxStatus);
+		vo.setPrice(price);
 		dao.update(vo);
 		
 		return vo;

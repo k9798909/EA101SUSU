@@ -51,7 +51,7 @@
 				
 				
 				<label class="other">上下架狀態: 下架
-				<input type="checkbox"class="check-switch check-switch-anim" name="status" value="1" checked>
+				<input type="checkbox"class="check-switch check-switch-anim" name="status" value="1" >
 						上架
 				</label>
 			

@@ -93,45 +93,45 @@ public class MallService {
 	
 
 	
-	/**
-	public static void main(String[] args) {
-		MallService ser = new MallService();
-
-		
-		byte[] img =null ;
-		try {
-			FileInputStream in =new FileInputStream(new File("C:\\Users\\Java\\Desktop\\WORKSQL\\MALLIMG\\1.jpg"));
-			BufferedInputStream bufin =new BufferedInputStream(in);
-			byte[] buffer = new byte[2048];
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			
-			while(bufin.read(buffer,0,2048)!=-1) 
-				baos.write(buffer);
-				
-			img =baos.toByteArray();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		add ok delete ok update ok findbyname ok
-		ser.add("大富翁", 1000, 20, img, "大家一起來玩吧","4-6","8歲以上", 0);
-		ser.delete("11");
-		ser.update("ZM00012","豪華版大富翁", 1000, 20, img, "大家一起來玩吧","4-6","8歲以上", 0);
-		List<MallVO> list=ser.getAll();
-		for(MallVO vo : list)
-			System.out.println(vo.getCommNo()+vo.getCommName());
 	
-		//System.out.println(ser.getOneByNo("ZM00012").getCommName());
-		List<String> list =ser.getType("ZM00009");
-		for(String x : list)
-			System.out.println(x);
-		System.out.println(ser.add("大富翁", 1000, 20, null, "大家一起來玩吧","4-6","8歲以上", 0));
+//	public static void main(String[] args) {
+//		MallService ser = new MallService();
+//
+//		
+//		byte[] img =null ;
+//		try {
+//			FileInputStream in =new FileInputStream(new File("C:\\Users\\Java\\Desktop\\WORKSQL\\MALLIMG\\1.jpg"));
+//			BufferedInputStream bufin =new BufferedInputStream(in);
+//			byte[] buffer = new byte[2048];
+//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//			
+//			while(bufin.read(buffer,0,2048)!=-1) 
+//				baos.write(buffer);
+//				
+//			img =baos.toByteArray();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-	}**/
+		
+//		ser.add("大富翁", 1000, 20, img, "大家一起來玩吧","4-6","8歲以上", 0);
+//		ser.delete("11");
+//		ser.update("ZM00012","豪華版大富翁", 1000, 20, img, "大家一起來玩吧","4-6","8歲以上", 0);
+//		List<MallVO> list=ser.getAll();
+//		for(MallVO vo : list)
+//			System.out.println(vo.getCommNo()+vo.getCommName());
+//	
+//		//System.out.println(ser.getOneByNo("ZM00012").getCommName());
+//		List<String> list =ser.getType("ZM00009");
+//		for(String x : list)
+//			System.out.println(x);
+//		System.out.println(ser.add("大富翁", 1000, 20, null, "大家一起來玩吧","4-6","8歲以上", 0));
+		
+//	}
 	
 	
 }

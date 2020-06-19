@@ -51,7 +51,6 @@ public class MallJDBCDAO implements MallDAO_interface {
 			+ " JOIN GMTYPEDT ON mall.commno=gmtypedt.commno"
 			+ " JOIN GMTYPE ON gmtypedt.typeno=gmtype.typeno"
 			+ " WHERE MALL.COMMNO=?";
-	private static final String SQLSELSEQ="SELECT 'ZM'||LPAD(TO_CHAR(COMMNO_SEQ.CURRVAL),5, '0') FROM DUAL";
 	//問題1
 	@Override
 	public String add(MallVO mall) {
@@ -64,8 +63,8 @@ public class MallJDBCDAO implements MallDAO_interface {
 			conn=DriverManager.getConnection(URL,NAME,PSW);
 			
 			conn.setAutoCommit(false);
-			
-			past = conn.prepareStatement(SQLADD);
+			String cols[] = {"COMMNO"};
+			past = conn.prepareStatement(SQLADD,cols);
 			past.setString(1,mall.getCommName());
 			past.setInt(2,mall.getPrice());
 			past.setInt(3,mall.getQuantity());
@@ -75,14 +74,14 @@ public class MallJDBCDAO implements MallDAO_interface {
 			past.setString(7,mall.getPlayer());
 			past.setInt(8,mall.getStatus());
 			past.executeUpdate();
+			
 			conn.commit();
 			
-			past.close();
+			rs = past.getGeneratedKeys();
+			if (rs.next()) {
+				seq = rs.getString(1);
+			}
 			
-			past= conn.prepareStatement(SQLSELSEQ);
-			rs=past.executeQuery();
-			if(rs.next()) 
-				seq=rs.getString(1);
 			
 		}catch(SQLException e){
 			e.getMessage();

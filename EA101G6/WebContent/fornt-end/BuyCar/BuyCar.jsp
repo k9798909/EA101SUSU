@@ -133,11 +133,6 @@
 		</div>
 	</header>
 
-
-	<%
-		
-	%>
-
 	<main>
 		<div class="container">
 			<table class="table table-striped table-bordered">
@@ -193,7 +188,7 @@
 
 			<div class="checkdiv">
 				<p id="total">總金額:</p>
-				<input type="submit" class="checkbtn" value="結帳">
+				<a href="<%=request.getContextPath()%>/fornt-end/MallOr/MallOr.jsp"><input type="submit" class="checkbtn" value="結帳"></a>
 				<a href="<%=request.getContextPath()%>/fornt-end/Mall/MallGetAllUp.jsp" ><button class="back">繼續購物</button></a>
 			</div>
 			

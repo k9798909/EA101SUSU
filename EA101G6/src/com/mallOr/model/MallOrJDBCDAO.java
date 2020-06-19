@@ -15,16 +15,17 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 	private static final String URL ="jdbc:oracle:thin:@localhost:1521:xe"; 
 	private static final String NAME ="EA101";
 	private static final String PSW ="123456";
-	private static final String SQLADD ="INSERT INTO MALLOR (MALLORNO,MBRNO,ORDATE,TAKE,ADDRESS,STATUS,PAYSTATUS,BOXSTATUS)"
-			+ "VALUES(TO_CHAR(SYSDATE,'YYYYMMDD')||'-'||LPAD(TO_CHAR(MALLORNO_SEQ.NEXTVAL), 7, '0'),?,?,?,?,?,?,?)";
+	private static final String SQLADD ="INSERT INTO MALLOR (MALLORNO,MBRNO,ORDATE,TAKE,ADDRESS,STATUS,PAYSTATUS,BOXSTATUS,PRICE)"
+			+ "VALUES(TO_CHAR(SYSDATE,'YYYYMMDD')||'-'||LPAD(TO_CHAR(MALLORNO_SEQ.NEXTVAL), 7, '0'),?,?,?,?,?,?,?,?)";
 	private static final String SQLUPDATE ="UPDATE MALLOR "
-			+ "SET TAKE=?,ADDRESS=?,STATUS=?,PAYSTATUS=?,BOXSTATUS=?"
+			+ "SET TAKE=?,ADDRESS=?,STATUS=?,PAYSTATUS=?,BOXSTATUS=?,PRICE=? "
 			+ "WHERE MALLORNO=?";
 	private static final String SQLDELETE="DELETE MALLOR WHERE MALLORNO=?";
 	private static final String SQLSELALL="SELECT * FROM MALLOR ORDER BY MALLORNO";
 	private static final String SQLSELBYMBR="SELECT * FROM MALLOR WHERE MBRNO=?";
 	private static final String SQLSELBYSTATUS="SELECT * FROM MALLOR WHERE STATUS=?";
 	private static final String SQLSELBYORNO="SELECT * FROM MALLOR WHERE MALLORNO=?";
+	private static final String SQLSELSEQ="SELECT TO_CHAR(SYSDATE,'YYYYMMDD')||'-'||LPAD(TO_CHAR(MALLORNO_SEQ.NEXTVAL), 7, '0') FROM DUAL";
 	static{
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -53,8 +54,14 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 			past.setInt(5,mallor.getStatus());
 			past.setInt(6,mallor.getPayStatus());
 			past.setInt(7,mallor.getBoxStatus());
+			past.setInt(8,mallor.getPrice());
 			past.executeUpdate();
 			conn.commit();
+			
+			past.close();
+			
+			past=conn.prepareStatement(SQLSELSEQ);
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -99,7 +106,9 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 			past.setInt(3,mallor.getStatus());
 			past.setInt(4,mallor.getPayStatus());
 			past.setInt(5,mallor.getBoxStatus());
-			past.setString(6,mallor.getMallOrNo());
+			past.setInt(6,mallor.getPrice());
+			past.setString(7,mallor.getMallOrNo());
+			
 			past.executeUpdate();
 			conn.commit();
 			
@@ -197,6 +206,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 				mallor.setStatus(rs.getInt("STATUS"));
 				mallor.setPayStatus(rs.getInt("PAYSTATUS"));
 				mallor.setBoxStatus(rs.getInt("BOXSTATUS"));
+				mallor.setPrice(rs.getInt("PRICE"));
 				list.add(mallor);
 			}
 			
@@ -247,6 +257,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 				mallor.setStatus(rs.getInt("STATUS"));
 				mallor.setPayStatus(rs.getInt("PAYSTATUS"));
 				mallor.setBoxStatus(rs.getInt("BOXSTATUS"));
+				mallor.setPrice(rs.getInt("PRICE"));
 				list.add(mallor);
 			}
 			
@@ -294,6 +305,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 				mallor.setStatus(rs.getInt("STATUS"));
 				mallor.setPayStatus(rs.getInt("PAYSTATUS"));
 				mallor.setBoxStatus(rs.getInt("BOXSTATUS"));
+				mallor.setPrice(rs.getInt("PRICE"));
 				list.add(mallor);
 			}
 			
@@ -340,6 +352,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 				mallor.setStatus(rs.getInt("STATUS"));
 				mallor.setPayStatus(rs.getInt("PAYSTATUS"));
 				mallor.setBoxStatus(rs.getInt("BOXSTATUS"));
+				mallor.setPrice(rs.getInt("PRICE"));
 			}
 			
 		} catch (SQLException e) {
