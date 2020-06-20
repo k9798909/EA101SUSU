@@ -18,7 +18,7 @@ import com.mall.model.MallVO;
 
 @WebServlet("/BuyCar/BuyCarServlet")
 public class BuyCarServlet extends HttpServlet {
-       
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -26,142 +26,156 @@ public class BuyCarServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("text/html;CharSet=UTF-8");
 		req.setCharacterEncoding("UTF-8");
-		PrintWriter out=res.getWriter();
+		PrintWriter out = res.getWriter();
 		String action = req.getParameter("action");
-		HttpSession session=req.getSession();
-		
-		
-		if("buyone".equals(action)){
-			String commNo=req.getParameter("commNo");
-			String commName=req.getParameter("commName");
-			Integer buyQuantity=new Integer(req.getParameter("buyQuantity"));
-			Integer buyPrice=new Integer(req.getParameter("buyPrice"));
-			
-			MallVO buyCarMall=new MallVO();
-			buyCarMall.setCommNo(commNo);
-			buyCarMall.setCommName(commName);
-			buyCarMall.setQuantity(buyQuantity);
-			buyCarMall.setPrice(buyPrice);
-			
-			req.setAttribute("buyCarMall", buyCarMall);
-			RequestDispatcher dispatchar=req.getRequestDispatcher("/fornt-end/BuyCar/BuyOne.jsp");
-			dispatchar.forward(req,res);
-		}
-		
-		if("add".equals(action)){
-			
-			try{
-				String commNo=req.getParameter("commNo");
-				String commName=req.getParameter("commName");
-				Integer buyQuantity=new Integer(req.getParameter("buyQuantity"));
-				Integer buyPrice=new Integer(req.getParameter("buyPrice"));
-				
-				//商品的物件看庫存夠嗎
-				MallService mallSvc=new MallService();
-				MallVO mallVo=mallSvc.findOneByNo(commNo);
-				//new物件
-				MallVO buyCarMall=new MallVO();
+		HttpSession session = req.getSession();
+		if ("buyOne".equals(action)) {
+			try {
+				String commNo = req.getParameter("commNo");
+				String commName = req.getParameter("commName");
+				Integer buyQuantity = new Integer(req.getParameter("buyQuantity"));
+				Integer buyPrice = new Integer(req.getParameter("buyPrice"));
+
+				// 商品的物件看庫存夠嗎
+				MallService mallSvc = new MallService();
+				MallVO mallVo = mallSvc.findOneByNo(commNo);
+				// new物件
+				MallVO buyCarMall = new MallVO();
 				buyCarMall.setCommNo(commNo);
 				buyCarMall.setCommName(commName);
 				buyCarMall.setQuantity(buyQuantity);
 				buyCarMall.setPrice(buyPrice);
-				
-				List<MallVO> buyCarList=null;
-				//如果session有list就拿出否則new 1個
-				if(session.getAttribute("buyCarList")==null) {
-					buyCarList=new LinkedList<MallVO>();
-					session.setAttribute("buyCarList",buyCarList);
-				}else {
-					buyCarList=(LinkedList<MallVO>)session.getAttribute("buyCarList");
+
+				List<MallVO> buyCarList = null;
+				// 如果session有list就拿出否則new 1個
+				if (session.getAttribute("buyCarList") == null) {
+					buyCarList = new LinkedList<MallVO>();
+					session.setAttribute("buyCarList", buyCarList);
+				} else {
+					buyCarList = (LinkedList<MallVO>) session.getAttribute("buyCarList");
 				}
-				//確認list有沒有那個商品沒有就新增，有就拿出原本數量並+-
-				int index=buyCarList.indexOf(buyCarMall);
-				if(index<0) {
+				// 確認list有沒有那個商品沒有就新增，有的話因為是購買所以數量改成購買的數量並加入購物車
+				int index = buyCarList.indexOf(buyCarMall);
+				if (index < 0) {
 					buyCarList.add(buyCarMall);
-					out.print("新增成功");
-				}else {
-					buyCarMall=buyCarList.get(index);
-					Integer tempquantity= Integer.valueOf(buyQuantity)
-							+Integer.valueOf(buyCarMall.getQuantity());
-					if(mallVo.getQuantity()>=tempquantity) {
+				} else {
+					buyCarMall = buyCarList.get(index);
+					Integer tempquantity = Integer.valueOf(buyQuantity);
 					buyCarMall.setQuantity(tempquantity);
-					out.print("新增成功");
-					}else {
-					out.print("購物車數量超過庫存");	
-					}
 				}
-				
-				
-			}catch(Exception e){
+
+				res.sendRedirect(req.getContextPath() + "/front-end/BuyCar/BuyCar.jsp");
+
+			} catch (Exception e) {
 				out.print("新增失敗!請稍後在試");
 			}
-			
-			
 		}
-		
-		if("delete".equals(action)){
-			try{
-				
-				String commNo=req.getParameter("commNo");
-				String commName=req.getParameter("commName");
-				Integer buyQuantity=new Integer(req.getParameter("buyQuantity"));
-				Integer buyPrice=new Integer(req.getParameter("buyPrice"));
-				
-				MallVO buyCarMall=new MallVO();
+		if ("add".equals(action)) {
+
+			try {
+				String commNo = req.getParameter("commNo");
+				String commName = req.getParameter("commName");
+				Integer buyQuantity = new Integer(req.getParameter("buyQuantity"));
+				Integer buyPrice = new Integer(req.getParameter("buyPrice"));
+
+				// 商品的物件看庫存夠嗎
+				MallService mallSvc = new MallService();
+				MallVO mallVo = mallSvc.findOneByNo(commNo);
+				// new物件
+				MallVO buyCarMall = new MallVO();
 				buyCarMall.setCommNo(commNo);
 				buyCarMall.setCommName(commName);
 				buyCarMall.setQuantity(buyQuantity);
 				buyCarMall.setPrice(buyPrice);
-				
-				List<MallVO> buyCarList=null;
-				
-				
-				if(session.getAttribute("buyCarList")!=null) {
-					buyCarList=(LinkedList<MallVO>)session.getAttribute("buyCarList");
+
+				List<MallVO> buyCarList = null;
+				// 如果session有list就拿出否則new 1個
+				if (session.getAttribute("buyCarList") == null) {
+					buyCarList = new LinkedList<MallVO>();
+					session.setAttribute("buyCarList", buyCarList);
+				} else {
+					buyCarList = (LinkedList<MallVO>) session.getAttribute("buyCarList");
+				}
+				// 確認list有沒有那個商品沒有就新增，有就拿出原本數量並+-
+				int index = buyCarList.indexOf(buyCarMall);
+				if (index < 0) {
+					buyCarList.add(buyCarMall);
+					out.print("新增成功");
+				} else {
+					buyCarMall = buyCarList.get(index);
+					Integer tempquantity = Integer.valueOf(buyQuantity) + Integer.valueOf(buyCarMall.getQuantity());
+					if (mallVo.getQuantity() >= tempquantity) {
+						buyCarMall.setQuantity(tempquantity);
+						out.print("新增成功");
+					} else {
+						out.print("購物車數量超過庫存");
+					}
+				}
+
+			} catch (Exception e) {
+				out.print("新增失敗!請稍後在試");
+			}
+
+		}
+
+		if ("delete".equals(action)) {
+			try {
+
+				String commNo = req.getParameter("commNo");
+				String commName = req.getParameter("commName");
+				Integer buyQuantity = new Integer(req.getParameter("buyQuantity"));
+				Integer buyPrice = new Integer(req.getParameter("buyPrice"));
+
+				MallVO buyCarMall = new MallVO();
+				buyCarMall.setCommNo(commNo);
+				buyCarMall.setCommName(commName);
+				buyCarMall.setQuantity(buyQuantity);
+				buyCarMall.setPrice(buyPrice);
+
+				List<MallVO> buyCarList = null;
+
+				if (session.getAttribute("buyCarList") != null) {
+					buyCarList = (LinkedList<MallVO>) session.getAttribute("buyCarList");
 					buyCarList.remove(buyCarMall);
 					out.print("移除成功");
 				}
-			}catch(Exception e){
+			} catch (Exception e) {
 				out.print("移除失敗!請稍後在試");
 			}
-			
+
 		}
-		
-		if("update".equals(action)){
-			
-			try{
-				String commNo=req.getParameter("commNo");
-				String commName=req.getParameter("commName");
-				Integer buyQuantity=new Integer(req.getParameter("buyQuantity"));
-				Integer buyPrice=new Integer(req.getParameter("buyPrice"));
-				//new物件
-				MallVO buyCarMall=new MallVO();
+
+		if ("update".equals(action)) {
+
+			try {
+				String commNo = req.getParameter("commNo");
+				String commName = req.getParameter("commName");
+				Integer buyQuantity = new Integer(req.getParameter("buyQuantity"));
+				Integer buyPrice = new Integer(req.getParameter("buyPrice"));
+				// new物件
+				MallVO buyCarMall = new MallVO();
 				buyCarMall.setCommNo(commNo);
 				buyCarMall.setCommName(commName);
 				buyCarMall.setQuantity(buyQuantity);
 				buyCarMall.setPrice(buyPrice);
-				
-				List<MallVO> buyCarList=null;
-				//如果session有list就拿出
-				if(session.getAttribute("buyCarList")!=null) {
-					buyCarList=(LinkedList<MallVO>)session.getAttribute("buyCarList");
+
+				List<MallVO> buyCarList = null;
+				// 如果session有list就拿出
+				if (session.getAttribute("buyCarList") != null) {
+					buyCarList = (LinkedList<MallVO>) session.getAttribute("buyCarList");
 				}
-				//確認物件在哪個index，然後拿出更改
-				int index=buyCarList.indexOf(buyCarMall);
-				buyCarMall=buyCarList.get(index);
+				// 確認物件在哪個index，然後拿出更改
+				int index = buyCarList.indexOf(buyCarMall);
+				buyCarMall = buyCarList.get(index);
 				buyCarMall.setQuantity(buyQuantity);
-				
+
 				out.print("修改成功");
-			}catch(Exception e){
+			} catch (Exception e) {
 				out.print("修改失敗!請稍後在試");
 			}
-			
-			
+
 		}
-		
-		
-		
-		
+
 	}
 
 }

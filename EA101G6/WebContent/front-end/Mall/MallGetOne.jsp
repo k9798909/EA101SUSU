@@ -16,24 +16,24 @@
 	rel="stylesheet">
 <!-- 登入圖示 -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/fornt-end/fonts/icomoon/style.css">
+	href="<%=request.getContextPath()%>/front-end/fonts/icomoon/style.css">
 
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/fornt-end/css/model/bootstrap.min.css">
+	href="<%=request.getContextPath()%>/front-end/css/model/bootstrap.min.css">
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/fornt-end/css/model/jquery.fancybox.min.css">
+	href="<%=request.getContextPath()%>/front-end/css/model/jquery.fancybox.min.css">
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/fornt-end/css/model/owl.carousel.min.css">
+	href="<%=request.getContextPath()%>/front-end/css/model/owl.carousel.min.css">
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/fornt-end/css/model/owl.theme.default.min.css">
+	href="<%=request.getContextPath()%>/front-end/css/model/owl.theme.default.min.css">
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/fornt-end/css/model/aos.css">
+	href="<%=request.getContextPath()%>/front-end/css/model/aos.css">
 <!-- MAIN CSS -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/fornt-end/css/model/style.css">
+	href="<%=request.getContextPath()%>/front-end/css/model/style.css">
 <!-- 個人CSS -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/fornt-end/css/mallCss/MallGetOne.css">
+	href="<%=request.getContextPath()%>/front-end/css/mallCss/MallGetOne.css">
 
 
 </head>
@@ -58,15 +58,15 @@
 
 					<a href="#" class="text-white"><span class="d-md-inline-block"><img
 							class="icon"
-							src="<%=request.getContextPath()%>/fornt-end/images/add-icon.png">註冊</span></a>
+							src="<%=request.getContextPath()%>/front-end/images/add-icon.png">註冊</span></a>
 
 					<div class="float-right">
 						<a href="#" class="text-white"><span class="d-md-inline-block"><img
 								class="icon"
-								src="<%=request.getContextPath()%>/fornt-end/images/User-icon.png">會員登入</span></a>
+								src="<%=request.getContextPath()%>/front-end/images/User-icon.png">會員登入</span></a>
 						<a href="#" class="text-white"><span class="d-md-inline-block"><img
 								class="icon"
-								src="<%=request.getContextPath()%>/fornt-end/images/man-icon.png">店家登入</span></a>
+								src="<%=request.getContextPath()%>/front-end/images/man-icon.png">店家登入</span></a>
 					</div>
 
 				</div>
@@ -185,7 +185,7 @@
 						<input type="hidden" id="commName"  name="commName" value="${mallVo.commName}">
 						<input type="hidden" id="buyPrice"  name="buyPrice" value="${mallVo.price}">  
 						<input type="hidden" id="buyQuantity" class="buyQuantity" name="buyQuantity" value="1">
-						<input type="hidden" name="action" value="buyone"> 
+						<input type="hidden" name="action" value="buyOne"> 
 						<input type="submit" value="購買" class="bybtn">
 					</form>
 				</div>
@@ -194,38 +194,38 @@
 
 
 	</main>
-	<a href="<%=request.getContextPath()%>/fornt-end/BuyCar/BuyCar.jsp"><button class="shopcar">
+	<a href="<%=request.getContextPath()%>/front-end/BuyCar/BuyCar.jsp"><button class="shopcar">
 		<img
-			src="<%=request.getContextPath()%>/fornt-end/images/supermarket.png">
+			src="<%=request.getContextPath()%>/front-end/images/supermarket.png">
 	</button></a>
 
 
 
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery-3.3.1.min.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/jquery-3.3.1.min.js"></script>
 	<!-- 看起來沒屁用 -->
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/popper.min.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/popper.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/bootstrap.min.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/bootstrap.min.js"></script>
 	<!-- 重要廣告界面 -->
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/owl.carousel.min.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/owl.carousel.min.js"></script>
 	<!-- 看起來沒屁用 -->
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.sticky.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/jquery.sticky.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.waypoints.min.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/jquery.waypoints.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.animateNumber.min.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/jquery.animateNumber.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.fancybox.min.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/jquery.fancybox.min.js"></script>
 	<!-- 上介面連結動畫 -->
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery.easing.1.3.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/jquery.easing.1.3.js"></script>
 	<!-- 重要廣告界面 -->
-	<script src="<%=request.getContextPath()%>/fornt-end/js/model/aos.js"></script>
-	<script src="<%=request.getContextPath()%>/fornt-end/js/model/main.js"></script>
+	<script src="<%=request.getContextPath()%>/front-end/js/model/aos.js"></script>
+	<script src="<%=request.getContextPath()%>/front-end/js/model/main.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- 查詢時有錯誤啟動 -->

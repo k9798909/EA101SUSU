@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/fornt-end/css/model/bootstrap.min.css">
+	href="<%=request.getContextPath()%>/front-end/css/model/bootstrap.min.css">
 
 <style>
 
@@ -71,10 +71,14 @@ div.order input.addr{
 		font-size:18px;
 	}
 	
+	div.checkdiv{
+		text-align:right;
+	}
+	
 		div.checkdiv p{
 			display: inline-block;
 			margin:0px 30px;
-			font-size: 36px;
+			font-size: 26px;
 		}	
 
 </style>
@@ -107,31 +111,39 @@ div.order input.addr{
 			</c:forEach>
 			</tbody>
 		</table>
+		<div class="checkdiv">
+			<p id="total">總金額:${totalPrice}</p>
+		</div>	
 	</div>
 	
-	<div class="checkdiv">
-		<p id="total">總金額:${totalPrice}</p>
-	</div>		
 	
-	<div class="container order">
+	<form action="<%= request.getContextPath()%>/MallOr/MallOrServlet" method="post">
+	<div class="container  order">
 		<div class="row justify-content-center">
-			<div class="col-12 col-md-6 information">
-				<div class="">會員姓名:吳樹育</div>
-				<div class="">取貨方式: <input name="take" type="radio">便利商店    <input name="take" type="radio">住家</div>	
-				<div class="">取貨地點:</div>
-				<input type="text" class="addr">
+			<div class="col-12 col-md-6 information border">
+				<div>會員姓名:<input type="text" value="吳樹育" readonly></div>
+				<div>取貨方式: <input name="take" type="radio" value="便利商店 ">便利商店    <input name="take" type="radio" value="住家">住家</div>	
+				<div>取貨地點:</div>
+				<input type="text" name="address" class="addr">
+				<div><p id="total">總金額:${totalPrice}元</p></div>
+				<input  type="hidden" name="price" value="${totalPrice}">
 			</div>
 		</div>
 	</div>
 	
-	<div class="paydiv"><input type="submit" class="paybtn" value="確定付款"><button>取消</button></div>
+	<input type="hidden">
+	<input type="hidden">
+	<input type="hidden">
+	<input type="hidden">
 	
+	<div class="paydiv"><input type="submit" class="paybtn" value="確定付款"><button type="button">取消</button></div>
+	</form>
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/jquery-3.3.1.min.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/jquery-3.3.1.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/popper.min.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/popper.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/fornt-end/js/model/bootstrap.min.js"></script>
+		src="<%=request.getContextPath()%>/front-end/js/model/bootstrap.min.js"></script>
 
 
 </body>

@@ -2,9 +2,13 @@ package com.mallOr.model;
 
 import java.util.List;
 
+import com.mall.model.MallVO;
+import com.mallOrDt.model.MallOrDtVO;
+
 public interface MallOrDAO_interface {
 
-	public void add(MallOrVO mallor);	
+	public void add(MallOrVO mallor);
+	public void add(MallOrVO mallOr,List<MallOrDtVO> mallOrDtVOList);
 	public void update(MallOrVO mallor);
 	public void delete(String mallOrNo);
 	public List<MallOrVO> getAll();

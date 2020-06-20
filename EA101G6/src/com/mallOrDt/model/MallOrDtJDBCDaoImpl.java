@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mall.model.MallVO;
+import com.mallOr.model.MallOrVO;
+
 public class MallOrDtJDBCDaoImpl implements MallOrDtDao_interface {
 	
 	static{
@@ -30,7 +33,6 @@ public class MallOrDtJDBCDaoImpl implements MallOrDtDao_interface {
 	private static final String SQLSELALL="SELECT * FROM MALLORDT";
 	private static final String SQLSELORNO="SELECT * FROM MALLORDT WHERE MALLORNO=?";
 	private static final String SQLSELONE="SELECT * FROM MALLORDT WHERE MALLORNO=? AND COMMNO=?";
-	private static final String SQLTOTAL="SELECT SUM(PRICE*QUANTITY) FROM MALLORDT WHERE MALLORNO=?";
 	
 	
 	@Override
@@ -292,40 +294,43 @@ public class MallOrDtJDBCDaoImpl implements MallOrDtDao_interface {
 		return vo;
 	}
 
-	@Override
-	public Integer getTotal(String mallOrNo) {
+	public void insertWithEmps(MallOrDtVO mallOrDt,java.sql.Connection conn) {
 		// TODO Auto-generated method stub
-		Connection conn=null;
-		PreparedStatement past=null;
-		ResultSet rs=null;
-		int total=0;
+		PreparedStatement past =null;
+		
 		try {
-			conn=DriverManager.getConnection(URL,NAME,PSW);
-			past=conn.prepareStatement(SQLTOTAL);
-			past.setString(1,mallOrNo);
-			rs=past.executeQuery();
 			
-			if(rs.next())
-				total=rs.getInt(1);
+			past=conn.prepareStatement(SQLADD);
+			past.setString(1,mallOrDt.getMallOrNo());
+			past.setString(2,mallOrDt.getCommNo());
+			past.setInt(3,mallOrDt.getQuantity());
+			past.setInt(4,mallOrDt.getPrice());
+			past.executeUpdate();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
 			try {
-				if(rs!=null)
-					rs.close();
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			
+		}finally {
+			
+			try {
+				
 				if(past!=null)
 					past.close();
-				if(conn!=null)
-					conn.close();
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
 		
-		return total;
 	}
 	
 

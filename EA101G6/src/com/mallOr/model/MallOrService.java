@@ -2,6 +2,8 @@ package com.mallOr.model;
 
 import java.util.List;
 
+import com.mallOrDt.model.MallOrDtVO;
+
 
 public class MallOrService {
 	
@@ -65,6 +67,10 @@ private MallOrDAO_interface dao ;
 	//ok
 	public MallOrVO findOneByOrNo(String mallOrNo) {
 		return dao.findOneByOrNo(mallOrNo);
+	}
+	
+	public void add(String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
+			Integer payStatus, Integer boxStatus,Integer price,List<MallOrDtVO> mallOrDtVOList) {
 	}
 	
 	/**測試

@@ -41,21 +41,21 @@ public class ForntMallServlet extends HttpServlet {
 				}else {
 					selErroMsg="商品名稱格式輸入錯誤，請輸入20字以內，請不要有特殊字元。";
 					req.setAttribute("selErroMsg",selErroMsg);
-					req.getRequestDispatcher("/fornt-end/Mall/MallSelNameUp.jsp").forward(req, res);
+					req.getRequestDispatcher("/front-end/Mall/MallSelNameUp.jsp").forward(req, res);
 				}
 		/*************************** 2.查詢完成,準備轉交(Send the Success view) ***********/	
 				if(selMallVoList.isEmpty()) {
 					selErroMsg="查無此資料";
 					req.setAttribute("selErroMsg",selErroMsg);
-					req.getRequestDispatcher("/fornt-end/Mall/MallSelNameUp.jsp").forward(req, res);
+					req.getRequestDispatcher("/front-end/Mall/MallSelNameUp.jsp").forward(req, res);
 				}else {
 					req.setAttribute("selMallVoList", selMallVoList);
-					req.getRequestDispatcher("/fornt-end/Mall/MallSelNameUp.jsp").forward(req, res);
+					req.getRequestDispatcher("/front-end/Mall/MallSelNameUp.jsp").forward(req, res);
 				}
 				
 			}catch (Exception e) {
 				e.getStackTrace();
-				res.sendRedirect(req.getContextPath() + "/fornt-end/Mall/MallGetAllUp.jsp");
+				res.sendRedirect(req.getContextPath() + "/front-end/Mall/MallGetAllUp.jsp");
 			}	
 				
 			

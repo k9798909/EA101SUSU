@@ -9,6 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mall.model.MallVO;
+import com.mallOrDt.model.MallOrDtJDBCDaoImpl;
+import com.mallOrDt.model.MallOrDtService;
+import com.mallOrDt.model.MallOrDtVO;
+
 
 public class MallOrJDBCDAO implements MallOrDAO_interface {
 
@@ -25,7 +30,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 	private static final String SQLSELBYMBR="SELECT * FROM MALLOR WHERE MBRNO=?";
 	private static final String SQLSELBYSTATUS="SELECT * FROM MALLOR WHERE STATUS=?";
 	private static final String SQLSELBYORNO="SELECT * FROM MALLOR WHERE MALLORNO=?";
-	private static final String SQLSELSEQ="SELECT TO_CHAR(SYSDATE,'YYYYMMDD')||'-'||LPAD(TO_CHAR(MALLORNO_SEQ.NEXTVAL), 7, '0') FROM DUAL";
+
 	static{
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -57,11 +62,6 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 			past.setInt(8,mallor.getPrice());
 			past.executeUpdate();
 			conn.commit();
-			
-			past.close();
-			
-			past=conn.prepareStatement(SQLSELSEQ);
-			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -376,7 +376,65 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 		return mallor;
 	}
 	
-	
+	public void add(MallOrVO mallOr,List<MallOrDtVO> mallOrDtVOList) {
+		Connection conn = null;
+		PreparedStatement past = null;
+		ResultSet rs=null;
+		String sqe="";
+		try {
+			conn=DriverManager.getConnection(URL,NAME,PSW);
+			
+			conn.setAutoCommit(false);
+			String[] cols={"MALLORNO"};
+			past=conn.prepareStatement(SQLADD,cols);
+			past.setString(1,mallOr.getMbrNo());
+			past.setTimestamp(2,mallOr.getOrDate());
+			past.setString(3,mallOr.getTake());
+			past.setString(4,mallOr.getAddress());
+			past.setInt(5,mallOr.getStatus());
+			past.setInt(6,mallOr.getPayStatus());
+			past.setInt(7,mallOr.getBoxStatus());
+			past.setInt(8,mallOr.getPrice());
+			past.executeUpdate();
+			
+			rs=past.getGeneratedKeys();
+			if(rs.next()) {
+				sqe=rs.getString(1);
+			}
+			
+			MallOrDtJDBCDaoImpl mallOrDtDao=new MallOrDtJDBCDaoImpl();
+			for(MallOrDtVO mallOrDtVo : mallOrDtVOList) {
+				mallOrDtVo.setMallOrNo(sqe);
+				mallOrDtDao.insertWithEmps(mallOrDtVo, conn);
+			}
+			
+			conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}finally{
+			
+			try {
+				conn.setAutoCommit(true);
+				if(past!=null)
+					past.close();
+				if(conn!=null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+					
+		}
+		
+		
+	}
 
 	
 }

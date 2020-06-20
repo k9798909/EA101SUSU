@@ -1,5 +1,6 @@
 package com.mallOrDt.model;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class MallOrDtService {
@@ -46,9 +47,7 @@ public class MallOrDtService {
 		return dao.findOneByFk(mallOrNo, commNo);
 	}
 	
-	public Integer getTotal(String mallOrNo){
-		return dao.getTotal(mallOrNo);
-	}
+	
 	/**
 	public static void main(String[] args) {
 		MallOrDtService ser =new MallOrDtService();
