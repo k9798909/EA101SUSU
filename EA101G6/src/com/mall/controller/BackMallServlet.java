@@ -55,7 +55,7 @@ public class BackMallServlet extends HttpServlet {
 				List<String> tampTypeNolist = new ArrayList<String>();
 				// commName部分
 				String commName = req.getParameter("commName").trim();
-				String commNameReg = "^[(\u4e00-\u9fa5) _\\w]{2,20}$";
+				String commNameReg = "^[(\u4e00-\u9fa5) a-zA-Z0-9_]{2,20}$";
 				if (commName.length() != 0 && commName.matches(commNameReg))
 					mallVo.setCommName(commName);
 				else

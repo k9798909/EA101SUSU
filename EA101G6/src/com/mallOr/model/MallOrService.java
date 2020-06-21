@@ -70,7 +70,19 @@ private MallOrDAO_interface dao ;
 	}
 	
 	public void add(String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
-			Integer payStatus, Integer boxStatus,Integer price,List<MallOrDtVO> mallOrDtVOList) {
+			Integer payStatus, Integer boxStatus,Integer price,List<MallOrDtVO> mallOrDtList) {
+		
+		MallOrVO vo = new MallOrVO();
+		vo.setMbrNo(mbrNo);
+		vo.setOrDate(orDate);
+		vo.setTake(take);
+		vo.setAddress(address);
+		vo.setStatus(status);
+		vo.setPayStatus(payStatus);
+		vo.setBoxStatus(boxStatus);
+		vo.setPrice(price);
+		dao.add(vo,mallOrDtList);
+		
 	}
 	
 	/**測試

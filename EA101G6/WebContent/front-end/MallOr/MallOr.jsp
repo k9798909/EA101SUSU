@@ -122,7 +122,7 @@ div.order input.addr{
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-6 information border">
 				<div>會員姓名:<input type="text" value="吳樹育" readonly></div>
-				<div>取貨方式: <input name="take" type="radio" value="便利商店 ">便利商店    <input name="take" type="radio" value="住家">住家</div>	
+				<div>取貨方式: <input name="take" type="radio" value="超商取貨">超商取貨    <input name="take" type="radio" value="住家取貨">住家取貨</div>	
 				<div>取貨地點:</div>
 				<input type="text" name="address" class="addr">
 				<div><p id="total">總金額:${totalPrice}元</p></div>
@@ -131,11 +131,7 @@ div.order input.addr{
 		</div>
 	</div>
 	
-	<input type="hidden">
-	<input type="hidden">
-	<input type="hidden">
-	<input type="hidden">
-	
+	<input type="hidden" name="action" value="checkOut">
 	<div class="paydiv"><input type="submit" class="paybtn" value="確定付款"><button type="button">取消</button></div>
 	</form>
 	<script

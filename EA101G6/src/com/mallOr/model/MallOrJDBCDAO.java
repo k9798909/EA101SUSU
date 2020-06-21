@@ -376,7 +376,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 		return mallor;
 	}
 	
-	public void add(MallOrVO mallOr,List<MallOrDtVO> mallOrDtVOList) {
+	public void add(MallOrVO mallOr,List<MallOrDtVO> mallOrDtList) {
 		Connection conn = null;
 		PreparedStatement past = null;
 		ResultSet rs=null;
@@ -403,7 +403,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 			}
 			
 			MallOrDtJDBCDaoImpl mallOrDtDao=new MallOrDtJDBCDaoImpl();
-			for(MallOrDtVO mallOrDtVo : mallOrDtVOList) {
+			for(MallOrDtVO mallOrDtVo : mallOrDtList) {
 				mallOrDtVo.setMallOrNo(sqe);
 				mallOrDtDao.insertWithEmps(mallOrDtVo, conn);
 			}
