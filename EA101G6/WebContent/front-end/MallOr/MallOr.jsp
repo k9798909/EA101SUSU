@@ -86,6 +86,10 @@ div.order input.addr{
 
 </head>
 <body>
+
+<%@ include file="/front-end/front-end-nav.jsp" %>
+
+<main>
 	<div class="container">
 	<div class="orTitle">訂單明細</div>
 		<table class="table table-striped table-bordered">
@@ -134,6 +138,8 @@ div.order input.addr{
 	<input type="hidden" name="action" value="checkOut">
 	<div class="paydiv"><input type="submit" class="paybtn" value="確定付款"><button type="button">取消</button></div>
 	</form>
+	
+</main>	
 	<script
 		src="<%=request.getContextPath()%>/front-end/js/model/jquery-3.3.1.min.js"></script>
 	<script

@@ -51,13 +51,16 @@
 				<jsp:useBean id="mallSvc" class="com.mall.model.MallService" scope="request"/>
 					
 					<%	
-						if(session.getAttribute("mallVoList")==null){
-							List<MallVO> mallVoList = mallSvc.getAll();
-							session.setAttribute("mallVoList", mallVoList);
-						}
+					List<MallVO> mallVoList = mallSvc.getAll();
+					pageContext.setAttribute("mallVoList", mallVoList);
+					// if(session.getAttribute("mallVoList")==null){
+ 					//		List<MallVO> mallVoList = mallSvc.getAll();
+ 					//		session.setAttribute("mallVoList", mallVoList);
+							
+ 					//	}
 					%>
-						
-					<c:forEach var="mallVo" items="${mallVoList}">
+					<%@ include file="/back-end/Mall/page1.file" %>	
+					<c:forEach var="mallVo" items="${mallVoList}"  begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 						<tr>
 							<td class="">
 								<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetAll.jsp" method="post">
@@ -85,9 +88,9 @@
 							<td class="col-md-1">${(mallVo.status=="1")?"上架中":"下架中" }</td>
 						</tr>
 					</c:forEach>
-
 				</tbody>
 			</table>
+			<div style="text-align:center"><%@ include file="/back-end/Mall/page2.file" %></div>
 		</div>
 
 

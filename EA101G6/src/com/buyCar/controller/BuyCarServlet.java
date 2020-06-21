@@ -29,6 +29,9 @@ public class BuyCarServlet extends HttpServlet {
 		PrintWriter out = res.getWriter();
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
+		
+		
+		
 		if ("buyOne".equals(action)) {
 			try {
 				String commNo = req.getParameter("commNo");
