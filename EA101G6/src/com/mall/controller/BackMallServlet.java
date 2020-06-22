@@ -147,6 +147,7 @@ public class BackMallServlet extends HttpServlet {
 					req.setAttribute("tampTypeNolist", tampTypeNolist);
 					req.setAttribute("erroMsg", erroMsg);
 					req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
+					return;
 				} else {
 					/*************************** 2.開始新增mall的資料 ***************************************/
 					MallService mallSvc = new MallService();
@@ -294,8 +295,10 @@ public class BackMallServlet extends HttpServlet {
 					req.setAttribute("updateerroMsg", erroMsg);
 					if(req.getParameter("isGetOne").trim().length()!=0) {
 						req.getRequestDispatcher("/back-end/Mall/MallGetOne.jsp").forward(req, res);
+						return;
 					}else{
 						req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
+						return;
 					}
 					
 				} else {
@@ -320,6 +323,7 @@ public class BackMallServlet extends HttpServlet {
 						List<MallVO> selMallVoList = mallSvc.findByName(selName);
 						session.setAttribute("selMallVoList", selMallVoList);
 						req.getRequestDispatcher("/back-end/Mall/MallGetOne.jsp").forward(req, res);
+						return;
 					}else{
 						res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
 						return;
@@ -331,6 +335,7 @@ public class BackMallServlet extends HttpServlet {
 				req.setAttribute("showupdate", "showupdate");
 				req.setAttribute("updateerroMsg", "目前系統忙碌中，請稍後!");
 				req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
+				return;
 			}
 
 
@@ -374,6 +379,7 @@ public class BackMallServlet extends HttpServlet {
 			}catch (Exception e) {
 				e.getStackTrace();
 				res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+				return;
 			}	
 				
 			

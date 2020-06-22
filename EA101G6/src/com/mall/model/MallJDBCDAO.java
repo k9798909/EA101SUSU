@@ -51,7 +51,10 @@ public class MallJDBCDAO implements MallDAO_interface {
 			+ " JOIN GMTYPEDT ON mall.commno=gmtypedt.commno"
 			+ " JOIN GMTYPE ON gmtypedt.typeno=gmtype.typeno"
 			+ " WHERE MALL.COMMNO=?";
-	//問題1
+	private static final String SQLSELMALLBYTYPE="SELECT * FROM MALL "+
+	"JOIN GMTYPEDT ON mall.commno=gmtypedt.commno "+
+	"WHERE GMTYPEDT.TYPENO=? AND MALL.STATUS=1";
+	
 	@Override
 	public String add(MallVO mall) {
 		// TODO Auto-generated method stub
@@ -537,6 +540,56 @@ public class MallJDBCDAO implements MallDAO_interface {
 						e.printStackTrace();
 					}
 				}
+				
+				return list;
+	}
+
+	@Override
+	public List<MallVO> findByType(String typeno) {
+		// TODO Auto-generated method stub
+				Connection conn = null;
+				PreparedStatement past = null;		
+				ResultSet rs = null;
+				List<MallVO> list = new ArrayList<MallVO>();
+				try {
+					conn=DriverManager.getConnection(URL,NAME,PSW);
+					past = conn.prepareStatement(SQLSELMALLBYTYPE);
+					past.setString(1,typeno);
+					rs=past.executeQuery();
+					while(rs.next()) {
+						MallVO mall = new MallVO();	
+						mall.setCommNo(rs.getString("COMMNO"));
+						mall.setCommName(rs.getString("COMMNAME"));
+						mall.setPrice(rs.getInt("PRICE"));
+						mall.setQuantity(rs.getInt("QUANTITY"));
+						mall.setImg(rs.getBytes("IMG"));
+						mall.setIntro(rs.getString("INTRO"));
+						mall.setAge(rs.getString("AGE"));
+						mall.setPlayer(rs.getString("PLAYER"));
+						mall.setStatus(rs.getInt("STATUS"));
+						list.add(mall);
+					}
+					
+					
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}finally{
+					
+					try {
+						if(rs!=null)
+							rs.close();
+						if(past!=null)
+							past.close();
+						if(conn!=null)
+							conn.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
 				
 				return list;
 	}

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="BIG5"%>
+<%@ page import="com.mall.model.*"%>
+<%@ page import="com.mallOr.model.*"%>
+<%@ page import="com.mallOrDt.model.*"%>		
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -9,6 +12,8 @@
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front-end/css/model/bootstrap.min.css">
+	
+	
 
 <style>
 
@@ -146,7 +151,18 @@ div.order input.addr{
 		src="<%=request.getContextPath()%>/front-end/js/model/popper.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/front-end/js/model/bootstrap.min.js"></script>
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>	
+	
+	<script>
+		
+		<c:if test="${not empty erroList}">	
+		 	var erromsg="";
+			<c:forEach var="erromsg" items="${erroList}">
+					erromsg+="${erromsg}\n"
+			</c:forEach>
+			swal({text:erromsg });
+		</c:if>
+	</script>
 
 </body>
 </html>

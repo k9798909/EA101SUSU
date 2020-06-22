@@ -13,12 +13,12 @@ public class MallOrDtService {
 	
 	//ok
 	public void add(String mallOrNo, String commNo, Integer quantity, Integer price){
-		MallOrDtVO vo =new MallOrDtVO();
-		vo.setMallOrNo(mallOrNo);
-		vo.setCommNo(commNo);
-		vo.setQuantity(quantity);
-		vo.setPrice(price);
-		dao.add(vo);
+		MallOrDtVO mallOrDtVo =new MallOrDtVO();
+		mallOrDtVo.setMallOrNo(mallOrNo);
+		mallOrDtVo.setCommNo(commNo);
+		mallOrDtVo.setQuantity(quantity);
+		mallOrDtVo.setPrice(price);
+		dao.add(mallOrDtVo);
 	}
 	//ok
 	public void delete(String mallOrNo,String commNo){
@@ -26,13 +26,13 @@ public class MallOrDtService {
 	}
 	//ok
 	public MallOrDtVO update(String mallOrNo, String commNo, Integer quantity, Integer price){
-		MallOrDtVO vo =new MallOrDtVO();
-		vo.setMallOrNo(mallOrNo);
-		vo.setCommNo(commNo);
-		vo.setQuantity(quantity);
-		vo.setPrice(price);
-		dao.update(vo);
-		return vo;
+		MallOrDtVO mallOrDtVo =new MallOrDtVO();
+		mallOrDtVo.setMallOrNo(mallOrNo);
+		mallOrDtVo.setCommNo(commNo);
+		mallOrDtVo.setQuantity(quantity);
+		mallOrDtVo.setPrice(price);
+		dao.update(mallOrDtVo);
+		return mallOrDtVo;
 	}
 	//ok
 	public List<MallOrDtVO> getAll(){

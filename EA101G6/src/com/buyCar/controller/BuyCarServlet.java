@@ -68,6 +68,7 @@ public class BuyCarServlet extends HttpServlet {
 				}
 
 				res.sendRedirect(req.getContextPath() + "/front-end/BuyCar/BuyCar.jsp");
+				return;
 
 			} catch (Exception e) {
 				out.print("新增失敗!請稍後在試");

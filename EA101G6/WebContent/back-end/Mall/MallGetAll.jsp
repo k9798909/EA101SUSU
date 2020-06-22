@@ -17,7 +17,7 @@
 <body>
 
 	<div id="commaction">
-		<button id="create-user">新增商品</button>
+		<button style="margin-right:10px;">遊戲類型</button><button id="create-user">新增商品</button>
 		<div style="display:inline">收尋商品:<form method="post" action="<%= request.getContextPath()%>/Mall/BackMallServlet" style="display:inline"><input type="text" name="selName">
 		<input  type="hidden" name="action" value="selectone">
 		<input type="submit" value="搜尋">

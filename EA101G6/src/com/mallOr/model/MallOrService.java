@@ -16,16 +16,16 @@ private MallOrDAO_interface dao ;
 	//新增 ok
 	public String add(String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
 			Integer payStatus, Integer boxStatus,Integer price) {
-		MallOrVO vo = new MallOrVO();
-		vo.setMbrNo(mbrNo);
-		vo.setOrDate(orDate);
-		vo.setTake(take);
-		vo.setAddress(address);
-		vo.setStatus(status);
-		vo.setPayStatus(payStatus);
-		vo.setBoxStatus(boxStatus);
-		vo.setPrice(price);
-		dao.add(vo);
+		MallOrVO mallOrVo = new MallOrVO();
+		mallOrVo.setMbrNo(mbrNo);
+		mallOrVo.setOrDate(orDate);
+		mallOrVo.setTake(take);
+		mallOrVo.setAddress(address);
+		mallOrVo.setStatus(status);
+		mallOrVo.setPayStatus(payStatus);
+		mallOrVo.setBoxStatus(boxStatus);
+		mallOrVo.setPrice(price);
+		dao.add(mallOrVo);
 		return "新增成功";
 	}
 	//刪除
@@ -36,19 +36,19 @@ private MallOrDAO_interface dao ;
 	//修改
 	public MallOrVO update(String mallOrNo, String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
 			Integer payStatus, Integer boxStatus,Integer price){
-		MallOrVO vo = new MallOrVO();
-		vo.setMallOrNo(mallOrNo);
-		vo.setMbrNo(mbrNo);
-		vo.setOrDate(orDate);
-		vo.setTake(take);
-		vo.setAddress(address);
-		vo.setStatus(status);
-		vo.setPayStatus(payStatus);
-		vo.setBoxStatus(boxStatus);
-		vo.setPrice(price);
-		dao.update(vo);
+		MallOrVO mallOrVo = new MallOrVO();
+		mallOrVo.setMallOrNo(mallOrNo);
+		mallOrVo.setMbrNo(mbrNo);
+		mallOrVo.setOrDate(orDate);
+		mallOrVo.setTake(take);
+		mallOrVo.setAddress(address);
+		mallOrVo.setStatus(status);
+		mallOrVo.setPayStatus(payStatus);
+		mallOrVo.setBoxStatus(boxStatus);
+		mallOrVo.setPrice(price);
+		dao.update(mallOrVo);
 		
-		return vo;
+		return mallOrVo;
 		
 		
 	}
@@ -69,19 +69,21 @@ private MallOrDAO_interface dao ;
 		return dao.findOneByOrNo(mallOrNo);
 	}
 	
-	public void add(String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
+	public MallOrVO add(String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
 			Integer payStatus, Integer boxStatus,Integer price,List<MallOrDtVO> mallOrDtList) {
 		
-		MallOrVO vo = new MallOrVO();
-		vo.setMbrNo(mbrNo);
-		vo.setOrDate(orDate);
-		vo.setTake(take);
-		vo.setAddress(address);
-		vo.setStatus(status);
-		vo.setPayStatus(payStatus);
-		vo.setBoxStatus(boxStatus);
-		vo.setPrice(price);
-		dao.add(vo,mallOrDtList);
+		MallOrVO mallOrVo = new MallOrVO();
+		mallOrVo.setMbrNo(mbrNo);
+		mallOrVo.setOrDate(orDate);
+		mallOrVo.setTake(take);
+		mallOrVo.setAddress(address);
+		mallOrVo.setStatus(status);
+		mallOrVo.setPayStatus(payStatus);
+		mallOrVo.setBoxStatus(boxStatus);
+		mallOrVo.setPrice(price);
+		mallOrVo.setMallOrNo(dao.add(mallOrVo,mallOrDtList));
+		
+		return mallOrVo;
 		
 	}
 	

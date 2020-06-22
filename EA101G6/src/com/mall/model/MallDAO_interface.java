@@ -26,5 +26,7 @@ public interface MallDAO_interface {
 	public MallVO findOneByNo(String commno);
 	//拿出遊戲類型
 	public List<GmTypeVO> getType(String commno);
+	//拿出遊戲類型相同的上架商品
+	public List<MallVO> findByType(String typeno);
 	
 }

@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="BIG5"%>
 <%@ page import="com.mall.model.*"%>
-<%@ page import="com.gmTypeDt.model.*"%>
-<%@ page import="com.gmType.model.*"%>
 <%@ page import="com.buyCar.model.*"%>
+<%@ page import="com.mall.model.*"%>
+<%@ page import="com.mallOr.model.*"%>
+<%@ page import="com.mallOrDt.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>

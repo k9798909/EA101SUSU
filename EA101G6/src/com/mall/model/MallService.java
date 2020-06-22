@@ -91,6 +91,9 @@ public class MallService {
 		return dao.getType(commNo);
 	}
 	
+	public List<MallVO> findByType(String typeno){
+		return dao.findByType(typeno);
+	}
 
 	
 	

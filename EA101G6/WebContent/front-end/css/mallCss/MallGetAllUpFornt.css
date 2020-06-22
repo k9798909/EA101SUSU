@@ -9,6 +9,11 @@
 		margin-top:20px; 
 	}
 	
+	div.seldiv form{
+ 		display:inline-block;
+ 		margin-left:20px;
+	}
+	
 	div.comm{
 		
 		height:300px;

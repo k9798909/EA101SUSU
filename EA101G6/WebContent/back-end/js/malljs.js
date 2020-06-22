@@ -80,12 +80,12 @@ $(document).ready(function() {
 			$(intro).text($(this).text());
 			$(intro).css({
 				"position" : "absolute",
-				"width" : "200px",
-				"top" : "30%",
+				"width" : "400px",
+				"top" : "15%",
 				"background-color" : "#ffffff",
 				"word-break" : "break-all",
 				"word-wrap" : "break-word",
-				"margin-left" : "-100px",
+				"margin-left" : "-200px",
 				"font-size" : "24px",
 				"left" : "50%",
 				"color" : "#000000",
