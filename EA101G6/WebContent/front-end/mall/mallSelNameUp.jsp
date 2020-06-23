@@ -12,7 +12,7 @@
 <title>Gameing on Board</title>
 
 <!-- 個人CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/mallCss/MallGetAllUpFornt.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/mallCss/mallGetAllUpFornt.css">
 
 </head>
 <body>
@@ -22,7 +22,7 @@
 	<main class="mall">
 	
 		<div class="seldiv">
-			<a href="<%=request.getContextPath()%>/front-end/Mall/MallGetAllUp.jsp"><button style="display:inline-block">回首頁</button></a>
+			<a href="<%=request.getContextPath()%>/front-end/mall/mallGetAllUp.jsp"><button style="display:inline-block">回首頁</button></a>
 			<form style="display:inline-block" action="<%=request.getContextPath()%>/Mall/ForntMallServlet" method="post">
 				<input placeholder="請輸入商品名稱" type="text" name="selName" class="selinput">
 				<input type="hidden" name="action" value="selName">
@@ -48,7 +48,7 @@
 				
 				<c:forEach var="mallVo" items="${selMallVoList}">
 					<div class="col-lg-3 col-6 comm">
-						<a href="<%=request.getContextPath()%>/front-end/Mall/MallGetOne.jsp?commNo=${mallVo.commNo}">
+						<a href="<%=request.getContextPath()%>/front-end/mall/mallGetOne.jsp?commNo=${mallVo.commNo}">
 							<div class="imgdiv"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></div>
 							<p> ${mallVo.commName} </p>
 							<div class="dt"><p><b>$${mallVo.price}</b></p></div>
@@ -59,7 +59,7 @@
 			</div>
 		</div>
 
-		<a href="<%=request.getContextPath()%>/front-end/BuyCar/BuyCar.jsp"><button class="shopcar" >
+		<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp"><button class="shopcar" >
 			<img src="<%=request.getContextPath()%>/front-end/images/supermarket.png">
 		</button></a>
 

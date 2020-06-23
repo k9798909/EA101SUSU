@@ -67,7 +67,7 @@ public class BuyCarServlet extends HttpServlet {
 					buyCarMall.setQuantity(tempquantity);
 				}
 
-				res.sendRedirect(req.getContextPath() + "/front-end/BuyCar/BuyCar.jsp");
+				res.sendRedirect(req.getContextPath() + "/front-end/buyCar/buyCar.jsp");
 				return;
 
 			} catch (Exception e) {

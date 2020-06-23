@@ -38,12 +38,12 @@ public class MallOrServlet extends HttpServlet {
 		List<MallVO> buyCarList=(LinkedList<MallVO>) session.getAttribute("buyCarList");
 		if("showCheckOut".equals(action)) {
 			if(buyCarList.size()==0) {
-				RequestDispatcher dispatcher=req.getRequestDispatcher("/front-end/BuyCar/BuyCar.jsp");
+				RequestDispatcher dispatcher=req.getRequestDispatcher("/front-end/buyCar/buyCar.jsp");
 				req.setAttribute("noMallAlert","購物車無商品無法結帳");
 				dispatcher.forward(req,res);
 				return;
 			}else {	
-				RequestDispatcher dispatcher=req.getRequestDispatcher("/front-end/MallOr/MallOr.jsp");
+				RequestDispatcher dispatcher=req.getRequestDispatcher("/front-end/mallOr/mallOr.jsp");
 				dispatcher.forward(req,res);
 				return;
 			}
@@ -97,7 +97,7 @@ public class MallOrServlet extends HttpServlet {
 			}
 			
 			if(!erroList.isEmpty()){
-				RequestDispatcher dispatcher=req.getRequestDispatcher("/front-end/MallOr/MallOr.jsp");
+				RequestDispatcher dispatcher=req.getRequestDispatcher("/front-end/mallOr/mallOr.jsp");
 				req.setAttribute("erroList",erroList);
 				dispatcher.forward(req,res);
 				return;
@@ -110,7 +110,7 @@ public class MallOrServlet extends HttpServlet {
 			session.removeAttribute("buyCarList");
 			req.setAttribute("mallOrVo",mallOrVo);
 			req.setAttribute("mallOrDtList",mallOrDtList);
-			RequestDispatcher dispatcher=req.getRequestDispatcher("/front-end/MallOr/MallOrGetOne.jsp");
+			RequestDispatcher dispatcher=req.getRequestDispatcher("/front-end/mallOr/mallOrGetOne.jsp");
 			dispatcher.forward(req, res);
 			return;
 			

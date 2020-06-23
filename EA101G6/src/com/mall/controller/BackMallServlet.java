@@ -146,7 +146,7 @@ public class BackMallServlet extends HttpServlet {
 					req.setAttribute("tempmallVo", mallVo);
 					req.setAttribute("tampTypeNolist", tampTypeNolist);
 					req.setAttribute("erroMsg", erroMsg);
-					req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
+					req.getRequestDispatcher("/back-end/mall/mallGetAll.jsp").forward(req, res);
 					return;
 				} else {
 					/*************************** 2.開始新增mall的資料 ***************************************/
@@ -162,7 +162,7 @@ public class BackMallServlet extends HttpServlet {
 					// 讓前台list能更新
 					session.removeAttribute("mallVoList");
 					session.setAttribute("successMsg","新增成功");
-					res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+					res.sendRedirect(req.getContextPath() + "/back-end/mall/mallGetAll.jsp");
 					return;
 					// req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 				}
@@ -294,10 +294,10 @@ public class BackMallServlet extends HttpServlet {
 					req.setAttribute("showupdate", "showupdate");
 					req.setAttribute("updateerroMsg", erroMsg);
 					if(req.getParameter("isGetOne").trim().length()!=0) {
-						req.getRequestDispatcher("/back-end/Mall/MallGetOne.jsp").forward(req, res);
+						req.getRequestDispatcher("/back-end/mall/mallGetOne.jsp").forward(req, res);
 						return;
 					}else{
-						req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
+						req.getRequestDispatcher("/back-end/mall/mallGetAll.jsp").forward(req, res);
 						return;
 					}
 					
@@ -322,10 +322,10 @@ public class BackMallServlet extends HttpServlet {
 						String selName=(String)session.getAttribute("selName");
 						List<MallVO> selMallVoList = mallSvc.findByName(selName);
 						session.setAttribute("selMallVoList", selMallVoList);
-						req.getRequestDispatcher("/back-end/Mall/MallGetOne.jsp").forward(req, res);
+						req.getRequestDispatcher("/back-end/mall/mallGetOne.jsp").forward(req, res);
 						return;
 					}else{
-						res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+						res.sendRedirect(req.getContextPath() + "/back-end/mall/mallGetAll.jsp");
 						return;
 					}
 					
@@ -334,7 +334,7 @@ public class BackMallServlet extends HttpServlet {
 				e.getStackTrace();
 				req.setAttribute("showupdate", "showupdate");
 				req.setAttribute("updateerroMsg", "目前系統忙碌中，請稍後!");
-				req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
+				req.getRequestDispatcher("/back-end/mall/mallGetAll.jsp").forward(req, res);
 				return;
 			}
 
@@ -361,24 +361,24 @@ public class BackMallServlet extends HttpServlet {
 				}else {
 					selErroMsg="商品名稱格式輸入錯誤，請輸入20字以內，請不要有特殊字元。";
 					session.setAttribute("selErroMsg",selErroMsg);
-					res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+					res.sendRedirect(req.getContextPath() + "/back-end/mall/mallGetAll.jsp");
 					return;
 				}
 		/*************************** 2.查詢完成,準備轉交(Send the Success view) ***********/	
 				if(selMallVoList.isEmpty()) {
 					selErroMsg="查無此資料";
 					session.setAttribute("selErroMsg",selErroMsg);
-					res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+					res.sendRedirect(req.getContextPath() + "/back-end/mall/mallGetAll.jsp");
 					return;
 				}else {
 					session.setAttribute("selMallVoList", selMallVoList);
-					req.getRequestDispatcher("/back-end/Mall/MallGetOne.jsp").forward(req, res);
+					req.getRequestDispatcher("/back-end/mall/mallGetOne.jsp").forward(req, res);
 					return;
 				}
 				
 			}catch (Exception e) {
 				e.getStackTrace();
-				res.sendRedirect(req.getContextPath() + "/back-end/Mall/MallGetAll.jsp");
+				res.sendRedirect(req.getContextPath() + "/back-end/mall/mallGetAll.jsp");
 				return;
 			}	
 				

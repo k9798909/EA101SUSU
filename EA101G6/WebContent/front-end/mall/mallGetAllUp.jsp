@@ -13,7 +13,7 @@
 
 <!-- ­Ó¤HCSS -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/front-end/css/mallCss/MallGetAllUpFornt.css">
+	href="<%=request.getContextPath()%>/front-end/css/mallCss/mallGetAllUpFornt.css">
 
 </head>
 <body>
@@ -64,10 +64,10 @@
 		<div class="container commMain">
 			<div class="row">
 
-				<%@ include file="/front-end/Mall/page1.file"%>
+				<%@ include file="/front-end/mall/page1.file"%>
 				<c:forEach var="mallVo" items="${mallVoList}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<div class="col-lg-3 col-6 comm">
-							<a href="<%=request.getContextPath()%>/front-end/Mall/MallGetOne.jsp?commNo=${mallVo.commNo}">
+							<a href="<%=request.getContextPath()%>/front-end/mall/mallGetOne.jsp?commNo=${mallVo.commNo}">
 							<div class="imgdiv">
 								<img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}">
 							</div>
@@ -81,9 +81,9 @@
 			</div>
 		</div>
 		<div style="text-align: center"><%@ include
-				file="/front-end/Mall/page2.file"%></div>
+				file="/front-end/mall/page2.file"%></div>
 
-		<a href="<%=request.getContextPath()%>/front-end/BuyCar/BuyCar.jsp"><button
+		<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp"><button
 				class="shopcar">
 				<img
 					src="<%=request.getContextPath()%>/front-end/images/supermarket.png">

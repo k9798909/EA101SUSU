@@ -17,7 +17,7 @@
 <body>
 
 	<div id="commaction">
-		<button onclick="javascript:location.href='<%= request.getContextPath() %>/back-end/Mall/MallGetAll.jsp'">商品頁面</button>
+		<button onclick="javascript:location.href='<%= request.getContextPath() %>/back-end/mall/mallGetAll.jsp'">商品頁面</button>
 	</div>
 	
 	
@@ -46,7 +46,7 @@
 					<c:forEach var="mallVo" items="${selMallVoList}">
 						<tr>
 							<td class="col-md-1">
-							<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetOne.jsp" method="post">
+							<form action= "<%= request.getContextPath()%>/back-end/mall/mallGetOne.jsp" method="post">
 							<input id="upda" type="submit"value="修改">
 							<input type="hidden" name="commNo" value="${mallVo.commNo}">
 							<!-- 叫出修改介面 -->
@@ -78,7 +78,7 @@
 
 
 
-<%@ include file="/back-end/Mall/MallUpdate.jsp" %>
+<%@ include file="/back-end/mall/mallUpdate.jsp" %>
 
 
 

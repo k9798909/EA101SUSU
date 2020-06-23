@@ -59,11 +59,11 @@
 							
  					//	}
 					%>
-					<%@ include file="/back-end/Mall/page1.file" %>	
+					<%@ include file="/back-end/mall/page1.file" %>
 					<c:forEach var="mallVo" items="${mallVoList}"  begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 						<tr>
 							<td class="">
-								<form action= "<%= request.getContextPath()%>/back-end/Mall/MallGetAll.jsp" method="post">
+								<form action= "<%= request.getContextPath()%>/back-end/mall/mallGetAll.jsp" method="post">
 									<input id="upda" type="submit"value="修改">
 									<input type="hidden" name="commNo" value="${mallVo.commNo}">
 									<!-- 叫出修改介面 -->
@@ -90,12 +90,12 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			<div style="text-align:center"><%@ include file="/back-end/Mall/page2.file" %></div>
+			<div style="text-align:center"><%@ include file="/back-end/mall/page2.file" %></div>
 		</div>
 
 
-<%@ include file="/back-end/Mall/MallAdd.jsp" %>
-<%@ include file="/back-end/Mall/MallUpdate.jsp" %>
+<%@ include file="/back-end/mall/mallAdd.jsp" %>
+<%@ include file="/back-end/mall/mallUpdate.jsp" %>
 
 
 

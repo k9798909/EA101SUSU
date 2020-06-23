@@ -13,7 +13,7 @@
 
 <!-- ­Ó¤HCSS -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/front-end/css/mallCss/MallGetOne.css">
+	href="<%=request.getContextPath()%>/front-end/css/mallCss/mallGetOne.css">
 
 
 </head>
@@ -87,7 +87,7 @@
 
 
 	</main>
-	<a href="<%=request.getContextPath()%>/front-end/BuyCar/BuyCar.jsp"><button class="shopcar">
+	<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp"><button class="shopcar">
 		<img
 			src="<%=request.getContextPath()%>/front-end/images/supermarket.png">
 	</button></a>
