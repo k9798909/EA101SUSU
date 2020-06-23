@@ -241,6 +241,23 @@ $(document).ready(function() {
 		});
 	//遊戲類型確定
 	  $("div.gmtypezone button.confirm").click(function(){
+		  
+		  $.ajax({
+			  dataType: "json",
+			  url: ctx+"/GmType/GmTypeServlet",
+			  type: "POST",
+			  data: {
+		  			action:"add",
+		  			typeName:$("#typeNameInput").val()
+				},
+			  success:function(data,status){
+					if(status=="success"){
+						swal({text:data});
+						let div=document.createElement("div");
+					}	
+				} 
+			});
+		  
 		  $.post(ctx+"/GmType/GmTypeServlet",
 					{
 			  			action:"add",
