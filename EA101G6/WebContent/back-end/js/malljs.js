@@ -252,27 +252,12 @@ $(document).ready(function() {
 				},
 			  success:function(data,status){
 					if(status=="success"){
-						swal({text:data});
+						swal({text:data.msg});
 						let div=document.createElement("div");
 					}	
 				} 
 			});
-		  
-		  $.post(ctx+"/GmType/GmTypeServlet",
-					{
-			  			action:"add",
-			  			typeName:$("#typeNameInput").val()
-					},
-					function(data,status){
-						if(status=="success"){
-							var obb=JSON.parse(JSON.stringify(data));
-							console.log(obb[0].msg);
-							swal({text:data});
-							let div=document.createElement("div");
-						}	
-					}
-			)
-		  
+		    
 	  })
 	  
 
