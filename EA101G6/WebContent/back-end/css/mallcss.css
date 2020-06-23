@@ -92,7 +92,7 @@ fieldset {
 	border: 1px solid;
 }
 
-#upda {
+.upda {
 	border-radius: 4px;
 	background-color: #e7e7e7;
 	color: #000000;
@@ -100,7 +100,7 @@ fieldset {
 }
 
 @media screen and (max-width: 476px){
-	#upda {
+	.upda {
 	border-radius: 4px;
 	background-color: #e7e7e7;
 	color: #000000;
@@ -122,7 +122,7 @@ fieldset {
 }
 
 
-#upda:hover {
+.upda:hover {
 	background-color: #E5446D;
 	color: white;
 }

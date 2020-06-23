@@ -9,6 +9,7 @@ function showupdate() {
 	$("#comm td div").off();
 	$("#create-user").text("修改商品");
 	$("#create-user").attr("disabled", true);
+	$("button#callGmType").attr('disabled', true);
 }
 
 $(document).ready(function() {
@@ -22,6 +23,7 @@ $(document).ready(function() {
 		$("#addDiv .showimg").append("<img>");
 		$("#create-user").attr('disabled', true);
 		$("#comm td div").off();
+		$("button#callGmType").attr('disabled', true);
 	});
 
 	// 預覽圖片function
@@ -60,6 +62,7 @@ $(document).ready(function() {
 			"opacity" : "1"
 		});
 		// 啟動事件
+		$("button#callGmType").attr('disabled', false);
 		setTimeout(hov, 500);
 		$(".erroMsg").remove();
 	})
@@ -159,6 +162,7 @@ $(document).ready(function() {
 		// 把按鈕便回來
 		$("#create-user").text("新增商品");
 		$("#create-user").attr("disabled", false);
+		$("button#callGmType").attr('disabled', false);
 		// 啟動事件
 		setTimeout(hov, 500);
 		
@@ -181,5 +185,78 @@ $(document).ready(function() {
 		if ($("#updateDiv .gmtype").length != 1)
 			$(gmtype).remove();
 	})
+	
+	//叫出遊戲類型
+	$("button#callGmType").click(function(){
+		  $("div.gmtypezone").slideToggle();
+		  $("#create-user").attr('disabled', true);
+		  $("button#callGmType").attr('disabled', true);
+		  $("input.upda").attr('disabled', true);
+		  $("#comm td div").off();
+	  })
+	  //隱藏遊戲類型
+	 $("button.typecancel").click(function(){
+		  $("div.gmtypezone").slideToggle();
+		  $("#create-user").attr('disabled', false);
+		  $("button#callGmType").attr('disabled', false);
+		  $("input.upda").attr('disabled', false);
+		  $("div.gmtypezone button.confirm").attr('disabled', false);
+		  $("div#delalert").hide();
+		  setTimeout(hov, 500);
+		  
+	  })
+	  var typeNo="";
+	  //刪除按鈕
+	  $("button.deltypebtn").click(function(){
+		  typeNo=$(this).val();
+		  $("div#delalert").toggle();
+		  $("div.gmtypezone button.confirm").attr('disabled', true);
+		  		  
+	  });
+	//遊戲類型警告確定
+	  $("div#delalert button.confirm").click(function(){
+		  $("div#delalert").toggle();
+		  $("div.gmtypezone input.confirm").attr('disabled', false);
+		  $("div.gmtypezone button.confirm").attr('disabled', false);
+		  $.post(ctx+"/GmType/GmTypeServlet",
+					{
+			  			action:"delete",
+			  			typeNo:typeNo
+					},
+					function(data,status){
+						if(status=="success"){
+							$("div."+typeNo+"").remove();
+							swal({text:data });
+						}	
+					}
+			)
+		}
+	  
+	  );
+  
+	   //遊戲類型警告取消
+	  $("div#delalert button.cnacel").click(function(){
+			  $("div#delalert").toggle()
+			  $("div.gmtypezone button.confirm").attr('disabled', false);
+		});
+	//遊戲類型確定
+	  $("div.gmtypezone button.confirm").click(function(){
+		  $.post(ctx+"/GmType/GmTypeServlet",
+					{
+			  			action:"add",
+			  			typeName:$("#typeNameInput").val()
+					},
+					function(data,status){
+						if(status=="success"){
+							var obb=JSON.parse(JSON.stringify(data));
+							console.log(obb[0].msg);
+							swal({text:data});
+							let div=document.createElement("div");
+						}	
+					}
+			)
+		  
+	  })
+	  
 
 });

@@ -58,7 +58,7 @@ main{
 					</tr>
 					<tr>
 						<td>訂購日期:</td>
-						<td><fmt:formatDate value="${mallOrVo.orDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+						<td><fmt:formatDate value="${mallOrVo.orDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					</tr>
 					<tr>
 						<td>訂單金額:</td>

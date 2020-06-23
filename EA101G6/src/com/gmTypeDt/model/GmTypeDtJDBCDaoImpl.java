@@ -26,6 +26,7 @@ public class GmTypeDtJDBCDaoImpl implements GmTypeDtDao_interface {
 			+ "VALUES(?,?)";
 	private static final String SQLDELETE="DELETE FROM GMTYPEDT WHERE TYPENO=? AND COMMNO=?";
 	private static final String SQLDELETEBYCOMMNO="DELETE FROM GMTYPEDT WHERE COMMNO=?";
+	private static final String SQLDELETEBYTYPENO="DELETE FROM GMTYPEDT WHERE TYPENO=?";
 	private static final String SQLSELALL="SELECT * FROM GMTYPEDT";
 	private static final String SQLSELBYTYPE="SELECT * FROM GMTYPEDT WHERE TYPENO=?";
 	private static final String SQLSELBYCOMM="SELECT * FROM GMTYPEDT WHERE COMMNO=?";
@@ -263,6 +264,48 @@ public class GmTypeDtJDBCDaoImpl implements GmTypeDtDao_interface {
 			conn.setAutoCommit(false);
 			past=conn.prepareStatement(SQLDELETEBYCOMMNO);
 			past.setString(1,commNo);
+			past.executeUpdate();
+			
+			conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}finally {
+			
+			try {
+				conn.setAutoCommit(true);
+				if(past!=null)
+					past.close();
+				if(conn!=null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+		}
+		
+	}
+	
+	@Override
+	public void deleteByTypeNo(String typeNo) {
+		// TODO Auto-generated method stub
+		
+		Connection conn =null;
+		PreparedStatement past =null;
+		
+		try {
+			conn=DriverManager.getConnection(URL,NAME,PSW);
+			
+			conn.setAutoCommit(false);
+			past=conn.prepareStatement(SQLDELETEBYTYPENO);
+			past.setString(1,typeNo);
 			past.executeUpdate();
 			
 			conn.commit();

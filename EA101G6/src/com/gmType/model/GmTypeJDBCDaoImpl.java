@@ -31,18 +31,28 @@ public class GmTypeJDBCDaoImpl implements GmTypeDao_interface {
 	private static final String SQLSELALL="SELECT * FROM GMTYPE ORDER BY TYPENO";
 	
 	@Override
-	public void add(GmTypeVO gmType) {
+	public String add(GmTypeVO gmType) {
 		// TODO Auto-generated method stub
 		Connection conn =null;
 		PreparedStatement past = null;
+		ResultSet rs = null;
+		String seq="";
 		
 		try {
 			conn =DriverManager.getConnection(URL,NAME,PSW);
 			conn.setAutoCommit(false);
-			past=conn.prepareStatement(SQLADD);
+			String cols[] = {"TYPENO"};
+			past=conn.prepareStatement(SQLADD,cols);
 			past.setString(1,gmType.getTypeName());
 			past.executeUpdate();
 			conn.commit();
+			
+			rs = past.getGeneratedKeys();
+			if (rs.next()) {
+				seq = rs.getString(1);
+			}
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			
@@ -67,6 +77,7 @@ public class GmTypeJDBCDaoImpl implements GmTypeDao_interface {
 			}
 			
 		}
+		return seq;
 		
 		
 		

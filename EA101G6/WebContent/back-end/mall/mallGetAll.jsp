@@ -17,7 +17,7 @@
 <body>
 
 	<div id="commaction">
-		<button style="margin-right:10px;">遊戲類型</button><button id="create-user">新增商品</button>
+		<button id="callGmType" style="margin-right:10px;">遊戲類型</button><button id="create-user">新增商品</button>
 		<div style="display:inline">收尋商品:<form method="post" action="<%= request.getContextPath()%>/Mall/BackMallServlet" style="display:inline"><input type="text" name="selName">
 		<input  type="hidden" name="action" value="selectone">
 		<input type="submit" value="搜尋">
@@ -64,10 +64,18 @@
 						<tr>
 							<td class="">
 								<form action= "<%= request.getContextPath()%>/back-end/mall/mallGetAll.jsp" method="post">
-									<input id="upda" type="submit"value="修改">
+									<input class="upda" type="submit"value="修改">
 									<input type="hidden" name="commNo" value="${mallVo.commNo}">
 									<!-- 叫出修改介面 -->
 									<input type="hidden" name="showupdate" value="showupdate">
+									<!-- 確定頁面 -->
+									<% 	String tampWhichPage=request.getParameter("whichPage");
+										if(tampWhichPage!=null&&tampWhichPage.length()!=0){
+											pageContext.setAttribute("whichPage",tampWhichPage);
+										}
+									
+									%>
+									<input  type="hidden" name="whichPage" value="${whichPage}">
 								</form>
 							</td>
 							<td class="col-md-1"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></td>
@@ -94,42 +102,52 @@
 		</div>
 
 
+
 <%@ include file="/back-end/mall/mallAdd.jsp" %>
 <%@ include file="/back-end/mall/mallUpdate.jsp" %>
+<%@ include file="/back-end/gmType/gmTypeGetAll.jsp" %>
 
 
-
+<script>var ctx ="<%=request.getContextPath()%>"</script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <script src="<%= request.getContextPath() %>/back-end/js/malljs.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<script>
+
+
 <!-- 當點擊修改時會傳的參數 有此參數會呼叫修改頁面 -->
 <% pageContext.setAttribute("showupdate",request.getParameter("showupdate")); %>
 
 <!-- 有成功訊息就啟動 -->
 <c:if test="${not empty successMsg}">
-	<script>swal({text:"${successMsg}" });</script>
+	swal({text:"${successMsg}" });
 	<%session.removeAttribute("successMsg");%>
 </c:if>
 
 <!-- 點擊修改時會啟動傳回錯誤訊息時也會啟動 -->
 <c:if test="${'showupdate'==showupdate}">
-	<%= "<script>$(document).ready(function() {showupdate();});</script>"%>
+	<%= "$(document).ready(function() {showupdate();});"%>
 	<% pageContext.removeAttribute("action"); %>
 </c:if>
 <!-- 新增有錯誤訊息時啟動叫出新增介面 -->
 <c:if test="${not empty erroMsg}">
-	<%= "<script>$(document).ready(function() {$('#create-user').click()})</script>"%>
+	<%= "$(document).ready(function() {$('#create-user').click()})"%>
 	<%request.removeAttribute("erroMsg"); %>
 </c:if>
 
 <!-- 查詢時有錯誤啟動 -->
 <c:if test="${not empty selErroMsg}">
-	<script>swal({text:"${selErroMsg}" });</script>
+		swal({text:"${selErroMsg}" });
 	<%session.removeAttribute("selErroMsg"); %>
 </c:if>							
 
+	  
+</script>
 
 </body>
 </html>

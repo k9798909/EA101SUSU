@@ -9,10 +9,11 @@ public class GmTypeService {
 		dao = new GmTypeJDBCDaoImpl();
 	}
 	
-	public void add(String typeName){
+	public GmTypeVO add(String typeName){
 		GmTypeVO vo = new GmTypeVO();
 		vo.setTypeName(typeName);
-		dao.add(vo);
+		vo.setTypeNo(dao.add(vo));
+		return vo;
 	};
 	public void delete(String typeNo){
 		dao.delete(typeNo);
