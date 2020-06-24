@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +21,32 @@
 		padding:0px;
 		height:30px;
 	}
+	
+	input.dtbtn {
+	margin-top:2px;
+    background-color: #ffffff;
+    border-radius: 2px; 
+    color: black;
+    border: none;
+    padding: 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width:40px;
+	}
+	
+	input.dtbtn:hover {
+    background-color: #e7e7e7;
+    border-radius: 4px; 
+    color: black;
+    border: solid;
+    padding: 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	}
 
 </style>
 
@@ -28,7 +55,9 @@
 <body>
 
 <main>
-
+	
+	<jsp:useBean id="mallOrSvc" class="com.mallOr.model.MallOrService"/>
+	
 	<div class="container orMain">
 		<div class="row">
 		<div class="col-12">
@@ -43,13 +72,22 @@
 				</tr>	
 				
 				<tbody>
+				
+				<c:forEach var="mallOr" items="${mallOrSvc.all}">
 				<tr>
-				<td>20200603-0000001</td>
-				<td>已付款</td>
-				<td>未出貨</td>
-				<td>未完成</td>
-				<td>觀看</td>
+				<td>${mallOr.mallOrNo}</td>
+				<td>${mallOr.payStatus=="1"?"已付款":"未付款"}</td>
+				<td>${mallOr.boxStatus=="1"?"已出貨":"未出貨"}</td>
+				<td>${mallOr.status=="1"?"已完成":"未完成"}</td>
+
+				<td><form>
+					<input type="hidden" name="mallOrNo" value="${mallOr.mallOrNo}">
+					<input type="hidden" name="action" value="selectone">
+					<input class="dtbtn" type="submit" value="觀看">
+				</form></td>
 				</tr>
+				</c:forEach>
+				
 				</tbody>
 				
 			</table>

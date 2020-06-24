@@ -10,20 +10,20 @@ public class GmTypeService {
 	}
 	
 	public GmTypeVO add(String typeName){
-		GmTypeVO vo = new GmTypeVO();
-		vo.setTypeName(typeName);
-		vo.setTypeNo(dao.add(vo));
-		return vo;
+		GmTypeVO gmTypeVo = new GmTypeVO();
+		gmTypeVo.setTypeName(typeName);
+		gmTypeVo.setTypeNo(dao.add(gmTypeVo));
+		return gmTypeVo;
 	};
 	public void delete(String typeNo){
 		dao.delete(typeNo);
 	};
 	public GmTypeVO update(String typeNo, String typeName) {
-		GmTypeVO vo = new GmTypeVO();
-		vo.setTypeNo(typeNo);
-		vo.setTypeName(typeName);
-		dao.update(vo);
-		return vo;
+		GmTypeVO gmTypeVo = new GmTypeVO();
+		gmTypeVo.setTypeNo(typeNo);
+		gmTypeVo.setTypeName(typeName);
+		dao.update(gmTypeVo);
+		return gmTypeVo;
 	};
 	public List<GmTypeVO> getAll(){
 		return dao.getAll();

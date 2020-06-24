@@ -47,6 +47,20 @@
     display: inline-block;
     font-size: 16px;
 	}
+	
+	input.box{
+	margin-top:2px;
+	margin-left:5px;
+    border-radius: 2px; 
+    color: black;
+     border: solid 1px;
+    padding: 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    width:35px;
+	}
 
 </style>
 
@@ -79,11 +93,23 @@
 				
 				<tbody>
 				
-				<c:forEach var="mallOr" items="${mallOrSvc.all}">
+				<c:forEach var="mallOr" items="${mallOrSvc.findByBoxStatus(0)}">
 				<tr>
 				<td>${mallOr.mallOrNo}</td>
 				<td>${mallOr.payStatus=="1"?"已付款":"未付款"}</td>
-				<td>${mallOr.boxStatus=="1"?"已出貨":"未出貨"}</td>
+				<td>
+				
+				
+				<form action="<%= request.getContextPath()%>/MallOr/MallOrServlet" method="post">
+				${mallOr.boxStatus=="1"?"已出貨":"未出貨"}	
+				<input class="box" type="submit" value="出貨" >
+				<input type="hidden" name="mallOrNo" value="${mallOr.mallOrNo}" >
+				<input type="hidden" name="status" value="${mallOr.status}" >
+				<input type="hidden" name="boxStatus" value="${mallOr.boxStatus}" >
+				<input type="hidden" name="payStatus" value="${mallOr.payStatus}" >
+				<input type="hidden" name="action" value="update" >
+				</form>
+				</td>
 				<td>${mallOr.status=="1"?"已完成":mallOr.status=="2"?"已取消":"未完成"}</td>
 
 				<td><form action="<%= request.getContextPath()%>/MallOr/MallOrServlet" method="post">

@@ -12,10 +12,10 @@ public class GmTypeDtService {
 	//ok
 	public void add(String typeNo, String commNo){
 		
-		GmTypeDtVO vo = new GmTypeDtVO();
-		vo.setTypeNo(typeNo);
-		vo.setCommNo(commNo);
-		dao.add(vo);
+		GmTypeDtVO gmTypeDtVo = new GmTypeDtVO();
+		gmTypeDtVo.setTypeNo(typeNo);
+		gmTypeDtVo.setCommNo(commNo);
+		dao.add(gmTypeDtVo);
 	}
 	
 	//ok

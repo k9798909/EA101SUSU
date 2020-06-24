@@ -40,7 +40,6 @@ main{
 </head>
 <body>
 
-<%@ include file="/front-end/front-end-nav.jsp" %>
 <main>
 	<div class="container">
 		<div class="row">
@@ -72,7 +71,11 @@ main{
 						<td>付款狀態</td>
 						<td>${mallOrVo.payStatus==1?"已付款":"未付款"}</td>
 					</tr>
-										<tr>
+					<tr>
+						<td>訂單狀況</td>
+						<td>${mallOr.status=="1"?"已完成":mallOr.status=="2"?"已取消":"未完成"}</td>
+					</tr>
+					<tr>
 						<td>取貨方式</td>
 						<td>${mallOrVo.take}</td>
 					</tr>
@@ -80,8 +83,11 @@ main{
 						<td>取貨地點</td>
 						<td>${mallOrVo.address}</td>
 					</tr>
-				</tbody>
+					
 
+					
+				</tbody>
+	
 			</table>
 			</div>
 		</div>

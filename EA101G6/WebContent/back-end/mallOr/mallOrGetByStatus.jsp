@@ -79,7 +79,7 @@
 				
 				<tbody>
 				
-				<c:forEach var="mallOr" items="${mallOrSvc.all}">
+				<c:forEach var="mallOr" items="${mallOrSvc.findByStatus(0)}">
 				<tr>
 				<td>${mallOr.mallOrNo}</td>
 				<td>${mallOr.payStatus=="1"?"已付款":"未付款"}</td>

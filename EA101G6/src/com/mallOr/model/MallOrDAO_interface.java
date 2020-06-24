@@ -14,6 +14,7 @@ public interface MallOrDAO_interface {
 	public List<MallOrVO> getAll();
 	public List<MallOrVO> findByMbrNo(String mbrNo);
 	public List<MallOrVO> findByStatus(Integer status);
+	public List<MallOrVO> findByBoxStatus(Integer boxStatus);
 	public MallOrVO findOneByOrNo(String mallOrNo);
 	
 	

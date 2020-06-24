@@ -34,18 +34,13 @@ private MallOrDAO_interface dao ;
 		return "刪除成功";
 	}
 	//修改
-	public MallOrVO update(String mallOrNo, String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
-			Integer payStatus, Integer boxStatus,Integer price){
+	public MallOrVO update(String mallOrNo, Integer status,
+			Integer payStatus, Integer boxStatus){
 		MallOrVO mallOrVo = new MallOrVO();
 		mallOrVo.setMallOrNo(mallOrNo);
-		mallOrVo.setMbrNo(mbrNo);
-		mallOrVo.setOrDate(orDate);
-		mallOrVo.setTake(take);
-		mallOrVo.setAddress(address);
 		mallOrVo.setStatus(status);
 		mallOrVo.setPayStatus(payStatus);
 		mallOrVo.setBoxStatus(boxStatus);
-		mallOrVo.setPrice(price);
 		dao.update(mallOrVo);
 		
 		return mallOrVo;
@@ -60,6 +55,12 @@ private MallOrDAO_interface dao ;
 	public List<MallOrVO> findByMbrNo(String mbrNo){
 		return dao.findByMbrNo(mbrNo);
 	}
+	
+	//ok
+	public List<MallOrVO> findByBoxStatus(Integer boxStatus){
+		return dao.findByBoxStatus(boxStatus);
+	}
+	
 	//ok
 	public List<MallOrVO> findByStatus(Integer status){
 		return dao.findByStatus(status);
