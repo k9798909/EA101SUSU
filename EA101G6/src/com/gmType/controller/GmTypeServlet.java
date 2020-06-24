@@ -53,7 +53,9 @@ public class GmTypeServlet extends HttpServlet {
 			GmTypeVO gmType=new GmTypeVO();
 			gmType=gmTypeSvc.add(typeName);
 		/**3.新增完成,準備轉交***/	
-			out.write("{ \"msg\" : \"新增完成\" , \"typeNo\" : \""+ gmType.getTypeNo() +"\" }");
+			out.write("{ \"msg\" : \"新增完成\" ,"
+					+ " \"typeNo\" : \""+ gmType.getTypeNo() +"\" "
+					+ ", \"typeName\" : \""+gmType.getTypeName()+"\" }");
 			return;
 		}
 		

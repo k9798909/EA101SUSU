@@ -107,7 +107,7 @@
 										</ul></li>
 								</ul></li>
 
-							<li><a href="#mall" class="nav-link">商城</a></li>
+							<li><a href="<%=request.getContextPath()%>/front-end/mall/mallGetAllUp.jsp" class="nav-link">商城</a></li>
 							<li><a href="#shop" class="nav-link">市集</a></li>
 							<li><a href="#play" class="nav-link">揪團區</a></li>
 							<li><a href="#store" class="nav-link">店家列表</a></li>

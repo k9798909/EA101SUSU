@@ -87,7 +87,7 @@
 				<input type="hidden" name="action" value="showCheckOut">
 				<input type="submit" class="checkbtn" value="結帳">
 				</form>
-				<a href="<%=request.getContextPath()%>/front-end/Mall/MallGetAllUp.jsp" ><button class="back">繼續購物</button></a>
+				<a href="<%=request.getContextPath()%>/front-end/mall/mallGetAllUp.jsp" ><button class="back">繼續購物</button></a>
 			</div>
 			
 			

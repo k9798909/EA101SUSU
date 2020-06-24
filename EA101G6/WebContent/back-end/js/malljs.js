@@ -250,11 +250,26 @@ $(document).ready(function() {
 		  			action:"add",
 		  			typeName:$("#typeNameInput").val()
 				},
-			  success:function(data,status){
-					if(status=="success"){
+			  success:function(data){
 						swal({text:data.msg});
-						let div=document.createElement("div");
-					}	
+						let tampDiv=document.createElement("div");
+						let tampP=document.createElement("p");
+						let tampButton=document.createElement("button");
+						$(tampDiv).addClass(data.typeNo);
+						$(tampButton).val(data.typeNo);
+						$(tampButton).addClass("deltypebtn");
+						$(tampButton).text("刪除");
+						$(tampP).text(data.typeName);
+						$("#tampAddDiv").before(tampDiv);
+						$(tampDiv).prepend(tampButton);
+						$(tampDiv).prepend(tampP);
+						$("input#typeNameInput").val("");
+						 $("button.deltypebtn").click(function(){
+							  typeNo=$(this).val();
+							  $("div#delalert").toggle();
+							  $("div.gmtypezone button.confirm").attr('disabled', true);
+							  		  
+						  });
 				} 
 			});
 		    

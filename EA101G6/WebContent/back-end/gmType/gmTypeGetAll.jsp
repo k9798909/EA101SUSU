@@ -81,7 +81,7 @@ div#delalert div{
   		
   		
   		
-  			<div>請輸入要新增的遊戲類型:<input id="typeNameInput" name="typeName" type="text"></div>
+  			<div id="tampAddDiv">請輸入要新增的遊戲類型:<input id="typeNameInput" name="typeName" type="text"></div>
   			<div><button class="confirm" type="submit" class="addtypebtn" >新增遊戲類型</button> <button type="button" class="typecancel">取消</button></div>
   			
   			

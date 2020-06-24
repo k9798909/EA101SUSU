@@ -16,7 +16,11 @@
 	
 
 <style>
-
+		
+		main{
+		margin:20px 0px;
+		}
+		
 		.table tbody tr{
 			height:50px;
 		}
@@ -131,9 +135,11 @@ div.order input.addr{
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-6 information border">
 				<div>會員姓名:<input type="text" value="吳樹育" readonly></div>
-				<div>取貨方式: <input name="take" type="radio" value="超商取貨">超商取貨    <input name="take" type="radio" value="住家取貨">住家取貨</div>	
+				<div>取貨方式: <input name="take" type="radio" value="超商取貨" ${"超商取貨"==take?"checked":""}>超商取貨    <input name="take" type="radio" value="住家取貨" ${"住家取貨"==take?"checked":""}>住家取貨</div>	
 				<div>取貨地點:</div>
-				<input type="text" name="address" class="addr">
+				<select name="city" id="縣市1"></select>
+				<select name="area" id="鄉鎮市區1"></select>
+				<input type="text" name="addr" class="addr" value="${not empty addr?addr:""}" placeholder="請輸入地址">
 				<div><p id="total">總金額:${totalPrice}元</p></div>
 				<input  type="hidden" name="price" value="${totalPrice}">
 			</div>
@@ -151,7 +157,11 @@ div.order input.addr{
 		src="<%=request.getContextPath()%>/front-end/js/model/popper.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/front-end/js/model/bootstrap.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/front-end/js/address.js"></script>	
+	
+	
 	
 	<script>
 		
@@ -162,6 +172,18 @@ div.order input.addr{
 			</c:forEach>
 			swal({text:erromsg });
 		</c:if>
+		
+		
+		   window.onload = function () {
+		       //當頁面載完之後，用AddressSeleclList.Initialize()，
+		       //傳入要綁定的縣市下拉選單ID及鄉鎮市區下拉選單ID
+		       AddressSeleclList.Initialize('縣市1', '鄉鎮市區1');
+		       //後面四個參數分別是兩個下拉選單的預設文字跟值
+		      AddressSeleclList.Initialize('縣市2', '鄉鎮市區2', 'Please Select City', '0', 'Please Select Area', '0');
+		  }
+
+		
+		
 	</script>
 
 </body>
