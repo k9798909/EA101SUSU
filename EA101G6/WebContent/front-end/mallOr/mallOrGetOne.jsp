@@ -40,7 +40,8 @@ main{
 </head>
 <body>
 
-<%@ include file="/front-end/front-end-nav.jsp" %>
+<%@ include file="/front-end/front-end-nav.jsp"%>
+
 <main>
 	<div class="container">
 		<div class="row">
@@ -58,7 +59,7 @@ main{
 					</tr>
 					<tr>
 						<td>訂購日期:</td>
-						<td><fmt:formatDate value="${mallOrVo.orDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+						<td><fmt:formatDate value="${mallOrVo.orDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					</tr>
 					<tr>
 						<td>訂單金額:</td>
@@ -72,7 +73,11 @@ main{
 						<td>付款狀態</td>
 						<td>${mallOrVo.payStatus==1?"已付款":"未付款"}</td>
 					</tr>
-										<tr>
+					<tr>
+						<td>訂單狀況</td>
+						<td>${mallOr.status=="1"?"已完成":mallOr.status=="2"?"已取消":"未完成"}</td>
+					</tr>
+					<tr>
 						<td>取貨方式</td>
 						<td>${mallOrVo.take}</td>
 					</tr>
@@ -80,8 +85,11 @@ main{
 						<td>取貨地點</td>
 						<td>${mallOrVo.address}</td>
 					</tr>
-				</tbody>
+					
 
+					
+				</tbody>
+	
 			</table>
 			</div>
 		</div>
@@ -95,11 +103,11 @@ main{
 				<tr> <th>商品名稱</th><th>數量</th><th>價錢</th><th>小計</th></tr>
 				</thead>
 				
-				<jsp:useBean id="MallSvc" class="com.mall.model.MallService" />
+				<jsp:useBean id="mallSvc" class="com.mall.model.MallService" />
 				
 				<tbody>
 				<c:forEach var="mallOrDt" items="${mallOrDtList}" varStatus="count">
-				<tr> <td>${MallSvc.findOneByNo(mallOrDt.commNo).commName}</td><td>${mallOrDt.quantity}</td><td>${mallOrDt.price}</td><td>${mallOrDt.price*mallOrDt.quantity}</td></tr>
+				<tr> <td>${mallSvc.findOneByNo(mallOrDt.commNo).commName}</td><td>${mallOrDt.quantity}</td><td>${mallOrDt.price}</td><td>${mallOrDt.price*mallOrDt.quantity}</td></tr>
 				</c:forEach>
 				</tbody>
 

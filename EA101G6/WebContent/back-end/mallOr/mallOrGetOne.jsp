@@ -19,11 +19,11 @@
   margin:0px auto;
 }
 div.dtMain{
- margin:20px auto;
+ margin:0px;
 }
 
 div.dtMain table.table th{
- font-size:16px;
+ font-size:14px;
 }
 div.dtMain table.table td{
  font-size:14px;
@@ -33,42 +33,52 @@ main{
 	margin-top:20px;
 }
 
+img.rock{
+	width:110px;
+	height:120px;
+	position:absolute;
+	bottom:10px;
+	left:30px;
+	transform:rotate(-20deg);
+}
+
+
 </style>
 
 
 
 </head>
 <body>
-
+<img class="rock" src="<%= request.getContextPath()%>/back-end/image/rocklogo.png">
 <main>
 	<div class="container">
 		<div class="row">
-			<table class="table col-6 text-center margin-center">
+			<table class="table col-6 text-center margin-center ">
 				<thead>
-					<tr>
-						<th colspan="2">訂單編號:${mallOrVo.mallOrNo}</th>
+					<tr >
+						<th colspan="2" >訂單編號:${mallOrVo.mallOrNo}</th>
 					</tr>
 				</thead>
 
 				<tbody>
 					<tr>
-						<td>訂購人:</td>
-						<td>哈哈哈</td>
+						<td >訂購人:</td>
+						<td >哈哈哈</td>
 					</tr>
-					<tr>
-						<td>訂購日期:</td>
+					<tr> 
+						<td >訂購日期:</td>
 						<td><fmt:formatDate value="${mallOrVo.orDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					</tr>
 					<tr>
-						<td>訂單金額:</td>
+						<td >訂單金額:</td>
 						<td>${mallOrVo.price}</td>
 					</tr>
 					<tr>
-						<td>處理狀態:</td>
-						<td>${mallOrVo.boxStatus==1?"已出貨":"未出貨"}</td>
+						<td >處理狀態:</td>
+						<td >${mallOrVo.boxStatus==1?"已出貨":"未出貨"}</td>
 					</tr>
 					<tr>
-						<td>付款狀態</td>
+						<td >付款狀態</td>
 						<td>${mallOrVo.payStatus==1?"已付款":"未付款"}</td>
 					</tr>
 					<tr>
@@ -76,11 +86,11 @@ main{
 						<td>${mallOr.status=="1"?"已完成":mallOr.status=="2"?"已取消":"未完成"}</td>
 					</tr>
 					<tr>
-						<td>取貨方式</td>
-						<td>${mallOrVo.take}</td>
+						<td >取貨方式</td>
+						<td >${mallOrVo.take}</td>
 					</tr>
 					<tr>
-						<td>取貨地點</td>
+						<td >取貨地點</td>
 						<td>${mallOrVo.address}</td>
 					</tr>
 					
@@ -101,11 +111,11 @@ main{
 				<tr> <th>商品名稱</th><th>數量</th><th>價錢</th><th>小計</th></tr>
 				</thead>
 				
-				<jsp:useBean id="MallSvc" class="com.mall.model.MallService" />
+				<jsp:useBean id="mallSvc" class="com.mall.model.MallService" />
 				
 				<tbody>
 				<c:forEach var="mallOrDt" items="${mallOrDtList}" varStatus="count">
-				<tr> <td>${MallSvc.findOneByNo(mallOrDt.commNo).commName}</td><td>${mallOrDt.quantity}</td><td>${mallOrDt.price}</td><td>${mallOrDt.price*mallOrDt.quantity}</td></tr>
+				<tr> <td>${mallSvc.findOneByNo(mallOrDt.commNo).commName}</td><td>${mallOrDt.quantity}</td><td>${mallOrDt.price}</td><td>${mallOrDt.price*mallOrDt.quantity}</td></tr>
 				</c:forEach>
 				</tbody>
 
