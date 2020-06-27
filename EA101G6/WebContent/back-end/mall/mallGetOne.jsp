@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%= request.getContextPath() %>/back-end/css/mallcss.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/mallcss.css">
 </head>
 <body>
 
@@ -85,7 +85,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="<%= request.getContextPath() %>/back-end/js/malljs.js"></script>
+<script src="<%= request.getContextPath() %>/js/malljs.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <% pageContext.setAttribute("showupdate",request.getParameter("showupdate")); %>

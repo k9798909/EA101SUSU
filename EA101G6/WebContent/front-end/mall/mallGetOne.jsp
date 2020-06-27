@@ -13,7 +13,7 @@
 
 <!-- ­Ó¤HCSS -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/front-end/css/mallCss/mallGetOne.css">
+	href="<%=request.getContextPath()%>/css/mallCss/mallGetOne.css">
 
 
 </head>

@@ -6,7 +6,7 @@
 <meta charset="BIG5">
 <title>Insert title here</title>
 
-<link rel="stylesheet" href="<%= request.getContextPath()%>/back-end/css/jquery-ui.css">
+<link rel="stylesheet" href="<%= request.getContextPath()%>/css/jquery-ui.css">
 </head>
 <body>
 

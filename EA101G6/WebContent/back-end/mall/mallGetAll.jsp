@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%= request.getContextPath() %>/back-end/css/mallcss.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/mallcss.css">
 </head>
 <body>
 

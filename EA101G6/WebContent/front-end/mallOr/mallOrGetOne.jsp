@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/front-end/css/model/bootstrap.min.css">
+	href="<%=request.getContextPath()%>/css/model/bootstrap.min.css">
 
 <style>
 .margin-center {
@@ -120,11 +120,11 @@ main{
 
 
 		<script
-			src="<%=request.getContextPath()%>/front-end/js/model/jquery-3.3.1.min.js"></script>
+			src="<%=request.getContextPath()%>/js/model/jquery-3.3.1.min.js"></script>
 		<script
-			src="<%=request.getContextPath()%>/front-end/js/model/popper.min.js"></script>
+			src="<%=request.getContextPath()%>/js/model/popper.min.js"></script>
 		<script
-			src="<%=request.getContextPath()%>/front-end/js/model/bootstrap.min.js"></script>
+			src="<%=request.getContextPath()%>/js/model/bootstrap.min.js"></script>
 		
 			
 </body>

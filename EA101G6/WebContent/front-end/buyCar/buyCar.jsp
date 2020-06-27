@@ -14,7 +14,7 @@
 <title>Gameing on Board</title>
 <!-- ­Ó¤HCSS -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/front-end/css/buyCarCss/buyCar.css">
+	href="<%=request.getContextPath()%>/css/buyCarCss/buyCar.css">
 
 </head>
 <body>
