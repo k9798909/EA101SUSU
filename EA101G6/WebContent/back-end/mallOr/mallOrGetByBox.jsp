@@ -107,7 +107,7 @@
 				<input type="hidden" name="status" value="${mallOr.status}" >
 				<input type="hidden" name="boxStatus" value="${mallOr.boxStatus}" >
 				<input type="hidden" name="payStatus" value="${mallOr.payStatus}" >
-				<input type="hidden" name="action" value="update" >
+				<input type="hidden" name="action" value="updateBox" >
 				</form>
 				</td>
 				<td>${mallOr.status=="1"?"已完成":mallOr.status=="2"?"已取消":"未完成"}</td>

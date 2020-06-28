@@ -90,10 +90,9 @@ public class MallOrServlet extends HttpServlet {
 				String area = req.getParameter("area");
 				String addr = req.getParameter("addr");
 				String addrReg = "^[(\u4e00-\u9fa5) a-zA-Z0-9_]{2,50}$";
-				if (city != null && city.trim().length() != 0 
-					&& area != null && area.trim().length() != 0 
-					&& addr != null && addr.trim().length() != 0) {
-					
+				if (city != null && city.trim().length() != 0 && area != null && area.trim().length() != 0
+						&& addr != null && addr.trim().length() != 0) {
+
 					address = city + area + addr;
 					if (!address.matches(addrReg)) {
 						erroList.add("地址格式錯誤");
@@ -152,61 +151,113 @@ public class MallOrServlet extends HttpServlet {
 			}
 
 		}
-		
-		
-		if ("update".equals(action)) {
-			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			Integer payStatus=null;
-			Integer status=null;
-			Integer boxStatus=null;
-			String mallOrNo=null;
+
+		if ("updateBox".equals(action)) {
 			try {
-				// 訂單狀態
-				if(req.getParameter("status")!=null&&req.getParameter("status").trim().length()!=0) {
-					status=new Integer(req.getParameter("status"));
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				Integer payStatus = null;
+				Integer status = null;
+				Integer boxStatus = null;
+				String mallOrNo = null;
+				try {
+					// 訂單狀態
+					if (req.getParameter("status") != null && req.getParameter("status").trim().length() != 0) {
+						status = new Integer(req.getParameter("status"));
+					}
+					// 繳款
+					if (req.getParameter("payStatus") != null && req.getParameter("payStatus").trim().length() != 0) {
+						payStatus = new Integer(req.getParameter("payStatus"));
+					}
+					// 出貨的狀態
+					if (req.getParameter("boxStatus") != null && req.getParameter("boxStatus").trim().length() != 0) {
+						boxStatus = new Integer(1);
+					}
+					if (req.getParameter("mallOrNo") != null && req.getParameter("mallOrNo").trim().length() != 0) {
+						mallOrNo = req.getParameter("mallOrNo");
+					}
+				} catch (NumberFormatException e) {
+					e.getStackTrace();
 				}
-				// 繳款
-				if(req.getParameter("payStatus")!=null&&req.getParameter("payStatus").trim().length()!=0) {
-					payStatus=new Integer(req.getParameter("payStatus"));
-				}
-				//出貨的狀態
-				if(req.getParameter("boxStatus")!=null&&req.getParameter("boxStatus").trim().length()!=0) {
-					boxStatus=new Integer(1);
-				}
-				if(req.getParameter("mallOrNo")!=null&&req.getParameter("mallOrNo").trim().length()!=0) {
-					mallOrNo=req.getParameter("mallOrNo");
-				}
-			}catch(NumberFormatException e){
-				e.getStackTrace();
+				/***************************
+				 * 2.開始修改,
+				 ********************************************/
+				MallOrService mallOrSvc = new MallOrService();
+				mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrNav.jsp");
+				dispatcher.forward(req, res);
+				return;
+			} catch (Exception e) {
+				e.printStackTrace();
+				res.sendRedirect(req.getContextPath() + "/front-end/mallOr/mallOrGetAll.jsp");
+				return;
 			}
-			/*************************** 2.開始修改,********************************************/
-			MallOrService mallOrSvc = new MallOrService();
-			mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
-			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrNav.jsp");
-			dispatcher.forward(req, res);
-			return;
 
 		}
-		
-		
-		
-		
+
+		if ("updateStatus".equals(action))
+
+		{
+			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+			try {
+				Integer payStatus = null;
+				Integer status = null;
+				Integer boxStatus = null;
+				String mallOrNo = null;
+				try {
+					// 訂單狀態
+					if (req.getParameter("status") != null && req.getParameter("status").trim().length() != 0) {
+						status = new Integer(req.getParameter("status"));
+					}
+					// 繳款
+					if (req.getParameter("payStatus") != null && req.getParameter("payStatus").trim().length() != 0) {
+						payStatus = new Integer(req.getParameter("payStatus"));
+					}
+					// 出貨的狀態
+					if (req.getParameter("boxStatus") != null && req.getParameter("boxStatus").trim().length() != 0) {
+						boxStatus = new Integer(req.getParameter("boxStatus"));
+					}
+					if (req.getParameter("mallOrNo") != null && req.getParameter("mallOrNo").trim().length() != 0) {
+						mallOrNo = req.getParameter("mallOrNo");
+					}
+				} catch (NumberFormatException e) {
+					e.getStackTrace();
+				}
+				/********************************************
+				 * 2.開始修改,
+				 ********************************************/
+
+				MallOrService mallOrSvc = new MallOrService();
+				mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/mallOr/mallOrGetAll.jsp");
+				dispatcher.forward(req, res);
+				return;
+			} catch (Exception e) {
+				e.printStackTrace();
+				res.sendRedirect(req.getContextPath() + "/front-end/mallOr/mallOrGetAll.jsp");
+				return;
+			}
+
+		}
+
 		if ("selectone".equals(action)) {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			String mallOrNo=req.getParameter("mallOrNo");
-			if(mallOrNo==null && mallOrNo.trim().length()==0) {
+			String mallOrNo = req.getParameter("mallOrNo");
+			if (mallOrNo == null && mallOrNo.trim().length() == 0) {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrGetAll.jsp");
 				req.setAttribute("erroAlert", "查無此訂單請稍後在試");
 				dispatcher.forward(req, res);
 				return;
 			}
-			
-			/*************************** 2.開始查詢,********************************************/
+
+			/***************************
+			 * 2.開始查詢,
+			 ********************************************/
 			MallOrService mallOrSvc = new MallOrService();
 			MallOrDtService mallOrDtSvc = new MallOrDtService();
-			MallOrVO mallOrVo=mallOrSvc.findOneByOrNo(mallOrNo);
-			List<MallOrDtVO> mallOrDtList= mallOrDtSvc.getByOrNo(mallOrNo);
+			MallOrVO mallOrVo = mallOrSvc.findOneByOrNo(mallOrNo);
+			List<MallOrDtVO> mallOrDtList = mallOrDtSvc.getByOrNo(mallOrNo);
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrGetOne.jsp");
 			req.setAttribute("mallOrVo", mallOrVo);
@@ -215,8 +266,6 @@ public class MallOrServlet extends HttpServlet {
 			return;
 
 		}
-		
-		
 
 	}
 

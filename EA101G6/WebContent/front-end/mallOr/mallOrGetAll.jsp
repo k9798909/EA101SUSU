@@ -51,37 +51,36 @@ input.dtbtn:hover {
 	font-size: 16px;
 }
 
-.dtTbDiv{
-	display:none;
-	margin-top:0px;
+.dtTbDiv {
+	display: none;
+	margin-top: 0px;
 }
 
-hr{
-background-color:#000000;
+hr {
+	background-color: #000000;
 }
 
-button.showDtTbBtn{
- 	height:20px;
- 	width:20px;
- 	padding:0px;
- 	box-sizing:border-box;
- 	text-align: top;
- 	font-size:13px;
+button.showDtTbBtn {
+	height: 20px;
+	width: 20px;
+	padding: 0px;
+	box-sizing: border-box;
+	text-align: top;
+	font-size: 13px;
 }
 
-main{
-margin-top:10px;
+main {
+	margin-top: 10px;
 }
-
 </style>
 
 
 </head>
 <body>
-	
-		<%@ include file="/front-end/front-end-nav.jsp"%>
-	
-	
+
+	<%@ include file="/front-end/front-end-nav.jsp"%>
+
+
 	<main>
 
 		<jsp:useBean id="mallOrSvc" class="com.mallOr.model.MallOrService" />
@@ -107,15 +106,40 @@ margin-top:10px;
 
 								<tr>
 									<td>${mallOr.mallOrNo}</td>
-									<td><fmt:formatDate value="${mallOr.orDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+									<td><fmt:formatDate value="${mallOr.orDate}"
+											pattern="yyyy-MM-dd HH:mm:ss" /></td>
 									<td>${mallOr.payStatus=="1"?"已付款":"未付款"}</td>
 									<td>${mallOr.boxStatus=="1"?"已出貨":"未出貨"}</td>
 									<td>${mallOr.status=="1"?"已完成":mallOr.status=="2"?"已取消":"未完成"}</td>
 								</tr>
 							</tbody>
 						</table>
-						<button class="showDtTbBtn btn btn-primary">+</button> 看明細
+						<!-- //未出貨可取消 -->
+						<c:if test="${mallOr.boxStatus=='0' && mallOr.status!='2'}">
+							<form action="<%=request.getContextPath()%>/MallOr/MallOrServlet" method="post" style="display: inline-block">
+								<input type="hidden" name="status" value="2">
+								<input type="hidden" name="boxStatus" value="${mallOr.boxStatus}"> 
+								<input type="hidden" name="payStatus" value="${mallOr.payStatus}"> 
+								<input type="hidden" name="mallOrNo" value="${mallOr.mallOrNo}">  
+								<input type="hidden" name="action" value="updateStatus"> 
+								<input type="submit" value="取消訂單">
+							</form>
+						</c:if>
+						<!-- //已出貨要領貨 -->
+						<c:if test="${mallOr.boxStatus=='1' && mallOr.status!='1'}">
+							<form action="<%=request.getContextPath()%>/MallOr/MallOrServlet" method="post" style="display: inline-block">
+								<input type="hidden" name="status" value="1">
+								<input type="hidden" name="boxStatus" value="${mallOr.boxStatus}"> 
+								<input type="hidden" name="payStatus" value="${mallOr.payStatus}"> 
+								<input type="hidden" name="mallOrNo" value="${mallOr.mallOrNo}">  
+								<input type="hidden" name="action" value="updateStatus"> 
+								<input type="submit" value="領貨完成">
+							</form>
+						</c:if>
 						
+						<button class="showDtTbBtn btn btn-primary">+</button> 看明細									
+
+
 						<div class="container dtTbDiv">
 							<div class="row">
 								<div class="col-8">
@@ -137,14 +161,14 @@ margin-top:10px;
 													<td>${mallOrDt.price}</td>
 													<td>${mallOrDt.price*mallOrDt.quantity}</td>
 												</tr>
-												
+
 											</c:forEach>
 										</tbody>
 									</table>
 								</div>
 							</div>
 						</div>
-<hr>
+						<hr>
 					</c:forEach>
 
 
@@ -159,15 +183,13 @@ margin-top:10px;
 
 	<script
 		src="<%=request.getContextPath()%>/js/model/jquery-3.3.1.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/js/model/popper.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/js/model/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/model/popper.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/model/bootstrap.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<script>
 		$(document).ready(function() {
-			$(".showDtTbBtn").click(function(){
+			$(".showDtTbBtn").click(function() {
 				$(this).next(".dtTbDiv").slideToggle();
 			});
 
