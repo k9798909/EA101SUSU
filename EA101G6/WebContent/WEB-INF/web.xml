@@ -9,4 +9,66 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+     <resource-ref>
+		<description>DB Connection</description>
+		<res-ref-name>jdbc/TestDB</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	
+	<servlet>
+		<servlet-name>BuyCarServlet</servlet-name>
+		<servlet-class>com.buyCar.controller.BuyCarServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BuyCarServlet</servlet-name>
+		<url-pattern>/BuyCar/BuyCarServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GmTypeServlet</servlet-name>
+		<servlet-class>com.gmType.controller.GmTypeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GmTypeServlet</servlet-name>
+		<url-pattern>/GmType/GmTypeServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>BackMallServlet</servlet-name>
+		<servlet-class>com.mall.controller.BackMallServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BackMallServlet</servlet-name>
+		<url-pattern>/Mall/BackMallServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ForntMallServlet</servlet-name>
+		<servlet-class>com.mall.controller.ForntMallServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ForntMallServlet</servlet-name>
+		<url-pattern>/Mall/ForntMallServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>MallShowImg</servlet-name>
+		<servlet-class>com.mall.controller.MallShowImg</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MallShowImg</servlet-name>
+		<url-pattern>/Mall/MallShowImg</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>MallOrServlet</servlet-name>
+		<servlet-class>com.mallOr.controller.MallOrServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MallOrServlet</servlet-name>
+		<url-pattern>/MallOr/MallOrServlet</url-pattern>
+	</servlet-mapping>
+  
 </web-app>

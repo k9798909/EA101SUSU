@@ -1,11 +1,6 @@
 package com.mall.model;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
 import java.util.List;
 
 import com.gmType.model.GmTypeVO;
@@ -15,7 +10,7 @@ public class MallService {
 	private MallDAO_interface dao ;
 	
 	public MallService() {
-		dao = new MallJDBCDAO();
+		dao = new MallDAO();
 	}
 	
 	//新增ok

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import com.mall.model.MallService;
 import com.mall.model.MallVO;
 
-@WebServlet("/BuyCar/BuyCarServlet")
+
 public class BuyCarServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

@@ -17,7 +17,6 @@ import com.gmType.model.GmTypeVO;
 import com.gmTypeDt.model.GmTypeDtService;
 
 
-@WebServlet("/GmType/GmTypeServlet")
 public class GmTypeServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

@@ -19,8 +19,7 @@ import com.mallOr.model.MallOrVO;
 import com.mallOrDt.model.MallOrDtService;
 import com.mallOrDt.model.MallOrDtVO;
 
-@WebServlet("/MallOr/MallOrServlet")
-public class MallOrServlet extends HttpServlet {
+public class MallOrServlet extends HttpServlet{
 
 	public MallOrServlet() {
 
@@ -178,18 +177,24 @@ public class MallOrServlet extends HttpServlet {
 				} catch (NumberFormatException e) {
 					e.getStackTrace();
 				}
-				/***************************
-				 * 2.開始修改,
-				 ********************************************/
+				/**************************** 2.開始修改,********************************************/
 				MallOrService mallOrSvc = new MallOrService();
 				mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
+			    //因為傳送郵件需要時間所以我改成多執行緒版，會比較快
+				String to = "k9798909@gmail.com";  
+			    String subject = "您好!您的訂單"+mallOrNo+"已出貨"; 
+			    String mbrName = "樹育";
+			    String messageText = "Hello! " + mbrName + subject; 
+			    OrderMail orderMail = new OrderMail(to, subject, messageText);
+			    orderMail.start();
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrNav.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrGet.jsp");
 				dispatcher.forward(req, res);
+				
 				return;
 			} catch (Exception e) {
 				e.printStackTrace();
-				res.sendRedirect(req.getContextPath() + "/front-end/mallOr/mallOrGetAll.jsp");
+				res.sendRedirect(req.getContextPath() + "/back-end/mallOr/mallOrGet.jsp");
 				return;
 			}
 
@@ -244,8 +249,8 @@ public class MallOrServlet extends HttpServlet {
 		if ("selectone".equals(action)) {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			String mallOrNo = req.getParameter("mallOrNo");
-			if (mallOrNo == null && mallOrNo.trim().length() == 0) {
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrGetAll.jsp");
+			if (mallOrNo == null || mallOrNo.trim().length() == 0) {
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrGet.jsp");
 				req.setAttribute("erroAlert", "查無此訂單請稍後在試");
 				dispatcher.forward(req, res);
 				return;

@@ -1,13 +1,10 @@
 package com.mall.controller;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +23,7 @@ import com.gmTypeDt.model.GmTypeDtVO;
 import com.mall.model.MallService;
 import com.mall.model.MallVO;
 
-@WebServlet("/Mall/BackMallServlet")
+
 @MultipartConfig
 public class BackMallServlet extends HttpServlet {
 

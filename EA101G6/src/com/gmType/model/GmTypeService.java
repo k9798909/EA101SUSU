@@ -6,7 +6,7 @@ public class GmTypeService {
 	private GmTypeDao_interface dao ;
 	
 	public GmTypeService() {
-		dao = new GmTypeJDBCDaoImpl();
+		dao = new GmTypeDao();
 	}
 	
 	public GmTypeVO add(String typeName){

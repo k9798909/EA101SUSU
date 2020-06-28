@@ -1,22 +1,24 @@
 package com.mallOr.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 
 import com.mallOrDt.model.MallOrDtJDBCDaoImpl;
 import com.mallOrDt.model.MallOrDtVO;
 
-public class MallOrJDBCDAO implements MallOrDAO_interface {
+public class MallOrJNDIDAO implements MallOrDAO_interface {
 
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String NAME = "EA101";
-	private static final String PSW = "123456";
+
 	private static final String SQLADD = "INSERT INTO MALLOR (MALLORNO,MBRNO,ORDATE,TAKE,ADDRESS,STATUS,PAYSTATUS,BOXSTATUS,PRICE)"
 			+ "VALUES(TO_CHAR(SYSDATE,'YYYYMMDD')||'-'||LPAD(TO_CHAR(MALLORNO_SEQ.NEXTVAL), 7, '0'),?,?,?,?,?,?,?,?)";
 	private static final String SQLUPDATE = "UPDATE MALLOR "
@@ -28,14 +30,15 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 	private static final String SQLSELBYBOXSTATUS = "SELECT * FROM MALLOR WHERE BOXSTATUS=? AND STATUS=0 ";
 	private static final String SQLSELBYORNO = "SELECT * FROM MALLOR WHERE MALLORNO=?";
 
+	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
+	private static DataSource ds = null;
 	static {
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
@@ -46,7 +49,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 		PreparedStatement past = null;
 
 		try {
-			conn = DriverManager.getConnection(URL, NAME, PSW);
+			conn = ds.getConnection();
 
 			conn.setAutoCommit(false);
 			past = conn.prepareStatement(SQLADD);
@@ -94,7 +97,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 		PreparedStatement past = null;
 
 		try {
-			conn = DriverManager.getConnection(URL, NAME, PSW);
+			conn = ds.getConnection();
 
 			conn.setAutoCommit(false);
 			past = conn.prepareStatement(SQLUPDATE);
@@ -140,7 +143,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 		PreparedStatement past = null;
 
 		try {
-			conn = DriverManager.getConnection(URL, NAME, PSW);
+			conn = ds.getConnection();
 
 			conn.setAutoCommit(false);
 			past = conn.prepareStatement(SQLDELETE);
@@ -183,7 +186,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 		ResultSet rs = null;
 		List<MallOrVO> list = new ArrayList<MallOrVO>();
 		try {
-			conn = DriverManager.getConnection(URL, NAME, PSW);
+			conn = ds.getConnection();
 			past = conn.prepareStatement(SQLSELALL);
 			rs = past.executeQuery();
 
@@ -231,7 +234,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 		ResultSet rs = null;
 		List<MallOrVO> list = new ArrayList<MallOrVO>();
 		try {
-			conn = DriverManager.getConnection(URL, NAME, PSW);
+			conn = ds.getConnection();
 			past = conn.prepareStatement(SQLSELBYMBR);
 			past.setString(1, mbrNo);
 			rs = past.executeQuery();
@@ -279,7 +282,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 		ResultSet rs = null;
 		List<MallOrVO> list = new ArrayList<MallOrVO>();
 		try {
-			conn = DriverManager.getConnection(URL, NAME, PSW);
+			conn = ds.getConnection();
 			past = conn.prepareStatement(SQLSELBYSTATUS);
 			past.setInt(1, status);
 			rs = past.executeQuery();
@@ -327,7 +330,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 		ResultSet rs = null;
 		MallOrVO mallor = null;
 		try {
-			conn = DriverManager.getConnection(URL, NAME, PSW);
+			conn = ds.getConnection();
 			past = conn.prepareStatement(SQLSELBYORNO);
 			past.setString(1, mallOrNo);
 			rs = past.executeQuery();
@@ -371,7 +374,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 		ResultSet rs = null;
 		String sqe = "";
 		try {
-			conn = DriverManager.getConnection(URL, NAME, PSW);
+			conn = ds.getConnection();
 
 			conn.setAutoCommit(false);
 			String[] cols = { "MALLORNO" };
@@ -433,7 +436,7 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 		ResultSet rs = null;
 		List<MallOrVO> list = new ArrayList<MallOrVO>();
 		try {
-			conn = DriverManager.getConnection(URL, NAME, PSW);
+			conn = ds.getConnection();
 			past = conn.prepareStatement(SQLSELBYBOXSTATUS);
 			past.setInt(1, boxStatus);
 			rs = past.executeQuery();

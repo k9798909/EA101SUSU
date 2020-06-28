@@ -7,7 +7,7 @@ public class GmTypeDtService {
 	private GmTypeDtDao_interface dao;
 	
 	public GmTypeDtService(){
-		dao=new GmTypeDtJDBCDaoImpl();
+		dao=new GmTypeDtDao();
 	}
 	//ok
 	public void add(String typeNo, String commNo){

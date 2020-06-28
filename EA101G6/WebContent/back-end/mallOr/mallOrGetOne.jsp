@@ -49,7 +49,7 @@ img.rock{
 
 </head>
 <body>
-<img class="rock" src="<%= request.getContextPath()%>/back-end/image/rocklogo.png">
+<img class="rock" src="<%= request.getContextPath()%>/image/rocklogo.png">
 <main>
 	<div class="container">
 		<div class="row">

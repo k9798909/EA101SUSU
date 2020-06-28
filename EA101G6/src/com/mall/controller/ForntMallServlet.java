@@ -14,7 +14,6 @@ import com.mall.model.MallService;
 import com.mall.model.MallVO;
 
 
-@WebServlet("/Mall/ForntMallServlet")
 public class ForntMallServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

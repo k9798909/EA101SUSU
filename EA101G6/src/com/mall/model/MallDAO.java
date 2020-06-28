@@ -3,30 +3,33 @@ package com.mall.model;
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.gmType.model.GmTypeVO;
 
-public class MallJDBCDAO implements MallDAO_interface {
+public class MallDAO implements MallDAO_interface {
 	
+	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
+	private static DataSource ds = null;
 	static {
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
 			e.printStackTrace();
-			System.out.println("載入驅動失敗");
 		}
-		
 	}
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String NAME="EA101";
-	private static final String PSW="123456";
+	
+
 	private static final String SQLADD="INSERT INTO MALL "
 			+ "(COMMNO,COMMNAME,PRICE,QUANTITY,IMG,INTRO,AGE,PLAYER,STATUS) "
 			+"VALUES('ZM'||LPAD(TO_CHAR(COMMNO_SEQ.NEXTVAL),5, '0') , ? , ? , ? , ? , ? , ? , ?, ?)";
@@ -57,7 +60,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		ResultSet rs = null;
 		String seq="";
 		try {
-			conn=DriverManager.getConnection(URL,NAME,PSW);
+			conn=ds.getConnection();
 			
 			conn.setAutoCommit(false);
 			String cols[] = {"COMMNO"};
@@ -116,7 +119,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		Connection conn = null ;
 		PreparedStatement past = null;
 		try {
-			conn = DriverManager.getConnection(URL,NAME,PSW);
+			conn = ds.getConnection();
 			
 			conn.setAutoCommit(false);
 			past =conn.prepareStatement(SQLUPDATE);
@@ -163,7 +166,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		Connection conn = null ;
 		PreparedStatement past = null ;
 		try {
-			conn = DriverManager.getConnection(URL,NAME,PSW);
+			conn = ds.getConnection();
 			
 			conn.setAutoCommit(false);
 			past = conn.prepareStatement(SQLDELETE);
@@ -210,7 +213,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		PreparedStatement past =null;
 		ResultSet rs = null;
 		try {
-			conn=DriverManager.getConnection(URL,NAME,PSW);
+			conn=ds.getConnection();
 			past=conn.prepareStatement(SQLSELNAME);
 			past.setString(1,"%"+name+"%");
 			rs = past.executeQuery();
@@ -257,7 +260,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		ResultSet rs = null;
 		List<MallVO> list = new ArrayList<MallVO>();
 		try {
-			conn=DriverManager.getConnection(URL,NAME,PSW);
+			conn=ds.getConnection();
 			past = conn.prepareStatement(SQLSELALL);
 			rs=past.executeQuery();
 			while(rs.next()) {
@@ -307,7 +310,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		ResultSet rs = null;
 		List<MallVO> list = new ArrayList<MallVO>();
 		try {
-			conn=DriverManager.getConnection(URL,NAME,PSW);
+			conn=ds.getConnection();
 			past = conn.prepareStatement(SQLSELALLUP);
 			rs=past.executeQuery();
 			while(rs.next()) {
@@ -357,7 +360,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		ResultSet rs = null;
 		List<MallVO> list = new ArrayList<MallVO>();
 		try {
-			conn=DriverManager.getConnection(URL,NAME,PSW);
+			conn=ds.getConnection();
 			past = conn.prepareStatement(SQLSELNEW);
 			rs=past.executeQuery();
 			while(rs.next()) {
@@ -407,7 +410,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		ResultSet rs = null;
 		MallVO mall = new MallVO();	
 		try {
-			conn=DriverManager.getConnection(URL,NAME,PSW);
+			conn=ds.getConnection();
 			past = conn.prepareStatement(SQLSELONE);
 			past.setString(1,commno);
 			rs=past.executeQuery();
@@ -457,7 +460,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		List<GmTypeVO> list = new ArrayList<GmTypeVO>();
 
 		try {
-			conn=DriverManager.getConnection(URL,NAME,PSW);
+			conn=ds.getConnection();
 			past = conn.prepareStatement(SQLSELTYPE);
 			past.setString(1,commno);
 			rs=past.executeQuery();
@@ -500,7 +503,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 				PreparedStatement past =null;
 				ResultSet rs = null;
 				try {
-					conn=DriverManager.getConnection(URL,NAME,PSW);
+					conn=ds.getConnection();
 					past=conn.prepareStatement(SQLSELNAMEUP);
 					past.setString(1,"%"+name+"%");
 					rs = past.executeQuery();
@@ -546,7 +549,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 				ResultSet rs = null;
 				List<MallVO> list = new ArrayList<MallVO>();
 				try {
-					conn=DriverManager.getConnection(URL,NAME,PSW);
+					conn=ds.getConnection();
 					past = conn.prepareStatement(SQLSELMALLBYTYPE);
 					past.setString(1,typeno);
 					rs=past.executeQuery();

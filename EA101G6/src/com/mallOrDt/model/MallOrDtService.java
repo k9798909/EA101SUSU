@@ -8,7 +8,7 @@ public class MallOrDtService {
 	MallOrDtDao_interface dao=null;
 	
 	public MallOrDtService(){
-		dao=new MallOrDtJDBCDaoImpl();
+		dao=new MallOrDtDao();
 	}
 	
 	//ok

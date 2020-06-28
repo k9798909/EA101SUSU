@@ -10,7 +10,7 @@ public class MallOrService {
 private MallOrDAO_interface dao ;
 	
 	public MallOrService() {
-		dao = new MallOrJDBCDAO();
+		dao = new MallOrDAO();
 	}
 	
 	//新增 ok
