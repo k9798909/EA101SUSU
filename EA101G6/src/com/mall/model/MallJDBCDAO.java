@@ -39,7 +39,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 	private static final String SQLSELALLUP="SELECT * FROM MALL WHERE STATUS=1 ORDER BY COMMNO ";
 	private static final String SQLSELNAMEUP="SELECT * FROM MALL WHERE STATUS=1 AND COMMNAME LIKE ? ORDER BY COMMNO";
 	//查詢編號最後五筆等於最新五筆
-	private static final String SQLSELNEW="SELECT * FROM (SELECT * FROM MALL ORDER BY COMMNO DESC) WHERE ROWNUM <= 5";
+	private static final String SQLSELNEW="SELECT * FROM (SELECT * FROM MALL ORDER BY COMMNO DESC) WHERE ROWNUM <= 6";
 	private static final String SQLSELONE="SELECT * FROM MALL WHERE COMMNO=? ";
 	private static final String SQLSELTYPE="SELECT GMTYPE.TYPENO,TYPENAME FROM MALL "
 			+ " JOIN GMTYPEDT ON mall.commno=gmtypedt.commno"

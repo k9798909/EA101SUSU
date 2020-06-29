@@ -44,6 +44,11 @@ public class MallOrServlet extends HttpServlet{
 				dispatcher.forward(req, res);
 				return;
 			} else {
+				
+				Integer totalPrice=buyCarList.stream()
+						.mapToInt(p -> p.getPrice()*p.getQuantity())
+						.sum();
+				req.setAttribute("totalPrice", totalPrice);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/mallOr/mallOr.jsp");
 				dispatcher.forward(req, res);
 				return;

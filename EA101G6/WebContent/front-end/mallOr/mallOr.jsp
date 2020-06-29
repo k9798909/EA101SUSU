@@ -120,7 +120,6 @@ div.order input.addr{
 					<td>${buyCarMall.price}</td>
 					<td>${buyCarMall.quantity*buyCarMall.price}</td>
 				</tr>
-				<c:set var="totalPrice" value="${totalPrice+buyCarMall.quantity*buyCarMall.price}"/>
 			</c:forEach>
 			</tbody>
 		</table>
