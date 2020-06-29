@@ -83,7 +83,7 @@
 				<tr>
 				<td>${mallOr.mallOrNo}</td>
 				<td>${mallOr.payStatus=="1"?"已付款":"未付款"}</td>
-				<td>${mallOr.boxStatus=="1"?"已出貨":"未出貨"}</td>
+				<td>${mallOr.boxStatus=="1"?"已出貨":mallOr.boxStatus=="2"?"已送達":"未出貨"}</td>
 				<td>${mallOr.status=="1"?"已完成":mallOr.status=="2"?"已取消":"未完成"}</td>
 
 				<td><form action="<%= request.getContextPath()%>/MallOr/MallOrServlet" method="post">

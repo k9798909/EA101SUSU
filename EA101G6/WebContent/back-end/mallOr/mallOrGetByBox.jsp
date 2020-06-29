@@ -98,7 +98,7 @@
 				<td>${mallOr.mallOrNo}</td>
 				<td>${mallOr.payStatus=="1"?"已付款":"未付款"}</td>
 				<td>
-				${mallOr.boxStatus=="1"?"已出貨":"未出貨"}
+				${mallOr.boxStatus=="1"?"已出貨":mallOr.boxStatus=="2"?"已送達":"未出貨"}
 				<!-- 有付款才可出貨 -->
 				<c:if test="${mallOr.payStatus=='1'}">
 				<form style="display:inline-block;" action="<%= request.getContextPath()%>/MallOr/MallOrServlet" method="post">

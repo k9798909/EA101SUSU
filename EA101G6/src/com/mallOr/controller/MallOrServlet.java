@@ -179,15 +179,16 @@ public class MallOrServlet extends HttpServlet{
 				}
 				/**************************** 2.開始修改,********************************************/
 				MallOrService mallOrSvc = new MallOrService();
-				mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
-			    //因為傳送郵件需要時間所以我改成多執行緒版，會比較快
+				//mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
+			    //因為傳送郵件需要時間所以我改成多執行緒版
 				String to = "k9798909@gmail.com";  
 			    String subject = "您好!您的訂單"+mallOrNo+"已出貨"; 
 			    String mbrName = "樹育";
 			    String messageText = "Hello! " + mbrName + subject; 
 			    OrderMail orderMail = new OrderMail(to, subject, messageText);
+			    mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
 			    orderMail.start();
-				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrGet.jsp");
 				dispatcher.forward(req, res);
 				

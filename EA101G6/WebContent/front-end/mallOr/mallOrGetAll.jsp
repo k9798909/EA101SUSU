@@ -109,13 +109,13 @@ main {
 									<td><fmt:formatDate value="${mallOr.orDate}"
 											pattern="yyyy-MM-dd HH:mm:ss" /></td>
 									<td>${mallOr.payStatus=="1"?"已付款":"未付款"}</td>
-									<td>${mallOr.boxStatus=="1"?"已出貨":"未出貨"}</td>
+									<td>${mallOr.boxStatus=="1"?"已出貨":mallOr.boxStatus=="2"?"已送達":"未出貨"}</td>
 									<td>${mallOr.status=="1"?"已完成":mallOr.status=="2"?"已取消":"未完成"}</td>
 								</tr>
 							</tbody>
 						</table>
 						<!-- //未出貨可取消 -->
-						<c:if test="${mallOr.boxStatus=='0' && mallOr.status!='2'}">
+						<c:if test="${mallOr.boxStatus=='0' && mallOr.status=='0'}">
 							<form action="<%=request.getContextPath()%>/MallOr/MallOrServlet" method="post" style="display: inline-block">
 								<input type="hidden" name="status" value="2">
 								<input type="hidden" name="boxStatus" value="${mallOr.boxStatus}"> 
@@ -126,7 +126,7 @@ main {
 							</form>
 						</c:if>
 						<!-- //已出貨要領貨 -->
-						<c:if test="${mallOr.boxStatus=='1' && mallOr.status!='1'}">
+						<c:if test="${mallOr.boxStatus=='2' && mallOr.status=='0'}">
 							<form action="<%=request.getContextPath()%>/MallOr/MallOrServlet" method="post" style="display: inline-block">
 								<input type="hidden" name="status" value="1">
 								<input type="hidden" name="boxStatus" value="${mallOr.boxStatus}"> 

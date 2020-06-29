@@ -22,10 +22,10 @@ public class MallOrJDBCDAO implements MallOrDAO_interface {
 	private static final String SQLUPDATE = "UPDATE MALLOR "
 			+ "SET STATUS=?,PAYSTATUS=?,BOXSTATUS=? " + "WHERE MALLORNO=?";
 	private static final String SQLDELETE = "DELETE MALLOR WHERE MALLORNO=?";
-	private static final String SQLSELALL = "SELECT * FROM MALLOR ORDER BY MALLORNO";
-	private static final String SQLSELBYMBR = "SELECT * FROM MALLOR WHERE MBRNO=?";
-	private static final String SQLSELBYSTATUS = "SELECT * FROM MALLOR WHERE STATUS=?";
-	private static final String SQLSELBYBOXSTATUS = "SELECT * FROM MALLOR WHERE BOXSTATUS=? AND STATUS=0 ";
+	private static final String SQLSELALL = "SELECT * FROM MALLOR ORDER BY MALLORNO DESC ";
+	private static final String SQLSELBYMBR = "SELECT * FROM MALLOR WHERE MBRNO=? ORDER BY MALLORNO DESC ";
+	private static final String SQLSELBYSTATUS = "SELECT * FROM MALLOR WHERE STATUS=? ORDER BY MALLORNO DESC ";
+	private static final String SQLSELBYBOXSTATUS = "SELECT * FROM MALLOR WHERE BOXSTATUS=? AND STATUS=0 ORDER BY MALLORNO DESC ";
 	private static final String SQLSELBYORNO = "SELECT * FROM MALLOR WHERE MALLORNO=?";
 
 	static {
