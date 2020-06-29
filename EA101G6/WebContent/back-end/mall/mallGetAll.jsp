@@ -114,6 +114,7 @@
 
 <script>
 
+<%session.removeAttribute("selNameMallVoSet"); //移除掉搜尋商品時會留的session%>
 
 <!-- 當點擊修改時會傳的參數 有此參數會呼叫修改頁面 -->
 <% pageContext.setAttribute("showupdate",request.getParameter("showupdate")); %>
@@ -143,7 +144,6 @@
 		<%session.removeAttribute("selErroMsg"); %>
 </c:if>							
 
-	  
 </script>
 
 </body>

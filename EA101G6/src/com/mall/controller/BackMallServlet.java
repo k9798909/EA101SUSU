@@ -314,10 +314,9 @@ public class BackMallServlet extends HttpServlet {
 					//確認他是哪個頁面傳的，是空字串就傳到getall，並把session.remove掉讓他更新，
 					//如果不是把action="selectone"在搜尋一次
 					if(req.getParameter("isGetOne").trim().length()!=0) {
-						String selName=req.getParameter("selName");
-						Set<MallVO> selMallVoSet = mallSvc.findByName(selName);
-						req.setAttribute("selMallVoSet", selMallVoSet);
-						req.setAttribute("selName",selName );
+						String selName=(String)session.getAttribute("selName");
+						Set<MallVO> selNameMallVoSet = mallSvc.findByName(selName);
+						session.setAttribute("selNameMallVoSet", selNameMallVoSet);
 						req.getRequestDispatcher("/back-end/mall/mallGetOne.jsp").forward(req, res);
 						return;
 					}else{
@@ -349,10 +348,11 @@ public class BackMallServlet extends HttpServlet {
 				MallService mallSvc = new MallService();
 				String selErroMsg="";
 				String selName = req.getParameter("selName").trim();
+				session.setAttribute("selName", selName);
 				String selNameReg = "^[(\u4e00-\u9fa5) _\\w]{1,20}$";
-				Set<MallVO> selMallVoSet=null;
+				Set<MallVO> selNameMallVoSet=null;
 				if (selName.length() != 0 && selName.matches(selNameReg)){
-					selMallVoSet = mallSvc.findByName(selName);
+					selNameMallVoSet = mallSvc.findByName(selName);
 				}else {
 					selErroMsg="商品名稱格式輸入錯誤，請輸入20字以內，請不要有特殊字元。";
 					session.setAttribute("selErroMsg",selErroMsg);
@@ -360,14 +360,13 @@ public class BackMallServlet extends HttpServlet {
 					return;
 				}
 		/*************************** 2.查詢完成,準備轉交(Send the Success view) ***********/	
-				if(selMallVoSet.isEmpty()) {
+				if(selNameMallVoSet.isEmpty()) {
 					selErroMsg="查無此資料";
 					session.setAttribute("selErroMsg",selErroMsg);
 					res.sendRedirect(req.getContextPath() + "/back-end/mall/mallGetAll.jsp");
 					return;
 				}else {
-					req.setAttribute("selMallVoSet", selMallVoSet);
-					req.setAttribute("selName",selName );
+					session.setAttribute("selNameMallVoSet", selNameMallVoSet);
 					req.getRequestDispatcher("/back-end/mall/mallGetOne.jsp").forward(req, res);
 					return;
 				}
