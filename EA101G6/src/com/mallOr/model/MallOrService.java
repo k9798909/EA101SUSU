@@ -1,6 +1,7 @@
 package com.mallOr.model;
 
 import java.util.List;
+import java.util.Set;
 
 import com.mallOrDt.model.MallOrDtVO;
 
@@ -48,21 +49,21 @@ private MallOrDAO_interface dao ;
 		
 	}
 	//ok
-	public List<MallOrVO> getAll(){
+	public Set<MallOrVO> getAll(){
 		return dao.getAll();
 	}
 	//ok
-	public List<MallOrVO> findByMbrNo(String mbrNo){
+	public Set<MallOrVO> findByMbrNo(String mbrNo){
 		return dao.findByMbrNo(mbrNo);
 	}
 	
 	//ok
-	public List<MallOrVO> findByBoxStatus(Integer boxStatus){
+	public Set<MallOrVO> findByBoxStatus(Integer boxStatus){
 		return dao.findByBoxStatus(boxStatus);
 	}
 	
 	//ok
-	public List<MallOrVO> findByStatus(Integer status){
+	public Set<MallOrVO> findByStatus(Integer status){
 		return dao.findByStatus(status);
 	}
 	//ok

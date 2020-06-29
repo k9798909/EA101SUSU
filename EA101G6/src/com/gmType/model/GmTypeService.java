@@ -1,6 +1,7 @@
 package com.gmType.model;
 
 import java.util.List;
+import java.util.Set;
 
 public class GmTypeService {
 	private GmTypeDao_interface dao ;
@@ -25,7 +26,7 @@ public class GmTypeService {
 		dao.update(gmTypeVo);
 		return gmTypeVo;
 	};
-	public List<GmTypeVO> getAll(){
+	public Set<GmTypeVO> getAll(){
 		return dao.getAll();
 	};
 	public GmTypeVO findOneByTypeNo(String typeNo){

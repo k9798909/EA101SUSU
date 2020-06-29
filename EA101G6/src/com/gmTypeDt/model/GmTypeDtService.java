@@ -1,6 +1,7 @@
 package com.gmTypeDt.model;
 
 import java.util.List;
+import java.util.Set;
 
 public class GmTypeDtService {
 	
@@ -34,15 +35,15 @@ public class GmTypeDtService {
 	}
 	
 	//ok
-	public List<GmTypeDtVO> getAll(){
+	public Set<GmTypeDtVO> getAll(){
 		return dao.getAll();
 	}
 	//ok
-	public List<GmTypeDtVO> findByTypeNo(String typeNo){
+	public Set<GmTypeDtVO> findByTypeNo(String typeNo){
 		return dao.findByTypeNo(typeNo);
 	}
 	//ok
-	public List<GmTypeDtVO> findByCommNo(String commNo){
+	public Set<GmTypeDtVO> findByCommNo(String commNo){
 		return dao.findByCommNo(commNo);
 	}
 	/**

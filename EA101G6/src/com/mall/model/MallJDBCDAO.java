@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.gmType.model.GmTypeVO;
 
@@ -203,9 +205,9 @@ public class MallJDBCDAO implements MallDAO_interface {
 	}
 
 	@Override
-	public List<MallVO> findByName(String name) {
+	public Set<MallVO> findByName(String name) {
 		// TODO Auto-generated method stub
-		List<MallVO> list = new ArrayList<MallVO>();
+		Set<MallVO> set = new LinkedHashSet<MallVO>();
 		Connection conn=null;
 		PreparedStatement past =null;
 		ResultSet rs = null;
@@ -225,7 +227,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 			mall.setAge(rs.getString("AGE"));
 			mall.setPlayer(rs.getString("PLAYER"));
 			mall.setStatus(rs.getInt("STATUS"));
-			list.add(mall);
+			set.add(mall);
 			}
 			 
 		}catch(SQLException e) {
@@ -245,17 +247,17 @@ public class MallJDBCDAO implements MallDAO_interface {
 			}
 		}
 		
-		return list;
+		return set;
 	}
 
 	
 	@Override
-	public List<MallVO> getAll() {
+	public Set<MallVO> getAll() {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement past = null;		
 		ResultSet rs = null;
-		List<MallVO> list = new ArrayList<MallVO>();
+		Set<MallVO> set = new LinkedHashSet<MallVO>();
 		try {
 			conn=DriverManager.getConnection(URL,NAME,PSW);
 			past = conn.prepareStatement(SQLSELALL);
@@ -271,7 +273,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 				mall.setAge(rs.getString("AGE"));
 				mall.setPlayer(rs.getString("PLAYER"));
 				mall.setStatus(rs.getInt("STATUS"));
-				list.add(mall);
+				set.add(mall);
 			}
 			
 			
@@ -295,17 +297,17 @@ public class MallJDBCDAO implements MallDAO_interface {
 		}
 		
 		
-		return list;
+		return set;
 	}
 
 	
 	@Override
-	public List<MallVO> getAllUp() {
+	public Set<MallVO> getAllUp() {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement past = null;		
 		ResultSet rs = null;
-		List<MallVO> list = new ArrayList<MallVO>();
+		Set<MallVO> set = new LinkedHashSet<MallVO>();
 		try {
 			conn=DriverManager.getConnection(URL,NAME,PSW);
 			past = conn.prepareStatement(SQLSELALLUP);
@@ -321,7 +323,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 				mall.setAge(rs.getString("AGE"));
 				mall.setPlayer(rs.getString("PLAYER"));
 				mall.setStatus(rs.getInt("STATUS"));
-				list.add(mall);
+				set.add(mall);
 			}
 			
 			
@@ -345,17 +347,17 @@ public class MallJDBCDAO implements MallDAO_interface {
 		}
 		
 		
-		return list;
+		return set;
 	}
 	
 	
 	@Override
-	public List<MallVO> getNew() {
+	public Set<MallVO> getNew() {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement past = null;		
 		ResultSet rs = null;
-		List<MallVO> list = new ArrayList<MallVO>();
+		Set<MallVO> set = new LinkedHashSet<MallVO>();
 		try {
 			conn=DriverManager.getConnection(URL,NAME,PSW);
 			past = conn.prepareStatement(SQLSELNEW);
@@ -371,7 +373,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 				mall.setAge(rs.getString("AGE"));
 				mall.setPlayer(rs.getString("PLAYER"));
 				mall.setStatus(rs.getInt("STATUS"));
-				list.add(mall);
+				set.add(mall);
 			}
 			
 			
@@ -395,7 +397,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 		}
 		
 		
-		return list;
+		return set;
 	}
 	
 	
@@ -449,12 +451,12 @@ public class MallJDBCDAO implements MallDAO_interface {
 	
 	
 	@Override
-	public List<GmTypeVO> getType(String commno) {
+	public Set<GmTypeVO> getType(String commno) {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement past = null;		
 		ResultSet rs = null;
-		List<GmTypeVO> list = new ArrayList<GmTypeVO>();
+		Set<GmTypeVO> set = new LinkedHashSet<GmTypeVO>();
 
 		try {
 			conn=DriverManager.getConnection(URL,NAME,PSW);
@@ -465,7 +467,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 				GmTypeVO gmTypeVo = new GmTypeVO();
 				gmTypeVo.setTypeNo(rs.getString(1));
 				gmTypeVo.setTypeName(rs.getString(2));
-				list.add(gmTypeVo);
+				set.add(gmTypeVo);
 			}
 			
 			
@@ -488,14 +490,14 @@ public class MallJDBCDAO implements MallDAO_interface {
 			}
 		}
 		
-		return list;
+		return set;
 	}
 	
 	
 	@Override
-	public List<MallVO> findByNameUp(String name) {
+	public Set<MallVO> findByNameUp(String name) {
 		// TODO Auto-generated method stub
-				List<MallVO> list = new ArrayList<MallVO>();
+				Set<MallVO> set = new LinkedHashSet<MallVO>();
 				Connection conn=null;
 				PreparedStatement past =null;
 				ResultSet rs = null;
@@ -515,7 +517,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 					mall.setAge(rs.getString("AGE"));
 					mall.setPlayer(rs.getString("PLAYER"));
 					mall.setStatus(rs.getInt("STATUS"));
-					list.add(mall);
+					set.add(mall);
 					}
 					 
 				}catch(SQLException e) {
@@ -535,16 +537,16 @@ public class MallJDBCDAO implements MallDAO_interface {
 					}
 				}
 				
-				return list;
+				return set;
 	}
 
 	@Override
-	public List<MallVO> findByType(String typeno) {
+	public Set<MallVO> findByType(String typeno) {
 		// TODO Auto-generated method stub
 				Connection conn = null;
 				PreparedStatement past = null;		
 				ResultSet rs = null;
-				List<MallVO> list = new ArrayList<MallVO>();
+				Set<MallVO> set = new LinkedHashSet<MallVO>();
 				try {
 					conn=DriverManager.getConnection(URL,NAME,PSW);
 					past = conn.prepareStatement(SQLSELMALLBYTYPE);
@@ -561,7 +563,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 						mall.setAge(rs.getString("AGE"));
 						mall.setPlayer(rs.getString("PLAYER"));
 						mall.setStatus(rs.getInt("STATUS"));
-						list.add(mall);
+						set.add(mall);
 					}
 					
 					
@@ -585,7 +587,7 @@ public class MallJDBCDAO implements MallDAO_interface {
 				}
 				
 				
-				return list;
+				return set;
 	}
 	
 	

@@ -39,20 +39,22 @@
 					</tr>
 				</thead>
 				<tbody>
-					
+
 					<jsp:useBean id="gmTypeSvc" class="com.gmType.model.GmTypeService" scope="request"/>
-					<jsp:useBean id="mallSvc" class="com.mall.model.MallService" scope="request"/>
-										
-					<c:forEach var="mallVo" items="${selMallVoList}">
+					<jsp:useBean id="mallSvc" class="com.mall.model.MallService" scope="request"/>					
+					<c:forEach var="mallVo" items="${selMallVoSet}">
 						<tr>
 							<td class="col-md-1">
-							<form action= "<%= request.getContextPath()%>/back-end/mall/mallGetOne.jsp" method="post">
+							<form action= "<%= request.getContextPath()%>/Mall/BackMallServlet" method="post">
 							<input id="upda" type="submit"value="修改">
 							<input type="hidden" name="commNo" value="${mallVo.commNo}">
 							<!-- 叫出修改介面 -->
 							<input type="hidden" name="showupdate" value="showupdate">
 							<!-- 讓update確認是getone -->
 							<input  type="hidden" name="isGetOne" value="isGetOne">
+							<!-- 讓update確認是getone -->
+							<input  type="hidden" name="selName" value="${selName}">
+							<input  type="hidden" name="action" value="selectone">
 							</form></td>
 							<td class="col-md-1"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></td>
 							<td class="col-md-2"><div>${mallVo.commName}</div></td>

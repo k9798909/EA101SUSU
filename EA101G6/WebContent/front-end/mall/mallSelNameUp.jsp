@@ -23,7 +23,7 @@
 	
 		<div class="seldiv">
 			<a href="<%=request.getContextPath()%>/front-end/mall/mallGetAllUp.jsp"><button style="display:inline-block">回首頁</button></a>
-			<form style="display:inline-block" action="<%=request.getContextPath()%>/Mall/ForntMallServlet" method="post">
+			<form style="display:inline-block" action="<%=request.getContextPath()%>/Mall/FrontMallServlet" method="post">
 				<input placeholder="請輸入商品名稱" type="text" name="selName" class="selinput">
 				<input type="hidden" name="action" value="selName">
 				<input type="submit" value="搜尋商品">
@@ -46,7 +46,7 @@
 				
 
 				
-				<c:forEach var="mallVo" items="${selMallVoList}">
+				<c:forEach var="mallVo" items="${selMallVoSet}">
 					<div class="col-lg-3 col-6 comm">
 						<a href="<%=request.getContextPath()%>/front-end/mall/mallGetOne.jsp?commNo=${mallVo.commNo}">
 							<div class="imgdiv"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></div>
