@@ -158,8 +158,8 @@ public class BackMallServlet extends HttpServlet {
 					}
 					/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 					// 讓前台list能更新
-					session.setAttribute("successMsg","新增成功");
-					res.sendRedirect(req.getContextPath() + "/back-end/mall/mallGetAll.jsp");
+					req.setAttribute("successMsg","新增成功");
+					req.getRequestDispatcher("/back-end/mall/mallGetAll.jsp").forward(req, res);
 					return;
 					// req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 				}
@@ -310,7 +310,7 @@ public class BackMallServlet extends HttpServlet {
 							GmTypeDtSvc.add(typeNoArr[i], commNo);
 						}
 					/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
-					session.setAttribute("successMsg", "更新成功");
+					req.setAttribute("successMsg", "更新成功");
 					//確認他是哪個頁面傳的，是空字串就傳到getall，並把session.remove掉讓他更新，
 					//如果不是把action="selectone"在搜尋一次
 					if(req.getParameter("isGetOne").trim().length()!=0) {
@@ -320,7 +320,7 @@ public class BackMallServlet extends HttpServlet {
 						req.getRequestDispatcher("/back-end/mall/mallGetOne.jsp").forward(req, res);
 						return;
 					}else{
-						res.sendRedirect(req.getContextPath() + "/back-end/mall/mallGetAll.jsp");
+						req.getRequestDispatcher("/back-end/mall/mallGetAll.jsp").forward(req, res);
 						return;
 					}
 					
@@ -355,15 +355,15 @@ public class BackMallServlet extends HttpServlet {
 					selNameMallVoSet = mallSvc.findByName(selName);
 				}else {
 					selErroMsg="商品名稱格式輸入錯誤，請輸入20字以內，請不要有特殊字元。";
-					session.setAttribute("selErroMsg",selErroMsg);
-					res.sendRedirect(req.getContextPath() + "/back-end/mall/mallGetAll.jsp");
+					req.setAttribute("selErroMsg",selErroMsg);
+					req.getRequestDispatcher("/back-end/mall/mallGetAll.jsp").forward(req, res);
 					return;
 				}
 		/*************************** 2.查詢完成,準備轉交(Send the Success view) ***********/	
 				if(selNameMallVoSet.isEmpty()) {
 					selErroMsg="查無此資料";
-					session.setAttribute("selErroMsg",selErroMsg);
-					res.sendRedirect(req.getContextPath() + "/back-end/mall/mallGetAll.jsp");
+					req.setAttribute("selErroMsg",selErroMsg);
+					req.getRequestDispatcher("/back-end/mall/mallGetAll.jsp").forward(req, res);
 					return;
 				}else {
 					session.setAttribute("selNameMallVoSet", selNameMallVoSet);

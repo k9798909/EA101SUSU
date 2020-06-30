@@ -64,13 +64,7 @@
 									<!-- 叫出修改介面 -->
 									<input type="hidden" name="showupdate" value="showupdate">
 									<!-- 確定頁面 -->
-									<% 	String tampWhichPage=request.getParameter("whichPage");
-										if(tampWhichPage!=null&&tampWhichPage.length()!=0){
-											pageContext.setAttribute("whichPage",tampWhichPage);
-										}
-									
-									%>
-									<input  type="hidden" name="whichPage" value="${whichPage}">
+									<input  type="hidden" name="whichPage" value="${param.whichPage}">
 								</form>
 							</td>
 							<td class="col-md-1"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></td>
@@ -116,24 +110,23 @@
 
 <%session.removeAttribute("selNameMallVoSet"); //移除掉搜尋商品時會留的session%>
 
-<!-- 當點擊修改時會傳的參數 有此參數會呼叫修改頁面 -->
-<% pageContext.setAttribute("showupdate",request.getParameter("showupdate")); %>
+
+
 
 <!-- 有成功訊息就啟動 -->
 <c:if test="${not empty successMsg}">
 	swal({text:"${successMsg}" });
-	<%session.removeAttribute("successMsg");%>
 </c:if>
 
+<!-- 當點擊修改時會傳的參數 有此參數會呼叫修改頁面 -->
 <!-- 點擊修改時會啟動傳回錯誤訊息時也會啟動 -->
-<c:if test="${'showupdate'==showupdate}">
+<c:if test="${'showupdate'==param.showupdate || 'showupdate'==showupdate }">
 	<%= "$(document).ready(function() {showupdate();});"%>
 	<% pageContext.removeAttribute("action"); %>
 </c:if>
 <!-- 新增有錯誤訊息時啟動叫出新增介面 -->
 <c:if test="${not empty erroMsg}">
 	<%= "$(document).ready(function() {$('#create-user').click()})"%>
-	<%request.removeAttribute("erroMsg"); %>
 </c:if>
 
 
@@ -141,7 +134,6 @@
 
 <c:if test="${not empty selErroMsg}">
 		swal({text:"${selErroMsg}" });
-		<%session.removeAttribute("selErroMsg"); %>
 </c:if>							
 
 </script>

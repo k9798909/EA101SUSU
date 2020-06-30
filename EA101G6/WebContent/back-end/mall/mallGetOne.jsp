@@ -92,7 +92,6 @@
 <!-- 有成功訊息就啟動 -->
 <c:if test="${not empty successMsg}">
 	<script>swal({text:"${successMsg}" });</script>
-	<%session.removeAttribute("successMsg");%>
 </c:if>
 
 <!-- 點擊修改時會啟動傳回錯誤訊息時也會啟動 -->
@@ -103,7 +102,6 @@
 <!-- 查詢時有錯誤啟動 -->
 <c:if test="${not empty selErroMsg}">
 	<script>swal({text:"${selErroMsg}" });</script>
-	<%session.removeAttribute("selErroMsg"); %>
 </c:if>							
 
 
