@@ -12,8 +12,7 @@
 <title>Gameing on Board</title>
 
 <!-- ­Ó¤HCSS -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/mallCss/mallGetAllUpFornt.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/mallCss/mallGetAllUpFornt.css">
 
 </head>
 <body>
