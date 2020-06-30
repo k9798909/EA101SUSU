@@ -45,12 +45,12 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>ForntMallServlet</servlet-name>
-		<servlet-class>com.mall.controller.ForntMallServlet</servlet-class>
+		<servlet-name>FrontMallServlet</servlet-name>
+		<servlet-class>com.mall.controller.FrontMallServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ForntMallServlet</servlet-name>
-		<url-pattern>/Mall/ForntMallServlet</url-pattern>
+		<servlet-name>FrontMallServlet</servlet-name>
+		<url-pattern>/Mall/FrontMallServlet</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

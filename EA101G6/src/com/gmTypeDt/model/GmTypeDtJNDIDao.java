@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -131,12 +133,12 @@ public class GmTypeDtJNDIDao implements GmTypeDtDao_interface {
 //	}
 
 	@Override
-	public List<GmTypeDtVO> getAll() {
+	public Set<GmTypeDtVO> getAll() {
 		// TODO Auto-generated method stub
 		Connection conn=null;
 		PreparedStatement past =null;
 		ResultSet rs=null;
-		List<GmTypeDtVO> list =new ArrayList<GmTypeDtVO>();
+		Set<GmTypeDtVO> set =new LinkedHashSet<GmTypeDtVO>();
 		try {
 			conn=ds.getConnection();
 			past=conn.prepareStatement(SQLSELALL);
@@ -145,7 +147,7 @@ public class GmTypeDtJNDIDao implements GmTypeDtDao_interface {
 				GmTypeDtVO vo =new GmTypeDtVO();
 				vo.setTypeNo(rs.getString(1));
 				vo.setCommNo(rs.getString(2));
-				list.add(vo);
+				set.add(vo);
 			}
 			
 		} catch (SQLException e) {
@@ -167,16 +169,16 @@ public class GmTypeDtJNDIDao implements GmTypeDtDao_interface {
 			
 		}
 		
-		return list;
+		return set;
 	}
 
 	@Override
-	public List<GmTypeDtVO> findByTypeNo(String typeNo) {
+	public Set<GmTypeDtVO> findByTypeNo(String typeNo) {
 		// TODO Auto-generated method stub
 		Connection conn=null;
 		PreparedStatement past =null;
 		ResultSet rs=null;
-		List<GmTypeDtVO> list =new ArrayList<GmTypeDtVO>();
+		Set<GmTypeDtVO> set =new LinkedHashSet<GmTypeDtVO>();
 		try {
 			conn=ds.getConnection();
 			past=conn.prepareStatement(SQLSELBYTYPE);
@@ -186,7 +188,7 @@ public class GmTypeDtJNDIDao implements GmTypeDtDao_interface {
 				GmTypeDtVO vo =new GmTypeDtVO();
 				vo.setTypeNo(rs.getString(1));
 				vo.setCommNo(rs.getString(2));
-				list.add(vo);
+				set.add(vo);
 			}
 			
 		} catch (SQLException e) {
@@ -208,16 +210,16 @@ public class GmTypeDtJNDIDao implements GmTypeDtDao_interface {
 			
 		}
 		
-		return list;
+		return set;
 	}
 
 	@Override
-	public List<GmTypeDtVO> findByCommNo(String commNo) {
+	public Set<GmTypeDtVO> findByCommNo(String commNo) {
 		// TODO Auto-generated method stub
 		Connection conn=null;
 		PreparedStatement past =null;
 		ResultSet rs=null;
-		List<GmTypeDtVO> list =new ArrayList<GmTypeDtVO>();
+		Set<GmTypeDtVO> set =new LinkedHashSet<GmTypeDtVO>();
 		try {
 			conn=ds.getConnection();
 			past=conn.prepareStatement(SQLSELBYCOMM);
@@ -227,7 +229,7 @@ public class GmTypeDtJNDIDao implements GmTypeDtDao_interface {
 				GmTypeDtVO vo =new GmTypeDtVO();
 				vo.setTypeNo(rs.getString(1));
 				vo.setCommNo(rs.getString(2));
-				list.add(vo);
+				set.add(vo);
 			}
 			
 		} catch (SQLException e) {
@@ -249,7 +251,7 @@ public class GmTypeDtJNDIDao implements GmTypeDtDao_interface {
 			
 		}
 		
-		return list;
+		return set;
 		
 	}
 

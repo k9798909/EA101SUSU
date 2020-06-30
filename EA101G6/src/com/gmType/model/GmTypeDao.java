@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -173,12 +175,12 @@ public class GmTypeDao implements GmTypeDao_interface {
 	}
 
 	@Override
-	public List<GmTypeVO> getAll() {
+	public Set<GmTypeVO> getAll() {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement past = null;
 		ResultSet rs = null;
-		List<GmTypeVO> list = new ArrayList<GmTypeVO>();
+		Set<GmTypeVO> set = new LinkedHashSet<GmTypeVO>();
 		try {
 			conn = ds.getConnection();
 			past = conn.prepareStatement(SQLSELALL);
@@ -187,7 +189,7 @@ public class GmTypeDao implements GmTypeDao_interface {
 				GmTypeVO gmType = new GmTypeVO();
 				gmType.setTypeNo(rs.getString(1));
 				gmType.setTypeName(rs.getString(2));
-				list.add(gmType);
+				set.add(gmType);
 			}
 			
 		} catch (SQLException e) {
@@ -210,7 +212,7 @@ public class GmTypeDao implements GmTypeDao_interface {
 		}
 		
 		
-		return list;
+		return set;
 	}
 
 	@Override

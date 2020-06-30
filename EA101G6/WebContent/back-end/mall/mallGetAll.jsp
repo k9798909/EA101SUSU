@@ -51,16 +51,11 @@
 				<jsp:useBean id="mallSvc" class="com.mall.model.MallService" scope="request"/>
 					
 					<%	
-					List<MallVO> mallVoList = mallSvc.getAll();
-					pageContext.setAttribute("mallVoList", mallVoList);
-					// if(session.getAttribute("mallVoList")==null){
- 					//		List<MallVO> mallVoList = mallSvc.getAll();
- 					//		session.setAttribute("mallVoList", mallVoList);
-							
- 					//	}
+					Set<MallVO> mallVoSet = mallSvc.getAll();
+					pageContext.setAttribute("mallVoSet", mallVoSet);
 					%>
 					<%@ include file="/back-end/mall/page1.file" %>
-					<c:forEach var="mallVo" items="${mallVoList}"  begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
+					<c:forEach var="mallVo" items="${mallVoSet}"  begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 						<tr>
 							<td class="">
 								<form action= "<%= request.getContextPath()%>/back-end/mall/mallGetAll.jsp" method="post">
@@ -119,6 +114,7 @@
 
 <script>
 
+<%session.removeAttribute("selNameMallVoSet"); //移除掉搜尋商品時會留的session%>
 
 <!-- 當點擊修改時會傳的參數 有此參數會呼叫修改頁面 -->
 <% pageContext.setAttribute("showupdate",request.getParameter("showupdate")); %>
@@ -140,13 +136,14 @@
 	<%request.removeAttribute("erroMsg"); %>
 </c:if>
 
+
 <!-- 查詢時有錯誤啟動 -->
+
 <c:if test="${not empty selErroMsg}">
 		swal({text:"${selErroMsg}" });
-	<%session.removeAttribute("selErroMsg"); %>
+		<%session.removeAttribute("selErroMsg"); %>
 </c:if>							
 
-	  
 </script>
 
 </body>

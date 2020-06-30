@@ -2,6 +2,7 @@ package com.mallOrDt.model;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Set;
 
 public class MallOrDtService {
 	
@@ -35,11 +36,11 @@ public class MallOrDtService {
 		return mallOrDtVo;
 	}
 	//ok
-	public List<MallOrDtVO> getAll(){
+	public Set<MallOrDtVO> getAll(){
 		return dao.getAll();
 	}
 	//ok
-	public List<MallOrDtVO> getByOrNo(String mallOrNo){
+	public Set<MallOrDtVO> getByOrNo(String mallOrNo){
 		return dao.getByOrNo(mallOrNo);
 	}
 	//ok

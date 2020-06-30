@@ -2,6 +2,7 @@ package com.mall.model;
 
 
 import java.util.List;
+import java.util.Set;
 
 import com.gmType.model.GmTypeVO;
 
@@ -52,27 +53,27 @@ public class MallService {
 		
 	}
 	//用商品名稱查詢，因為我查的可能不只一項回傳list ok
-	public List<MallVO> findByName(String name){
+	public Set<MallVO> findByName(String name){
 		return dao.findByName(name);
 		
 	}
 	//用商品名稱查詢上架版，因為我查的可能不只一項回傳list
-	public List<MallVO> findByNameUp(String name){
+	public Set<MallVO> findByNameUp(String name){
 		return dao.findByNameUp(name);
 		
 	}
 	//拿全部ok
-	public List<MallVO> getAll(){
+	public Set<MallVO> getAll(){
 		return dao.getAll();
 		
 	}
 	//拿全部ok
-	public List<MallVO> getAllUp(){
+	public Set<MallVO> getAllUp(){
 		return dao.getAllUp();
 		
 	}
 	//取得最新商品前五比 ok
-	public List<MallVO> getNew(){
+	public Set<MallVO> getNew(){
 		return dao.getNew();
 		
 	}
@@ -82,11 +83,11 @@ public class MallService {
 		
 	}
 	
-	public List<GmTypeVO> getType(String commNo){
+	public Set<GmTypeVO> getType(String commNo){
 		return dao.getType(commNo);
 	}
 	
-	public List<MallVO> findByType(String typeno){
+	public Set<MallVO> findByType(String typeno){
 		return dao.findByType(typeno);
 	}
 

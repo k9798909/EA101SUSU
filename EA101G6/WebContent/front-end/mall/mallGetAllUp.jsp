@@ -29,7 +29,7 @@
 	%>
 
 		<div class="seldiv">
-			<form action="<%=request.getContextPath()%>/Mall/ForntMallServlet" method="post">
+			<form action="<%=request.getContextPath()%>/Mall/FrontMallServlet" method="post">
 				<input placeholder="請輸入商品名稱" type="text" name="selName"
 					class="selinput"> <input type="hidden" name="action"
 					value="selName"> <input type="submit" value="搜尋商品">
@@ -51,13 +51,13 @@
 		MallService mallSvc = new MallService();
 		pageContext.setAttribute("mallSvc", mallSvc);
 		String typeNo=request.getParameter("typeNo");
-		List<MallVO> mallVoList=null;
+		Set<MallVO> mallVoSet=null;
 		if(typeNo==null||typeNo.trim().length()==0){
-			mallVoList = mallSvc.getAllUp();
+			mallVoSet = mallSvc.getAllUp();
 		}else{
-			mallVoList = mallSvc.findByType(typeNo);
+			mallVoSet = mallSvc.findByType(typeNo);
 		}
-		pageContext.setAttribute("mallVoList", mallVoList);
+		pageContext.setAttribute("mallVoSet", mallVoSet);
 		%>
 
 
@@ -65,7 +65,7 @@
 			<div class="row">
 
 				<%@ include file="/front-end/mall/page1.file"%>
-				<c:forEach var="mallVo" items="${mallVoList}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+				<c:forEach var="mallVo" items="${mallVoSet}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<div class="col-lg-3 col-6 comm">
 							<a href="<%=request.getContextPath()%>/front-end/mall/mallGetOne.jsp?commNo=${mallVo.commNo}">
 							<div class="imgdiv">

@@ -39,11 +39,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					
+
 					<jsp:useBean id="gmTypeSvc" class="com.gmType.model.GmTypeService" scope="request"/>
-					<jsp:useBean id="mallSvc" class="com.mall.model.MallService" scope="request"/>
-										
-					<c:forEach var="mallVo" items="${selMallVoList}">
+					<jsp:useBean id="mallSvc" class="com.mall.model.MallService" scope="request"/>					
+					<c:forEach var="mallVo" items="${selNameMallVoSet}">
 						<tr>
 							<td class="col-md-1">
 							<form action= "<%= request.getContextPath()%>/back-end/mall/mallGetOne.jsp" method="post">
