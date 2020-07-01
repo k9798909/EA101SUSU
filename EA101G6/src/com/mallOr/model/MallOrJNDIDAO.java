@@ -17,6 +17,8 @@ import javax.sql.DataSource;
 
 import com.mallOrDt.model.MallOrDtJDBCDaoImpl;
 import com.mallOrDt.model.MallOrDtVO;
+import com.mbrpf.model.MbrpfDAO;
+import com.mbrpf.model.MbrpfVO;
 
 public class MallOrJNDIDAO implements MallOrDAO_interface {
 
@@ -476,6 +478,69 @@ public class MallOrJNDIDAO implements MallOrDAO_interface {
 		}
 
 		return set;
+	}
+	
+	public String add(MallOrVO mallOr, List<MallOrDtVO> mallOrDtList,MbrpfVO mbrpfVo) {
+		Connection conn = null;
+		PreparedStatement past = null;
+		ResultSet rs = null;
+		String sqe = "";
+		try {
+			conn = ds.getConnection();
+
+			conn.setAutoCommit(false);
+			String[] cols = { "MALLORNO" };
+			past = conn.prepareStatement(SQLADD, cols);
+			past.setString(1, mallOr.getMbrNo());
+			past.setTimestamp(2, mallOr.getOrDate());
+			past.setString(3, mallOr.getTake());
+			past.setString(4, mallOr.getAddress());
+			past.setInt(5, mallOr.getStatus());
+			past.setInt(6, mallOr.getPayStatus());
+			past.setInt(7, mallOr.getBoxStatus());
+			past.setInt(8, mallOr.getPrice());
+			past.executeUpdate();
+
+			rs = past.getGeneratedKeys();
+			if (rs.next()) {
+				sqe = rs.getString(1);
+			}
+
+			MallOrDtJDBCDaoImpl mallOrDtDao = new MallOrDtJDBCDaoImpl();
+			for (MallOrDtVO mallOrDtVo : mallOrDtList) {
+				mallOrDtVo.setMallOrNo(sqe);
+				mallOrDtDao.insertWithEmps(mallOrDtVo, conn);
+			}
+			
+			MbrpfDAO MbrpfDao=new MbrpfDAO();
+			MbrpfDao.updatePoint(mbrpfVo,conn);
+
+			conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+
+			try {
+				conn.setAutoCommit(true);
+				if (past != null)
+					past.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return sqe;
+
 	}
 
 }

@@ -19,6 +19,8 @@ import com.mallOr.model.MallOrService;
 import com.mallOr.model.MallOrVO;
 import com.mallOrDt.model.MallOrDtService;
 import com.mallOrDt.model.MallOrDtVO;
+import com.mbrpf.model.MbrpfService;
+import com.mbrpf.model.MbrpfVO;
 
 public class MallOrServlet extends HttpServlet{
 
@@ -60,8 +62,10 @@ public class MallOrServlet extends HttpServlet{
 		if ("checkOut".equals(action)) {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			try {
+				MbrpfVO mbrpfVo = new MbrpfService().getOneMbrpf("BM00001");
+				
 				List<MallOrDtVO> mallOrDtList = new ArrayList<MallOrDtVO>();
-
+				
 				if (buyCarList != null && buyCarList.size() != 0) {
 					for (MallVO mallVo : buyCarList) {
 						MallOrDtVO mallOrDtVo = new MallOrDtVO();
@@ -121,6 +125,12 @@ public class MallOrServlet extends HttpServlet{
 				} else {
 					erroList.add("金額過於龐大請分次處理");
 				}
+				
+				if (price<mbrpfVo.getPoints()) {
+					mbrpfVo.setPoints(mbrpfVo.getPoints()-price);
+				} else{
+					erroList.add("點數不夠請儲值");
+				}
 
 				if (!erroList.isEmpty()) {
 					RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/mallOr/mallOr.jsp");
@@ -134,11 +144,11 @@ public class MallOrServlet extends HttpServlet{
 				}
 
 				/***************************
-				 * 2.開始新增or的資料同時新增dt
+				 * 2.開始新增or的資料同時新增dt同時扣會員點數
 				 ***************************************/
 				MallOrVO mallOrVo = new MallOrVO();
 				mallOrVo = mallOrSvc.add("BM00001", orDate, take, address, status, payStatus, boxStatus, price,
-						mallOrDtList);
+						mallOrDtList,mbrpfVo);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				session.removeAttribute("buyCarList");
 				req.setAttribute("mallOrVo", mallOrVo);
@@ -149,7 +159,7 @@ public class MallOrServlet extends HttpServlet{
 
 			} catch (Exception e) {
 				e.getStackTrace();
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/buyCar/buyCar.jsp");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/mallOr/mallOr.jsp");
 				req.setAttribute("noMallAlert", "請稍後在試");
 				dispatcher.forward(req, res);
 				return;

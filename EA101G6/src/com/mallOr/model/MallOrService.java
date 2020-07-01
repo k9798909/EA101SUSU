@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.mallOrDt.model.MallOrDtVO;
+import com.mbrpf.model.MbrpfVO;
 
 
 public class MallOrService {
@@ -84,6 +85,24 @@ private MallOrDAO_interface dao ;
 		mallOrVo.setBoxStatus(boxStatus);
 		mallOrVo.setPrice(price);
 		mallOrVo.setMallOrNo(dao.add(mallOrVo,mallOrDtList));
+		
+		return mallOrVo;
+		
+	}
+	
+	public MallOrVO add(String mbrNo, java.sql.Timestamp orDate, String take, String address, Integer status,
+			Integer payStatus, Integer boxStatus,Integer price,List<MallOrDtVO> mallOrDtList,MbrpfVO mbrpfVo) {
+		
+		MallOrVO mallOrVo = new MallOrVO();
+		mallOrVo.setMbrNo(mbrNo);
+		mallOrVo.setOrDate(orDate);
+		mallOrVo.setTake(take);
+		mallOrVo.setAddress(address);
+		mallOrVo.setStatus(status);
+		mallOrVo.setPayStatus(payStatus);
+		mallOrVo.setBoxStatus(boxStatus);
+		mallOrVo.setPrice(price);
+		mallOrVo.setMallOrNo(dao.add(mallOrVo,mallOrDtList,mbrpfVo));
 		
 		return mallOrVo;
 		

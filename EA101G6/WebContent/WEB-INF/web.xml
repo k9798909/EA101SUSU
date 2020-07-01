@@ -70,5 +70,7 @@
 		<servlet-name>MallOrServlet</servlet-name>
 		<url-pattern>/MallOr/MallOrServlet</url-pattern>
 	</servlet-mapping>
+	
+
   
 </web-app>
