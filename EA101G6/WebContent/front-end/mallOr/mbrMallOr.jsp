@@ -85,13 +85,12 @@ main {
 
 		<jsp:useBean id="mallOrSvc" class="com.mallOr.model.MallOrService" />
 		<jsp:useBean id="mallSvc" class="com.mall.model.MallService" />
-		<jsp:useBean id="mallOrDtSvc"
-			class="com.mallOrDt.model.MallOrDtService" />
+		<jsp:useBean id="mallOrDtSvc" class="com.mallOrDt.model.MallOrDtService" />
 
 		<div class="container orMain">
 			<div class="row">
 				<div class="col-12">
-					<c:forEach var="mallOr" items="${mallOrSvc.findByMbrNo('BM00001')}">
+					<c:forEach var="mallOr" items="${mallOrSvc.findByMbrNo(account)}">
 						<table class="table table-bordered">
 							<thead class="bg-warning">
 								<tr>
