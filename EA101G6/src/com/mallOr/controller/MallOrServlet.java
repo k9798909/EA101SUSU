@@ -111,7 +111,6 @@ public class MallOrServlet extends HttpServlet{
 					}
 				} else {
 					erroList.add("請輸入地址");
-
 				}
 				// 一開始是0未完成的狀態
 				Integer status = 0;

@@ -87,6 +87,7 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			<br>
 			<div style="text-align:center"><%@ include file="/back-end/mall/page2.file" %></div>
 		</div>
 

@@ -29,18 +29,18 @@
 
 		<div class="seldiv">
 			<form action="<%=request.getContextPath()%>/Mall/FrontMallServlet" method="post">
-				<input placeholder="請輸入商品名稱" type="text" name="selName"
-					class="selinput"> <input type="hidden" name="action"
-					value="selName"> <input type="submit" value="搜尋商品">
+				<input placeholder="請輸入商品名稱" type="text" name="selName" class="selinput"> 
+				<input type="hidden" name="action" value="selName"> 
+				<input class="btn btn-secondary" type="submit" value="搜尋商品">
 			</form>
 			<form action="<%= request.getRequestURI()%>" method="post">
 				<select name="typeNo">
 					<option value="">不分類</option>
 					<c:forEach var="typeVo" items="${gmTypeSvc.all}">
-						<option value="${typeVo.typeNo}">${typeVo.typeName} </option>				
+						<option value="${typeVo.typeNo}" ${param.typeNo==typeVo.typeNo?"selected":""}>${typeVo.typeName} </option>				
 					</c:forEach>
 				</select> 
-				<input type="submit" style="width:80px;height:30px;" value="搜尋類型">
+				<input type="submit" class="btn btn-secondary" style="width:90px;height:35px;" value="搜尋類型">
 			</form>
 		</div>
 
