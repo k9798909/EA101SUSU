@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.mbrpf.model.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
@@ -86,11 +87,17 @@ main {
 		<jsp:useBean id="mallOrSvc" class="com.mallOr.model.MallOrService" />
 		<jsp:useBean id="mallSvc" class="com.mall.model.MallService" />
 		<jsp:useBean id="mallOrDtSvc" class="com.mallOrDt.model.MallOrDtService" />
-
+		<%	
+			String mbract = (String)session.getAttribute("account");
+			MbrpfService mbrpfSvc = new MbrpfService();
+			MbrpfVO mbrpfVo=mbrpfSvc.checkLogin(mbract);
+			pageContext.setAttribute("mbrpfVo",mbrpfVo);
+		%>
+		
 		<div class="container orMain">
 			<div class="row">
 				<div class="col-12">
-					<c:forEach var="mallOr" items="${mallOrSvc.findByMbrNo(account)}">
+					<c:forEach var="mallOr" items="${mallOrSvc.findByMbrNo(mbrpfVo.mbrno)}">
 						<table class="table table-bordered">
 							<thead class="bg-warning">
 								<tr>

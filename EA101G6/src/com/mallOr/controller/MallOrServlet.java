@@ -62,7 +62,10 @@ public class MallOrServlet extends HttpServlet{
 		if ("checkOut".equals(action)) {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			try {
-				MbrpfVO mbrpfVo = new MbrpfService().getOneMbrpf("BM00001");
+				
+				String mbract = (String)session.getAttribute("account");
+				MbrpfService mbrpfSvc = new MbrpfService();
+				MbrpfVO mbrpfVo=mbrpfSvc.checkLogin(mbract);
 				
 				List<MallOrDtVO> mallOrDtList = new ArrayList<MallOrDtVO>();
 				
@@ -126,7 +129,7 @@ public class MallOrServlet extends HttpServlet{
 					erroList.add("金額過於龐大請分次處理");
 				}
 				
-				if (price<mbrpfVo.getPoints()) {
+				if (price<=mbrpfVo.getPoints()) {
 					mbrpfVo.setPoints(mbrpfVo.getPoints()-price);
 				} else{
 					erroList.add("點數不夠請儲值");
@@ -147,12 +150,13 @@ public class MallOrServlet extends HttpServlet{
 				 * 2.開始新增or的資料同時新增dt同時扣會員點數
 				 ***************************************/
 				MallOrVO mallOrVo = new MallOrVO();
-				mallOrVo = mallOrSvc.add("BM00001", orDate, take, address, status, payStatus, boxStatus, price,
+				mallOrVo = mallOrSvc.add(mbrpfVo.getMbrno(), orDate, take, address, status, payStatus, boxStatus, price,
 						mallOrDtList,mbrpfVo);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				session.removeAttribute("buyCarList");
 				req.setAttribute("mallOrVo", mallOrVo);
-				req.setAttribute("mallOrDtList", mallOrDtList);
+				req.setAttribute("mallOrVo", mallOrVo);
+				req.setAttribute("mbrName", mbrpfVo.getMbrname());
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/mallOr/mallOrGetOne.jsp");
 				dispatcher.forward(req, res);
 				return;
@@ -174,6 +178,7 @@ public class MallOrServlet extends HttpServlet{
 				Integer status = null;
 				Integer boxStatus = null;
 				String mallOrNo = null;
+				String mbrNo=null;
 				try {
 					// 訂單狀態
 					if (req.getParameter("status") != null && req.getParameter("status").trim().length() != 0) {
@@ -190,20 +195,30 @@ public class MallOrServlet extends HttpServlet{
 					if (req.getParameter("mallOrNo") != null && req.getParameter("mallOrNo").trim().length() != 0) {
 						mallOrNo = req.getParameter("mallOrNo");
 					}
-				} catch (NumberFormatException e) {
+					
+					if (req.getParameter("mbrNo") != null && req.getParameter("mbrNo").trim().length() != 0) {
+						mallOrNo = req.getParameter("mbrNo");
+					}
+					
+				} catch (Exception e) {
 					e.getStackTrace();
 				}
 				/**************************** 2.開始修改,********************************************/
 				MallOrService mallOrSvc = new MallOrService();
-				//mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
+				mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
 			    //因為傳送郵件需要時間所以我改成多執行緒版
-				String to = "k9798909@gmail.com";  
-			    String subject = "您好!您的訂單"+mallOrNo+"已出貨"; 
-			    String mbrName = "樹育";
-			    String messageText = "Hello! " + mbrName + subject; 
-			    OrderMail orderMail = new OrderMail(to, subject, messageText);
-			    mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
-			    orderMail.start();
+				
+				MbrpfService mbrpfSvc = new MbrpfService();
+				MbrpfVO mbrpfVo=mbrpfSvc.getOneMbrpf(mallOrNo);
+				if(mbrpfVo.getMail()!=null) {
+					String to = mbrpfVo.getMail();  
+					String subject = "您好!您的訂單"+mallOrNo+"已出貨"; 
+					String mbrName = mbrpfVo.getMbrname();
+					String messageText = "Hello! " + mbrName + subject; 
+					OrderMail orderMail = new OrderMail(to, subject, messageText);
+					mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
+					orderMail.start();
+				}
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrGet.jsp");
 				dispatcher.forward(req, res);

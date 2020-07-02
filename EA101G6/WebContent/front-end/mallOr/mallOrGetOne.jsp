@@ -55,7 +55,7 @@ main{
 				<tbody>
 					<tr>
 						<td>訂購人:</td>
-						<td>哈哈哈</td>
+						<td>${mbrName}</td>
 					</tr>
 					<tr>
 						<td>訂購日期:</td>
@@ -67,7 +67,7 @@ main{
 					</tr>
 					<tr>
 						<td>處理狀態:</td>
-						<td>${mallOrVo.boxStatus==1?"已出貨":"未出貨"}</td>
+						<td>${mallOr.boxStatus=="1"?"已出貨":mallOr.boxStatus=="2"?"已送達":"未出貨"}</td>
 					</tr>
 					<tr>
 						<td>付款狀態</td>

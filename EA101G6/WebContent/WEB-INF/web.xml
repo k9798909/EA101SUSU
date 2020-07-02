@@ -71,6 +71,15 @@
 		<url-pattern>/MallOr/MallOrServlet</url-pattern>
 	</servlet-mapping>
 	
-
+	
+		<servlet>
+		<servlet-name>MbrpfServlet</servlet-name>
+		<servlet-class>com.mbrpf.controller.MbrpfServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MbrpfServlet</servlet-name>
+		<url-pattern>/mbrpf/mbrpf.do</url-pattern>
+	</servlet-mapping>
+	
   
 </web-app>

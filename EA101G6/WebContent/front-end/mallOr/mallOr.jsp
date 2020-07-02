@@ -2,7 +2,8 @@
 	pageEncoding="BIG5"%>
 <%@ page import="com.mall.model.*"%>
 <%@ page import="com.mallOr.model.*"%>
-<%@ page import="com.mallOrDt.model.*"%>		
+<%@ page import="com.mallOrDt.model.*"%>
+<%@ page import="com.mbrpf.model.*"%>		
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -10,8 +11,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/model/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/model/bootstrap.min.css">
 	
 	
 
@@ -128,12 +128,18 @@ div.order input.addr{
 		</div>	
 	</div>
 	
+		<%	
+			String mbract = (String)session.getAttribute("account");
+			MbrpfService mbrpfSvc = new MbrpfService();
+			MbrpfVO mbrpfVo=mbrpfSvc.checkLogin(mbract);
+			pageContext.setAttribute("mbrpfVo",mbrpfVo);
+		%>
 	
 	<form action="<%= request.getContextPath()%>/MallOr/MallOrServlet" method="post">
 	<div class="container  order">
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-6 information border">
-				<div>會員姓名:<input type="text" value="吳樹育" readonly></div>
+				<div>會員姓名:<input type="text" value="${mbrpfVo.mbrname}" readonly></div>
 				<div>取貨方式: <input name="take" type="radio" value="超商取貨" ${"超商取貨"==take?"checked":""}>超商取貨    <input name="take" type="radio" value="住家取貨" ${"住家取貨"==take?"checked":""}>住家取貨</div>	
 				<div>取貨地點:</div>
 				<select name="city" id="縣市1"></select>
