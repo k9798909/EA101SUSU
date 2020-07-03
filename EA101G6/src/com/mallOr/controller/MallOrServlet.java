@@ -111,6 +111,7 @@ public class MallOrServlet extends HttpServlet{
 					}
 				} else {
 					erroList.add("請輸入地址");
+
 				}
 				// 一開始是0未完成的狀態
 				Integer status = 0;
@@ -153,7 +154,7 @@ public class MallOrServlet extends HttpServlet{
 						mallOrDtList,mbrpfVo);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				session.removeAttribute("buyCarList");
-				req.setAttribute("mallOrVo", mallOrVo);
+				req.setAttribute("mallOrDtList", mallOrDtList);
 				req.setAttribute("mallOrVo", mallOrVo);
 				req.setAttribute("mbrName", mbrpfVo.getMbrname());
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/mallOr/mallOrGetOne.jsp");
@@ -196,7 +197,7 @@ public class MallOrServlet extends HttpServlet{
 					}
 					
 					if (req.getParameter("mbrNo") != null && req.getParameter("mbrNo").trim().length() != 0) {
-						mallOrNo = req.getParameter("mbrNo");
+						mbrNo = req.getParameter("mbrNo");
 					}
 					
 				} catch (Exception e) {
@@ -215,7 +216,6 @@ public class MallOrServlet extends HttpServlet{
 					String mbrName = mbrpfVo.getMbrname();
 					String messageText = "Hello! " + mbrName + subject; 
 					OrderMail orderMail = new OrderMail(to, subject, messageText);
-					mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
 					orderMail.start();
 				}
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
@@ -286,6 +286,9 @@ public class MallOrServlet extends HttpServlet{
 				dispatcher.forward(req, res);
 				return;
 			}
+			String mbrNo= req.getParameter("mbrNo");
+			MbrpfService mbrpfSvc = new MbrpfService();
+			MbrpfVO mbrpfVo=mbrpfSvc.getOneMbrpf(mbrNo);
 
 			/***************************
 			 * 2.開始查詢,
@@ -295,7 +298,9 @@ public class MallOrServlet extends HttpServlet{
 			MallOrVO mallOrVo = mallOrSvc.findOneByOrNo(mallOrNo);
 			Set<MallOrDtVO> mallOrDtSet = mallOrDtSvc.getByOrNo(mallOrNo);
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrGetOne.jsp");
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrGet.jsp");
+			req.setAttribute("showDetail", true);
+			req.setAttribute("mbrpfVo", mbrpfVo);
 			req.setAttribute("mallOrVo", mallOrVo);
 			req.setAttribute("mallOrDtSet", mallOrDtSet);
 			dispatcher.forward(req, res);

@@ -93,9 +93,7 @@ img.rock{
 						<td >取貨地點</td>
 						<td>${mallOrVo.address}</td>
 					</tr>
-					
 
-					
 				</tbody>
 	
 			</table>
@@ -106,7 +104,7 @@ img.rock{
 	<div class="container dtMain">
 		<div class="row">
 		<div class="col-8 margin-center">
-			<table class="table text-center margin-center ">
+			<table class="table text-center">
 				<thead>
 				<tr> <th>商品名稱</th><th>數量</th><th>價錢</th><th>小計</th></tr>
 				</thead>

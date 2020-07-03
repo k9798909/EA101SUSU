@@ -116,6 +116,7 @@
 
 				<td><form action="<%= request.getContextPath()%>/MallOr/MallOrServlet" method="post">
 					<input type="hidden" name="mallOrNo" value="${mallOr.mallOrNo}">
+					<input type="hidden" name="mbrNo" value="${mallOr.mbrNo}">
 					<input type="hidden" name="action" value="selectone">
 					<input class="dtbtn" type="submit" value="觀看">
 				</form></td>
