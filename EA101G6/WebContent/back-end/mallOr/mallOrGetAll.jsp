@@ -39,8 +39,6 @@
 	input.dtbtn:hover {
     background-color: #e7e7e7;
     border-radius: 4px; 
-    color: black;
-    border: solid;
     padding: 0px;
     text-align: center;
     text-decoration: none;
@@ -68,7 +66,7 @@
 		<div class="row">
 		<div class="col-12">
 			<table class="table table-bordered">
-				<thead class="table-warning">
+				<thead class="table-primary">
 				<tr>
 				<th >訂單編號</th>
 				<th >付款狀態</th>
@@ -90,6 +88,7 @@
 					<input type="hidden" name="mallOrNo" value="${mallOr.mallOrNo}">
 					<input type="hidden" name="mbrNo" value="${mallOr.mbrNo}">
 					<input type="hidden" name="action" value="selectone">
+					<input type="hidden" name="active" value="${param.active}">
 					<input class="dtbtn" type="submit" value="觀看">
 				</form></td>
 				</tr>

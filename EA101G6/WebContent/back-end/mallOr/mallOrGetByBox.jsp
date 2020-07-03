@@ -118,6 +118,7 @@
 					<input type="hidden" name="mallOrNo" value="${mallOr.mallOrNo}">
 					<input type="hidden" name="mbrNo" value="${mallOr.mbrNo}">
 					<input type="hidden" name="action" value="selectone">
+					<input type="hidden" name="active" value="${param.active}">
 					<input class="dtbtn" type="submit" value="觀看">
 				</form></td>
 				</tr>

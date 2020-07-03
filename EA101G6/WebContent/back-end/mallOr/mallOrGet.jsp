@@ -35,6 +35,7 @@ div#basicModal table.table tbody tr td:first-of-type{
 	width:100px;
 	height:40px;
 	vertical-align: middle;
+	text-align:center;
 }
 
 
@@ -64,29 +65,29 @@ h5.modal-title{
 
 
 
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">商城訂單</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?action=getAll">所有訂單 <span class="sr-only">(current)</span></a>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ${param.active=='getAll'?'active bg-primary rounded':''}">
+        <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?active=getAll">所有訂單 <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?action=getByBox">未出貨 <span class="sr-only">(current)</span></a>
+      <li class="nav-item  ${param.active=='getByBox'?'active bg-primary rounded':''}">
+        <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?active=getByBox">未出貨 <span class="sr-only">(current)</span></a>
       </li>
     </ul>
   </div>
-  
 </nav>
 
-<c:if test="${param.action=='getAll'}">
+
+<c:if test="${param.active=='getAll'}">
 <%@ include file="/back-end/mallOr/mallOrGetAll.jsp"%>
 </c:if>
 
-<c:if test="${param.action=='getByBox'}">
+<c:if test="${param.active=='getByBox'}">
 <%@ include file="/back-end/mallOr/mallOrGetByBox.jsp"%>
 </c:if>
 
