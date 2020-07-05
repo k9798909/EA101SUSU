@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.mallOr.model.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,15 +50,10 @@
 
 </style>
 
-  
-
+ 
   
 </head>
 <body>
-
-
-
-
 
 
 
@@ -76,8 +73,13 @@
 				</tr>	
 				
 				<tbody>
-				
-				<c:forEach var="mallOr" items="${mallOrSvc.all}">
+				<% 
+					MallOrService mallOrSvc=new MallOrService();
+					Set<MallOrVO> set=mallOrSvc.getAll();
+					request.setAttribute("mallOrSvc",mallOrSvc);
+				%>
+				<%@ include file="/back-end/mallOr/page1.file" %>
+				<c:forEach var="mallOr" items="${mallOrSvc.all}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 				<tr>
 				<td>${mallOr.mallOrNo}</td>
 				<td>${mallOr.payStatus=="1"?"已付款":"未付款"}</td>
@@ -97,6 +99,7 @@
 				</tbody>
 				
 			</table>
+			<div style="text-align:center"><%@ include file="/back-end/mallOr/page2.file" %></div>
 			</div>
 		</div>
 	</div>	

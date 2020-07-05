@@ -52,31 +52,27 @@ h5.modal-title{
 	margin-left:40%;
 }
 
+.orNav{
+	margin-left:40%;
+	
+}
+
 </style>
 
 
 </head>
 <body>
 
-
-  
-  <jsp:useBean id="mallOrSvc" class="com.mallOr.model.MallOrService"/>
-  
-
-
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="orNav navbar navbar-expand-lg navbar-light bg-light ">
   <a class="navbar-brand" href="#">商城訂單</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item ${param.active=='getAll'?'active bg-primary rounded':''}">
-        <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?active=getAll">所有訂單 <span class="sr-only">(current)</span></a>
-      </li>
       <li class="nav-item  ${param.active=='getByBox'?'active bg-primary rounded':''}">
         <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?active=getByBox">未出貨 <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item ${param.active=='getAll'?'active bg-primary rounded':''}">
+        <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?active=getAll">所有訂單 <span class="sr-only">(current)</span></a>
       </li>
     </ul>
   </div>
