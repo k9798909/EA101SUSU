@@ -47,6 +47,10 @@
     display: inline-block;
     font-size: 16px;
 	}
+	
+	.bg-gray{
+	background-color:#E0E0E0;
+}
 
 </style>
 
@@ -63,7 +67,7 @@
 		<div class="row">
 		<div class="col-12">
 			<table class="table table-bordered">
-				<thead class="table-primary">
+				<thead class="table-secondary">
 				<tr>
 				<th >訂單編號</th>
 				<th >付款狀態</th>
@@ -72,7 +76,7 @@
 				<th >詳細資訊</th>
 				</tr>	
 				
-				<tbody>
+				<tbody class="bg-white">
 				<% 
 					MallOrService mallOrSvc=new MallOrService();
 					Set<MallOrVO> set=mallOrSvc.getAll();

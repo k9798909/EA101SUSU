@@ -57,22 +57,30 @@ h5.modal-title{
 	
 }
 
+.bg-gray{
+	background-color:#E0E0E0;
+}
+
 </style>
 
 
 </head>
 <body>
 
-<nav class="orNav navbar navbar-expand-lg navbar-light bg-light ">
+
+<nav class="orNav navbar navbar-expand-lg navbar-light  ">
   <a class="navbar-brand" href="#">商城訂單</a>
 
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item  ${param.active=='getByBox'?'active bg-primary rounded':''}">
+      <li class="nav-item ${param.active=='getByBox'?'active bg-gray rounded border border-dark':''}">
         <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?active=getByBox">未出貨 <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item ${param.active=='getAll'?'active bg-primary rounded':''}">
+      <li class="nav-item ${param.active=='getAll'?'active bg-gray rounded border border-dark':''}">
         <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?active=getAll">所有訂單 <span class="sr-only">(current)</span></a>
+      </li>
+       	<li class="nav-item ${param.active=='getByStatus'?'active bg-gray rounded border border-dark':''}">
+        <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?active=getByStatus">訂單取消 <span class="sr-only">(current)</span></a>
       </li>
     </ul>
   </div>
@@ -85,6 +93,10 @@ h5.modal-title{
 
 <c:if test="${param.active=='getByBox'}">
 <%@ include file="/back-end/mallOr/mallOrGetByBox.jsp"%>
+</c:if>
+
+<c:if test="${param.active=='getByStatus'}">
+<%@ include file="/back-end/mallOr/mallOrGetByStatus.jsp"%>
 </c:if>
 
 
