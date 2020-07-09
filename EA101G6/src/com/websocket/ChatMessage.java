@@ -1,3 +1,4 @@
+package com.websocket;
 
 
 public class ChatMessage {

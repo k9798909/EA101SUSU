@@ -1,3 +1,4 @@
+package com.websocket;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
@@ -29,7 +30,7 @@ import redis.clients.jedis.JedisPool;
 public class MyWebSocket {
 	// concurrent包的執行緒安全Map，用來存放每個客戶端對應的MyWebSocket物件。
 	private static Map<String, Session> empSessionsMap = new ConcurrentHashMap<>();
-	private static Map<String, Session> mbrsessionsMap = new ConcurrentHashMap<>();
+	private static Map<String, Session> mbrSessionsMap = new ConcurrentHashMap<>();
 	private static JedisPool pool = JedisUtil.getJedisPool();
 	String empReg="^(LE){1}\\d{5}$";
 	String mbrReg="^(BM){1}\\d{5}$";
@@ -46,20 +47,14 @@ public class MyWebSocket {
 		jedis.auth("123456");
 		//String historyOwn=
 		
-		
+	
 		if(account.matches(mbrReg)) {
-			mbrsessionsMap.put(account,userSession);
-				List<String> list = jedis.lrange(account+":LE00001",0,-1);
-				String historyMsg = gson.toJson(list);
-				userSession.getAsyncRemote().sendText(historyMsg);
+			mbrSessionsMap.put(account,userSession);
+			List<String> list = jedis.lrange(account+":LE00001",0,-1);
+			String historyMsg = gson.toJson(list);
+			userSession.getAsyncRemote().sendText(historyMsg);
 		}else if(account.matches(empReg)) {
 			empSessionsMap.put(account,userSession);
-			Set<String> unDoneSet = jedis.smembers("unDone");
-			for(String str : unDoneSet) {
-				List<String> list = jedis.lrange(account+":"+str,0,-1);
-				String historyMsg = gson.toJson(list);
-				userSession.getAsyncRemote().sendText(historyMsg);
-			}
 		}
 		
 		jedis.close();
@@ -70,14 +65,24 @@ public class MyWebSocket {
 		ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
 		Jedis jedis = pool.getResource();
 		jedis.auth("123456");
-		jedis.rpush(chatMessage.getSender()+":"+chatMessage.getReceiver(),message);
-		jedis.rpush(chatMessage.getReceiver()+":"+chatMessage.getSender(),message);
 		
 		
 		if(chatMessage.getSender().matches(empReg)) {
-			mbrsessionsMap.get(chatMessage.getReceiver()).getAsyncRemote().sendText(message);
+			if("history".equals(chatMessage.getType())) {
+				List<String> historyList = jedis.lrange(chatMessage.getSender()+":"+chatMessage.getReceiver(),0,-1);
+				String historyMsg = gson.toJson(historyList);
+				empSessionsMap.get(chatMessage.getSender()).getAsyncRemote().sendText(historyMsg);
+			}else {
+				if(mbrSessionsMap.get(chatMessage.getReceiver())!=null){
+					mbrSessionsMap.get(chatMessage.getReceiver()).getAsyncRemote().sendText(message);
+				} 
+				jedis.rpush(chatMessage.getSender()+":"+chatMessage.getReceiver(),message);
+				jedis.rpush(chatMessage.getReceiver()+":"+chatMessage.getSender(),message);
+			}
 		}else if(chatMessage.getSender().matches(mbrReg)) {
-				jedis.sadd("unDone",chatMessage.getSender());
+			jedis.sadd("unDone",chatMessage.getSender());
+			jedis.rpush(chatMessage.getSender()+":"+chatMessage.getReceiver(),message);
+			jedis.rpush(chatMessage.getReceiver()+":"+chatMessage.getSender(),message);
 			Collection<Session> empSet=empSessionsMap.values();
 			for(Session session : empSet){
 				session.getAsyncRemote().sendText(message);
@@ -95,5 +100,8 @@ public class MyWebSocket {
 	@OnError
 	public void onError(Session userSession, Throwable e) {
 	}
+	
+	
+	
 
 }

@@ -60,9 +60,9 @@
 </body>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<% 
-	request.setAttribute("account","BM00001");
-	request.setAttribute("seName","煩死了");
+<% 	
+	request.setAttribute("account","BM00002");
+	request.setAttribute("seName","客戶");
 %>
 <script>
 	var MyPoint = "/MyWebSocket/${account}";
@@ -84,10 +84,15 @@
 		};
 
 		webSocket.onmessage = function(event) {
-			var msgList = JSON.parse(event.data);
-			for (var i = 0; i < msgList.length; i++) {
-				let messageObj = JSON.parse(msgList[i]);
-				showMsg(messageObj);
+			let msgObj = JSON.parse(event.data);
+			console.log(event.data);
+			if(Array.isArray(msgObj)){
+				for (var i = 0; i < msgObj.length; i++) {
+					let messageObj = JSON.parse(msgObj[i]);
+					showMsg(messageObj);
+				}
+			}else if(msgObj!=null){
+				showMsg(msgObj);
 			}
 		};
 

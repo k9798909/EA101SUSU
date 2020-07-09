@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
+<%@ page import="connectionpool.*"%>
+<%@ page import="redis.clients.*"%>
+<%@ page import="com.websocket.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>		
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +50,7 @@
 	}
 </style>
 
-<body onload="connect();" onunload="disconnect();">
+<body onload="connect();">
 
 	<div id="massageZone">
 		<div id="messagesArea">
@@ -54,29 +59,33 @@
 		<input id="message" type="text">
 		<button id="sendMessage">傳送</button> 
 	</div>
-	
+	<%
+		RedisService RedisSvc =new RedisService();
+		pageContext.setAttribute("RedisSvc",RedisSvc);
+	%>
 	<button id="msgBtn">訊息</button>
-
+	<c:forEach var="unDone" items="${RedisSvc.getUnDone()}">
+		<button onclick=getHistory("${unDone}") >${unDone}</button>
+	</c:forEach>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <% 
 	request.setAttribute("account","LE00001");
-	request.setAttribute("seName","我煩死了");
+	request.setAttribute("seName","課服");
 %>
 <script>
-	var MyPoint = "/MyWebSocket/${account}";
-	var host = window.location.host;
-	var path = window.location.pathname;
-	var webCtx = path.substring(0, path.indexOf('/', 1));
-	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+
 	var messagesArea=document.getElementById("messagesArea");
 	var statusOutput = document.getElementById("statusOutput");
 	var webSocket;
-	var msg_end=document.getElementById("msg_end");
-
+	
 	function connect() {
-		// create a websocket
+		let MyPoint = "/MyWebSocket/${account}";
+		let host = window.location.host;
+		let path = window.location.pathname;
+		let webCtx = path.substring(0, path.indexOf('/', 1));
+		let endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
 		webSocket = new WebSocket(endPointURL);
 
 		webSocket.onopen = function(event) {
@@ -84,11 +93,22 @@
 		};
 
 		webSocket.onmessage = function(event) {
-			var msgList = JSON.parse(event.data);
-			for (var i = 0; i < msgList.length; i++) {
-				let messageObj = JSON.parse(msgList[i]);
-				showMsg(messageObj);
+			let msgObj = JSON.parse(event.data);
+			console.log(event.data);
+			let msg_end=document.getElementById("msg_end");
+			let tampmsg_end = $(msg_end).clone();
+			$(messagesArea).text("");
+			$(messagesArea).append(tampmsg_end);
+			if(Array.isArray(msgObj)){
+				for (var i = 0; i < msgObj.length; i++) {
+					let messageObj = JSON.parse(msgObj[i]);
+					showMsg(messageObj);
+				}
+			}else if(msgObj!=null){
+				showMsg(msgObj);
 			}
+			
+			
 		};
 
 		webSocket.onclose = function(event) {
@@ -99,17 +119,16 @@
 	$("#sendMessage").click(function() {
 		let message = $("#message").val().trim() + "\r\n";		
 		
-		var msgObj = {
+		let msgObj = {
 			"sender" : "${account}",
 			"seName":"${seName}",
 			"message" : message,
-			"receiver" : "BM00001"
+			"receiver" : "BM00002"
 		};
 		
 		let msg=JSON.stringify(msgObj);
 		webSocket.send(msg);
 		showMsg(msgObj);
-		
 		$("#message").val("");
 		$("#message").focus();
 		
@@ -119,11 +138,21 @@
 		webSocket.close();
 	}
 	
-	$("#msgBtn").click(function(){
-		$("#massageZone").toggle();
-	})
+	function getHistory(receiver) {
+		let msgObj = {
+				"sender" : "${account}",
+				"seName":"${seName}",
+				"receiver" : receiver,
+				"type":"history"
+			};
+		let msg=JSON.stringify(msgObj);
+		webSocket.send(msg);
+		
+		
+	}
 	
 	function showMsg(msg) {
+		let msg_end=document.getElementById("msg_end");
 		let message = msg.seName + ":" + msg.message + "\r\n";
 		let outDiv=document.createElement("div");
 		let inDiv=document.createElement("div");
@@ -143,8 +172,5 @@
 		msg_end.scrollIntoView(); 
 	}
 
-	//function updateStatus(newStatus) {
-	//	statusOutput.innerHTML = newStatus;
-	//}
 </script>
 </html>
