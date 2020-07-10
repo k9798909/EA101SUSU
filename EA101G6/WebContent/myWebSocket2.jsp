@@ -10,6 +10,7 @@
 <title>Chat Room</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 
 <style>
@@ -48,6 +49,16 @@
 		right:50px;
 		bottom:50px;
 	}
+	div.customer{
+		height:300px;
+		border:solid;
+		width:80px;
+		text-align:center;
+	}
+	div.customer button.btn{
+		width:50px;
+		margin-top:3px;
+	}
 </style>
 
 <body onload="connect();">
@@ -67,14 +78,29 @@
 	<c:forEach var="unDone" items="${RedisSvc.getUnDone()}">
 		<button onclick=getHistory("${unDone}") >${unDone}</button>
 	</c:forEach>
-</body>
-
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<% 
+	
+	
+	<div class="customer">
+	<button class="btn btn-primary">1</button>
+	<button class="btn btn-primary">2</button>
+	<button class="btn btn-primary">3</button>
+	<button class="btn btn-primary">4</button>
+	<button class="btn btn-primary">5</button>
+	<button class="btn btn-primary">6</button>
+	<button class="btn btn-primary">7</button>
+	</div>
+	
+	   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	
+	<% 
 	request.setAttribute("account","LE00001");
 	request.setAttribute("seName","課服");
-%>
-<script>
+	%>
+	
+	<script>
 
 	var messagesArea=document.getElementById("messagesArea");
 	var statusOutput = document.getElementById("statusOutput");
@@ -173,4 +199,8 @@
 	}
 
 </script>
+	
+</body>
+
+
 </html>
