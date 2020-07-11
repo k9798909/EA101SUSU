@@ -71,6 +71,7 @@
 	img.msgicon{
 		width:40px;
 		height:40px;
+		border-radius:40px;
 		
 	}
 	
@@ -150,12 +151,7 @@
 
 		webSocket.onmessage = function(event) {
 			let msgObj = JSON.parse(event.data);
-			console.log(msgObj);
-			let msg_end=document.getElementById("msg_end");
-			let tampmsg_end = $(msg_end).clone();
-			$(messagesArea).text("");
-			$(messagesArea).append(tampmsg_end);
-		
+			//因為歷史訊息是一陣列
 			if(Array.isArray(msgObj)){
 				if(JSON.parse(msgObj[0]).type=="unDone"){
 					for (let i = 0; i < msgObj.length; i++) {
@@ -165,12 +161,18 @@
 					return;
 				}
 				//歷史訊息
+				//讓聊天室窗初始化
+				let msg_end=document.getElementById("msg_end");
+				let tampmsg_end = $(msg_end).clone();
+				$(messagesArea).text("");
+				$(messagesArea).append(tampmsg_end);
 				for (let i = 0; i < msgObj.length; i++) {
 					let messageObj = JSON.parse(msgObj[i]);
 					showMsg(messageObj);
 				}
 				
 			}else if(msgObj!=null){
+				
 				if(msgObj.type=="unDone"){
 					unDoneShow(msgObj);
 					return;
@@ -209,7 +211,7 @@
 	})
 
 	function disconnect() {
-		webSocket.close("${account}");
+		webSocket.close();
 	}
 	
 	function getHistory(receiver,seName) {

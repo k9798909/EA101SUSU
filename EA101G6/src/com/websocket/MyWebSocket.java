@@ -31,7 +31,6 @@ public class MyWebSocket {
 	// concurrent包的執行緒安全Map，用來存放每個客戶端對應的MyWebSocket物件。
 	private static Map<String, Session> empSessionsMap = new ConcurrentHashMap<>();
 	private static Map<String, Session> mbrSessionsMap = new ConcurrentHashMap<>();
-	private static JedisPool pool = JedisUtil.getJedisPool();
 	String empReg="^(LE){1}\\d{5}$";
 	String mbrReg="^(BM){1}\\d{5}$";
 	Gson gson = new Gson();
@@ -80,7 +79,7 @@ public class MyWebSocket {
 			}
 	
 		}
-		
+		//完成後
 		if(chatMessage.getType()!=null&&"unDone".equals(chatMessage.getType())) {
 			redisSvc.deleteUnDone(chatMessage);
 			return;
@@ -90,7 +89,7 @@ public class MyWebSocket {
 		if(chatMessage.getSender().matches(mbrReg)) {
 			redisSvc.setUnDone(chatMessage.getSender(), chatMessage.getSeName());
 			redisSvc.setMessage(chatMessage, message);
-			mbrSessionsMap.get(chatMessage.getReceiver()).getAsyncRemote().sendText(message);
+			empSessionsMap.get(chatMessage.getReceiver()).getAsyncRemote().sendText(message);
 			return;
 		}
 	
@@ -102,7 +101,7 @@ public class MyWebSocket {
 		if(empSessionsMap.containsValue(userSession)){
 			Set<String> userNames = empSessionsMap.keySet();
 			for (String userName : userNames) {
-				if (empSessionsMap.get(userName).equals(userSession)) {
+				if (empSessionsMap.get(userName)!=null && empSessionsMap.get(userName).equals(userSession)) {
 					userNameClose = userName;
 					empSessionsMap.remove(userName);
 					break;
@@ -112,7 +111,7 @@ public class MyWebSocket {
 		}else if(mbrSessionsMap.containsValue(userSession)){
 			Set<String> userNames = empSessionsMap.keySet();
 			for (String userName : userNames) {
-				if (mbrSessionsMap.get(userName).equals(userSession)) {
+				if (mbrSessionsMap.get(userName)!=null && mbrSessionsMap.get(userName).equals(userSession)) {
 					userNameClose = userName;
 					mbrSessionsMap.remove(userName);
 					break;
