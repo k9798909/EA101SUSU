@@ -35,6 +35,7 @@ public class MyWebSocket {
 	String empReg="^(LE){1}\\d{5}$";
 	String mbrReg="^(BM){1}\\d{5}$";
 	Gson gson = new Gson();
+	RedisService redisSvc=new RedisService();
 	/*
 	 * 如果想取得HttpSession與ServletContext必須實作
 	 * ServerEndpointConfig.Configurator.modifyHandshake()，
@@ -43,58 +44,89 @@ public class MyWebSocket {
 	
 	@OnOpen
 	public void onOpen(@PathParam("account") String account, Session userSession) throws IOException {
-		Jedis jedis = pool.getResource();
-		jedis.auth("123456");
 		//String historyOwn=
 		
-	
 		if(account.matches(mbrReg)) {
 			mbrSessionsMap.put(account,userSession);
-			List<String> list = jedis.lrange(account+":LE00001",0,-1);
+			List<String> list = redisSvc.getHistoryList(account);
 			String historyMsg = gson.toJson(list);
 			userSession.getAsyncRemote().sendText(historyMsg);
 		}else if(account.matches(empReg)) {
 			empSessionsMap.put(account,userSession);
+			Set<String> set=redisSvc.getUnDone();
+			String unDone=gson.toJson(set);
+			userSession.getAsyncRemote().sendText(unDone);
 		}
 		
-		jedis.close();
 	}
 
 	@OnMessage
 	public void onMessage(Session userSession, String message) {
 		ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
-		Jedis jedis = pool.getResource();
-		jedis.auth("123456");
-		
 		
 		if(chatMessage.getSender().matches(empReg)) {
+			
 			if("history".equals(chatMessage.getType())) {
-				List<String> historyList = jedis.lrange(chatMessage.getSender()+":"+chatMessage.getReceiver(),0,-1);
+				List<String> historyList = redisSvc.getHistoryList(chatMessage);
 				String historyMsg = gson.toJson(historyList);
 				empSessionsMap.get(chatMessage.getSender()).getAsyncRemote().sendText(historyMsg);
+				return;
 			}else {
-				if(mbrSessionsMap.get(chatMessage.getReceiver())!=null){
+				redisSvc.setMessage(chatMessage, message);
+				if(mbrSessionsMap.get(chatMessage.getReceiver())!=null) {
 					mbrSessionsMap.get(chatMessage.getReceiver()).getAsyncRemote().sendText(message);
-				} 
-				jedis.rpush(chatMessage.getSender()+":"+chatMessage.getReceiver(),message);
-				jedis.rpush(chatMessage.getReceiver()+":"+chatMessage.getSender(),message);
+				}
+				return;
 			}
-		}else if(chatMessage.getSender().matches(mbrReg)) {
-			jedis.sadd("unDone",chatMessage.getSender());
-			jedis.rpush(chatMessage.getSender()+":"+chatMessage.getReceiver(),message);
-			jedis.rpush(chatMessage.getReceiver()+":"+chatMessage.getSender(),message);
-			Collection<Session> empSet=empSessionsMap.values();
-			for(Session session : empSet){
-				session.getAsyncRemote().sendText(message);
-			}
+	
 		}
 		
-		jedis.close();
+		if(chatMessage.getType()!=null&&"unDone".equals(chatMessage.getType())) {
+			redisSvc.deleteUnDone(chatMessage);
+			return;
+		}
 		
+		
+		if(chatMessage.getSender().matches(mbrReg)) {
+			redisSvc.setUnDone(chatMessage.getSender(), chatMessage.getSeName());
+			redisSvc.setMessage(chatMessage, message);
+			mbrSessionsMap.get(chatMessage.getReceiver()).getAsyncRemote().sendText(message);
+			return;
+		}
+	
 	}
 
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
+		String userNameClose = null;
+		if(empSessionsMap.containsValue(userSession)){
+			Set<String> userNames = empSessionsMap.keySet();
+			for (String userName : userNames) {
+				if (empSessionsMap.get(userName).equals(userSession)) {
+					userNameClose = userName;
+					empSessionsMap.remove(userName);
+					break;
+				}
+			}
+				
+		}else if(mbrSessionsMap.containsValue(userSession)){
+			Set<String> userNames = empSessionsMap.keySet();
+			for (String userName : userNames) {
+				if (mbrSessionsMap.get(userName).equals(userSession)) {
+					userNameClose = userName;
+					mbrSessionsMap.remove(userName);
+					break;
+				}
+			}
+		}
+		
+		try {
+			userSession.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	@OnError

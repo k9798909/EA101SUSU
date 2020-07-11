@@ -61,7 +61,7 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <% 	
-	request.setAttribute("account","BM00002");
+	request.setAttribute("account","BM00006");
 	request.setAttribute("seName","客戶");
 %>
 <script>
