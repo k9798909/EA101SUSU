@@ -90,9 +90,11 @@ public class MbrpfService {
 	}
 	
 	public void updateMbrpf(MbrpfVO mbrpfVO ,Connection conn) {
-		
 		dao.updatePoint(mbrpfVO, conn);
-
+	}
+	
+	public void updateMbrpf(MbrpfVO mbrpfVO) {
+		dao.updatePoint(mbrpfVO);
 	}
 
 }

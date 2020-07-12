@@ -2,13 +2,13 @@
 
   <%if (rowsPerPage<rowNumber) {%>
     <%if(pageIndex>=rowsPerPage){%>
-        <A href="<%=request.getRequestURI()%>?whichPage=1"><button class="btn btn-primary">至第一頁</button></A>&nbsp;
-        <A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>"><button class="btn btn-primary">上一頁</button> </A>&nbsp;
+        <A href="<%=request.getRequestURI()%>?whichPage=1"><button class="btn btn btn-secondary">至第一頁</button></A>&nbsp;
+        <A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>"><button class="btn btn-secondary">上一頁</button> </A>&nbsp;
     <%}%>
   
     <%if(pageIndex<pageIndexArray[pageNumber-1]){%>
-        <A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>"><button class="btn btn-primary">下一頁 </button></A>&nbsp;
-        <A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>"><button class="btn btn-primary">至最後一頁</button></A>&nbsp;
+        <A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>"><button class="btn btn-secondary">下一頁 </button></A>&nbsp;
+        <A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>"><button class="btn btn-secondary">至最後一頁</button></A>&nbsp;
     <%}%>
   <%}%>  
 

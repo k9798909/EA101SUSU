@@ -35,8 +35,6 @@
   		white-space : nowrap;
 		margin-top:10px;
 		margin-bottom: 0px;
-		
-
 	}
 	div.comm a{
 		color: currentColor;
@@ -66,13 +64,14 @@
 		margin-top: 0px;
 	}
 	
-	button.shopcar{
+	a.shopcar{
 		position: fixed;
 		right:25px;
 		bottom: 25px;
 		
 	}
-	button.shopcar img{
-		width:40px;
-		height:40px;
+	a.shopcar img{
+		width:60px;
+		height:60px;
 	}
+	

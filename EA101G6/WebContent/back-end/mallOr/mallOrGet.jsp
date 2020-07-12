@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="BIG5">
-<title>Insert title here</title>
+<title>訂單管理</title>
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/model/bootstrap.min.css">
 
@@ -66,6 +66,7 @@ h5.modal-title{
 
 </head>
 <body>
+
 
 
 <nav class="orNav navbar navbar-expand-lg navbar-light  ">

@@ -25,7 +25,7 @@ div.gmtypezone{
 	left:50%;
 	margin-left:-150px;
 	z-index:998;
-	top:50px;
+	top:100px;
 	display:none;
 }
 
@@ -36,7 +36,11 @@ height:40px;
 }
 
 div.gmtypezone button{
-margin-left:10px;
+	margin-left:10px;
+	border-radius: 4px;
+	background-color: #e7e7e7;
+	color: #000000;
+	font-size: 16px;
 }
 
 div.gmtypezone p{
@@ -67,6 +71,8 @@ div#delalert div{
 	margin:10px 0px;
 }
 
+
+
 </style>
 
 </head>
@@ -76,13 +82,12 @@ div#delalert div{
 	
 		<div class="gmtypezone" title="遊戲類型">
 		<c:forEach var="gmType" items="${gmTypeSvc.getAll()}">
-  			<div class="${gmType.typeNo}"><p>${gmType.typeName}</p><button class="deltypebtn" value="${gmType.typeNo}">刪除</button></div>
+  			<div class="${gmType.typeNo}"><p>${gmType.typeName}</p><button class="deltypebtn btn btn-secondary" value="${gmType.typeNo}">刪除</button></div>
   		</c:forEach>
-  		
-  		
-  		
+
   			<div id="tampAddDiv">請輸入要新增的遊戲類型:<input id="typeNameInput" name="typeName" type="text"></div>
-  			<div><button class="confirm" type="submit" class="addtypebtn" >新增遊戲類型</button> <button type="button" class="typecancel">取消</button></div>
+  			<br>
+  			<div><button type="submit" class="confirm addtypebtn btn btn-secondary" >新增遊戲類型</button> <button type="button" class="typecancel btn btn-secondary">取消</button></div>
   			
   			
   		

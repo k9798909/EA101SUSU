@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Gameing on Board</title>
+<title>商品</title>
 
 <!-- 個人CSS -->
 <link rel="stylesheet"
@@ -87,10 +87,7 @@
 
 
 	</main>
-	<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp"><button class="shopcar">
-		<img
-			src="<%=request.getContextPath()%>/front-end/images/supermarket.png">
-	</button></a>
+	<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp" class="shopcar"><img src="<%= request.getContextPath()%>/image/buyCar.jpg"></a>
 
 
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

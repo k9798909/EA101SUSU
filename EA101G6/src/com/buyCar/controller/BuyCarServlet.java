@@ -66,14 +66,20 @@ public class BuyCarServlet extends HttpServlet {
 					Integer tempquantity = Integer.valueOf(buyQuantity);
 					buyCarMall.setQuantity(tempquantity);
 				}
-
-				res.sendRedirect(req.getContextPath() + "/front-end/buyCar/buyCar.jsp");
+				Integer totalPrice=buyCarList.stream()
+						.mapToInt(p -> p.getPrice()*p.getQuantity())
+						.sum();
+				session.setAttribute("totalPrice", totalPrice);
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/mallOr/mallOr.jsp");
+				dispatcher.forward(req, res);
 				return;
 
 			} catch (Exception e) {
 				out.print("新增失敗!請稍後在試");
 			}
+			
 		}
+		
 		if ("add".equals(action)) {
 
 			try {

@@ -19,10 +19,11 @@
 	 text-align:center;
 	}
 	
-	div.orMain table.table td{
-		padding:0px;
-		height:30px;
-	}
+div.orMain table.table td{
+	height:10px;
+	box-sizing:border-box;
+	padding:5px;
+}
 	
 	input.dtbtn {
 	margin-top:2px;
@@ -64,6 +65,14 @@
     width:35px;
 	}
 
+div.orMain table.table tbody tr:nth-child(even) {
+	background: #ffffff;
+}
+
+div.orMain table.table tbody tr:nth-child(odd) {
+	background:#F0F0F0;
+}
+
 </style>
 
   
@@ -84,7 +93,7 @@
 		<div class="row">
 		<div class="col-12">
 			<table class="table table-bordered">
-				<thead class="table-secondary">
+				<thead class="bg-white">
 				<tr>
 				<th >訂單編號</th>
 				<th >付款狀態</th>

@@ -10,15 +10,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Document</title>
+<title>商品管理</title>
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/mallcss.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/mallCss/mallcss.css">
 </head>
+
+
+
 <body>
 
 	<div id="commaction">
 		<button id="callGmType" style="margin-right:10px;">遊戲類型</button><button id="create-user">新增商品</button>
-		<div style="display:inline">收尋商品:<form method="post" action="<%= request.getContextPath()%>/Mall/BackMallServlet" style="display:inline"><input type="text" name="selName">
+		<div style="display:inline"><b>收尋商品:</b><form method="post" action="<%= request.getContextPath()%>/Mall/BackMallServlet" style="display:inline"><input type="text" name="selName">
 		<input  type="hidden" name="action" value="selectone">
 		<input type="submit" value="搜尋">
 		</form>
@@ -27,20 +30,20 @@
 	</div>
 	
 	
-		<div class="container ">
-			<table id="comm" class="table table-bordered ">
+		<div >
+			<table id="comm" class="table table-bordered">
 				<thead>
-					<tr class="">
-						<th class="col-md-1"></th>
-						<th class="col-md-1">圖片</th>
-						<th class="col-md-2">商品名稱</th>
-						<th class="col-md-1">售價</th>
-						<th class="col-md-1">數量</th>
-						<th class="col-md-2">商品詳情</th>
-						<th class="col-md-1">適合年齡</th>
-						<th class="col-md-1">建議人數</th>
-						<th class="col-md-1">遊戲類型</th>
-						<th class="col-md-1">上架狀態</th>
+					<tr>
+						<th></th>
+						<th>圖片</th>
+						<th>商品名稱</th>
+						<th>售價</th>
+						<th>數量</th>
+						<th>商品詳情</th>
+						<th>適合年齡</th>
+						<th>建議人數</th>
+						<th>遊戲類型</th>
+						<th>上架狀態</th>
 
 					</tr>
 				</thead>
@@ -67,14 +70,14 @@
 									<input  type="hidden" name="whichPage" value="${param.whichPage}">
 								</form>
 							</td>
-							<td class="col-md-1"><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></td>
-							<td class="col-md-2"><div>${mallVo.commName}</div></td>
-							<td class="col-md-1">${mallVo.price}</td>
-							<td class="col-md-1">${mallVo.quantity}</td>
-							<td class="col-md-2"><div>${mallVo.intro}</div></td>
-							<td class="col-md-1">${mallVo.age}歲以上</td>
-							<td class="col-md-1">${mallVo.player}人</td>
-							<td class="col-md-1">
+							<td><img src="<%= request.getContextPath()%>/Mall/MallShowImg?commNo=${mallVo.commNo}"></td>
+							<td><div>${mallVo.commName}</div></td>
+							<td>${mallVo.price}</td>
+							<td>${mallVo.quantity}</td>
+							<td><div>${mallVo.intro}</div></td>
+							<td>${mallVo.age}歲以上</td>
+							<td>${mallVo.player}人</td>
+							<td>
 								<div>
 									<c:forEach var="typeVo" items="${mallSvc.getType(mallVo.commNo)}">
 										${typeVo.typeName} 
@@ -82,13 +85,14 @@
 								</div>
 							</td>
 							
-							<td class="col-md-1">${(mallVo.status=="1")?"上架中":"下架中" }</td>
+							<td>${(mallVo.status=="1")?"上架中":"下架中" }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 			<br>
 			<div style="text-align:center"><%@ include file="/back-end/mall/page2.file" %></div>
+
 		</div>
 
 

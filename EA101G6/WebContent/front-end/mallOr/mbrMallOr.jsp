@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>會員訂單</title>
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/model/bootstrap.min.css">
@@ -23,7 +23,8 @@ div.orMain table.table {
 
 div.orMain table.table td {
 	padding: 0px;
-	height: 30px;
+	height: 40px;
+	vertical-align : middle ;
 }
 
 input.dtbtn {
@@ -73,6 +74,11 @@ button.showDtTbBtn {
 main {
 	margin-top: 10px;
 }
+
+.bg-myColor{
+	background-color:#FF5809;
+
+}
 </style>
 
 
@@ -99,7 +105,7 @@ main {
 				<div class="col-12">
 					<c:forEach var="mallOr" items="${mallOrSvc.findByMbrNo(mbrpfVo.mbrno)}">
 						<table class="table table-bordered">
-							<thead class="bg-warning">
+							<thead class="bg-primary">
 								<tr>
 									<th>訂單編號</th>
 									<th>下訂日期</th>
@@ -118,30 +124,36 @@ main {
 									<td>${mallOr.boxStatus=="1"?"已出貨":mallOr.boxStatus=="2"?"已送達":"未出貨"}</td>
 									<td>${mallOr.status=="1"?"已完成":mallOr.status=="2"?"已取消":"未完成"}</td>
 								</tr>
+								<tr>
+								<td>運送地址</td><td colspan="3" style="text-align:left; padding-left:15px;">${mallOr.address}</td>
+								<td>
+								<!-- //未出貨可取消 -->
+									<c:if test="${mallOr.boxStatus=='0' && mallOr.status=='0'}">
+										<form action="<%=request.getContextPath()%>/MallOr/MallOrServlet" method="post" style="display: inline-block">
+											<input type="hidden" name="status" value="2">
+											<input type="hidden" name="boxStatus" value="${mallOr.boxStatus}"> 
+											<input type="hidden" name="payStatus" value="${mallOr.payStatus}"> 
+											<input type="hidden" name="mallOrNo" value="${mallOr.mallOrNo}">  
+											<input type="hidden" name="action" value="updateStatus"> 
+											<input  style="font-size:14px;" type="submit" value="取消訂單">
+										</form>
+									</c:if>
+								<!-- //已出貨要領貨 -->
+								<c:if test="${mallOr.boxStatus=='2' && mallOr.status=='0'}">
+									<form action="<%=request.getContextPath()%>/MallOr/MallOrServlet" method="post" style="display: inline-block">
+										<input type="hidden" name="status" value="1">
+										<input type="hidden" name="boxStatus" value="${mallOr.boxStatus}"> 
+										<input type="hidden" name="payStatus" value="${mallOr.payStatus}"> 
+										<input type="hidden" name="mallOrNo" value="${mallOr.mallOrNo}">  
+										<input type="hidden" name="action" value="updateStatus"> 
+										<input type="submit" value="領貨完成">
+									</form>
+								</c:if>
+								</td>
+								</tr>
 							</tbody>
 						</table>
-						<!-- //未出貨可取消 -->
-						<c:if test="${mallOr.boxStatus=='0' && mallOr.status=='0'}">
-							<form action="<%=request.getContextPath()%>/MallOr/MallOrServlet" method="post" style="display: inline-block">
-								<input type="hidden" name="status" value="2">
-								<input type="hidden" name="boxStatus" value="${mallOr.boxStatus}"> 
-								<input type="hidden" name="payStatus" value="${mallOr.payStatus}"> 
-								<input type="hidden" name="mallOrNo" value="${mallOr.mallOrNo}">  
-								<input type="hidden" name="action" value="updateStatus"> 
-								<input type="submit" value="取消訂單">
-							</form>
-						</c:if>
-						<!-- //已出貨要領貨 -->
-						<c:if test="${mallOr.boxStatus=='2' && mallOr.status=='0'}">
-							<form action="<%=request.getContextPath()%>/MallOr/MallOrServlet" method="post" style="display: inline-block">
-								<input type="hidden" name="status" value="1">
-								<input type="hidden" name="boxStatus" value="${mallOr.boxStatus}"> 
-								<input type="hidden" name="payStatus" value="${mallOr.payStatus}"> 
-								<input type="hidden" name="mallOrNo" value="${mallOr.mallOrNo}">  
-								<input type="hidden" name="action" value="updateStatus"> 
-								<input type="submit" value="領貨完成">
-							</form>
-						</c:if>
+						
 						
 						<button class="showDtTbBtn btn btn-primary">+</button> 看明細									
 
@@ -149,18 +161,17 @@ main {
 						<div class="container dtTbDiv">
 							<div class="row">
 								<div class="col-8">
-									<table class="table table-bordered">
-										<thead>
+									<table class="table table-bordered ">
+										<thead class="bg-warning">
 											<tr>
-												<th>商品名稱</th>
-												<th>數量</th>
-												<th>價錢</th>
-												<th>小計</th>
+												<td>商品名稱</td>
+												<td>數量</td>
+												<td>價錢</td>
+												<td>小計</td>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="mallOrDt"
-												items="${mallOrDtSvc.getByOrNo(mallOr.mallOrNo)}">
+											<c:forEach var="mallOrDt" items="${mallOrDtSvc.getByOrNo(mallOr.mallOrNo)}">
 												<tr>
 													<td>${mallSvc.findOneByNo(mallOrDt.commNo).commName}</td>
 													<td>${mallOrDt.quantity}</td>
@@ -197,6 +208,8 @@ main {
 		$(document).ready(function() {
 			$(".showDtTbBtn").click(function() {
 				$(this).next(".dtTbDiv").slideToggle();
+				let inText=$(this).text();
+				$(this).text(inText=="+"?"-":"+");
 			});
 
 		})

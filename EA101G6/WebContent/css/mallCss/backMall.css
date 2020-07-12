@@ -82,22 +82,19 @@
 		margin-bottom:1px;
 	}
 	
-	a.shopcar{
+	button.shopcar{
 		position: fixed;
 		right:25px;
 		bottom: 25px;
-		
 	}
-	a.shopcar img{
-		width:60px;
-		height:60px;
+	
+	button.shopcar img{
+		width:40px;
+		height:40px;
 	}
 	
 	input.bybtn{
 		position:absolute;
-		background-color:#007bff;
-		color:#ffffff;
-		border:none;
 		bottom:20px;
 		left:100px;
 		width:15%;
@@ -106,17 +103,12 @@
 	}
 	
 	input.bybtn:hover{
-		background-color:#007bff;
-		color:#ffffff;
-		border:1px #000000;	
-		opacity:0.8;		
+		background-color:#DDDDDD;
+		border:solid #000000;			
 	}
 	
 	button.carbtn{
 		position:absolute;
-		background-color:#007bff;
-		color:#ffffff;
-		border:none;
 		bottom:20px;
 		right:100px;
 		width:25%;
@@ -125,10 +117,8 @@
 	}
 	
 	button.carbtn:hover{
-		background-color:#007bff;
-		color:#ffffff;
-		border:1px #000000;
-		opacity:0.8;	
+		background-color:#DDDDDD;
+		border:solid #000000;	
 	}
 	
 	div.commimg{
@@ -150,7 +140,6 @@
         margin-left:20px;
         margin-top:10px;
     }
-    
     
 @media (max-width: 576px){
 

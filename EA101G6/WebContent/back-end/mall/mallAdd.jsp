@@ -11,7 +11,7 @@
 </head>
 <body>
 
-	<div id="addDiv" title="mallAdd">
+	<div class="commDiv" id="addDiv" title="mallAdd">
 
 		<form method="post" action="<%= request.getContextPath()%>/Mall/BackMallServlet" enctype="multipart/form-data">
 			<fieldset>		
@@ -58,7 +58,9 @@
 				 <label class="other">上傳商品圖片:<input type="file" name="img" accept="image/*"
 					class="upload"></label>
 				<div class="showimg"></div>
-				<input type="hidden" name="action" value="mallAdd"></input>
+				<input type="hidden" name="action" value="mallAdd">
+				<!-- 確定頁面 -->
+				<input  type="hidden" name="whichPage" value="${param.whichPage}">
 				<input type="submit" value="新增" class="btn">
 				<button class="btn cancel" type="button">取消</button>
 

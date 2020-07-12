@@ -33,6 +33,11 @@ main{
 	margin-top:20px;
 }
 
+.for{
+	margin:50px;
+	text-align:center;
+}
+
 </style>
 
 
@@ -115,6 +120,8 @@ main{
 			</div>
 			</div>
 		</div>
+		
+		<div class="for"><a href="<%= request.getContextPath()%>/front-end/mallOr/mbrMallOr.jsp"><button class="btn btn-secondary">前往訂單頁面</button></a></div>
 </main>		
 
 

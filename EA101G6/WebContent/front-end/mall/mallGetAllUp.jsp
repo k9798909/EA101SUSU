@@ -9,10 +9,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Gameing on Board</title>
+<title>°Ó«°</title>
 
 <!-- ­Ó¤HCSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/mallCss/mallGetAllUpFornt.css">
+
+<style>
+	.img-bg-section{
+		width: 100%;
+		height: 120%;
+	}
+	.owl-carousel{
+		margin-bottom: 90px;
+		margin-top: 90px;
+	}
+	
+</style>
 
 </head>
 <body>
@@ -26,6 +38,10 @@
 	pageContext.setAttribute("gmTypeSvc", gmTypeSvc);
 	
 	%>
+	
+
+
+		<!-- original -->
 
 		<div class="seldiv">
 			<form action="<%=request.getContextPath()%>/Mall/FrontMallServlet" method="post">
@@ -82,11 +98,8 @@
 		<div style="text-align: center"><%@ include
 				file="/front-end/mall/page2.file"%></div>
 
-		<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp"><button
-				class="shopcar">
-				<img
-					src="<%=request.getContextPath()%>/front-end/images/supermarket.png">
-			</button></a>
+		<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp" class="shopcar">
+			<img src="<%= request.getContextPath()%>/image/buyCar.jpg"></a>
 
 	</main>
 

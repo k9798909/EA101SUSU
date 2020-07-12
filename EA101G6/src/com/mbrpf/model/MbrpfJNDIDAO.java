@@ -486,13 +486,44 @@ public class MbrpfJNDIDAO implements MbrpfDAO_interface {
 					se.getStackTrace();
 				}
 			}
-
 		}
-
 	}
+	
+	@Override
+	public void updatePoint(MbrpfVO mbrpfVO) {
 
-	
-	
-	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATEPOINT);
+
+			pstmt.setInt(1, mbrpfVO.getPoints());
+			pstmt.setString(2, mbrpfVO.getMbrno());
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 
 }

@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>結帳訂單</title>
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/model/bootstrap.min.css">
 	
@@ -17,52 +17,55 @@
 
 <style>
 		
-		main{
-		margin:20px 0px;
-		}
-		
-		.table tbody tr{
-			height:50px;
-		}
-		
-		.table tbody tr td{
-			height:40px;
-			padding:0px;
-			font-size:16px; 
-			text-align: center;
-			vertical-align: middle;
-		}
-		
-				
-		.table tbody tr th{
-			height:40px;
-			padding:0px;
-		}
-		.table tbody tr td.name{
-			text-align:left;
-		}
-		.table tr th{
-			text-align: center;
-			vertical-align: middle;
-			font-size: 18px;
-		}
-
-div.paydiv{
-	text-align:center;
+input.mbrName{
+	height:24px;
+	margin-right:10px;
+	width:100px;
 }
 
-input.paybtn{
-	position:relative;
-	left:-10%;
+ div.paydiv{ 
+ 	text-align:center; 
+ } 
 
-}
+ #msform input.paybtn{ 
+ 	display:inline-block;
+	width:20%;
+	height:40px;
+	vertical-align:middle;
+	padding:0px;
+	margin-right:30px;
+	background-color:#007bff;
+	color:#ffffff;
+	border:none;
+	border-radius: 4px;
+ }
+ 
+  #msform input.paybtn:hover{ 
+opacity:0.8;
+ } 
+  
+#msform input.cancel{ 
+ 	display:inline-block;
+ 	width:20%;
+ 	height:40px;
+ 	vertical-align:middle;
+ 	padding:0px;
+ 	margin-left:30px;
+ 	background-color:#007bff;
+	color:#ffffff;
+	border:none;
+	border-radius: 4px;
+ 	}
+ 	#msform input.cancel:hover{ 
+opacity:0.8;
+ 	}  
 
-div.order div{
+#msform div{
 	margin:10px 0px;
 }
 
-div.order input.addr{
-	width:300px;
+#msform input.addr{
+	width:400px;
 	height:25px;
 }
 
@@ -88,7 +91,29 @@ div.order input.addr{
 			display: inline-block;
 			margin:0px 30px;
 			font-size: 26px;
-		}	
+		}
+		
+
+/*form styles*/
+#msform {
+	width: 630px;
+	margin: 20px auto;
+	position: relative;
+}
+#msform fieldset {
+	background: white;
+	border: 0 none;
+	border-radius: 3px;
+	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+	padding: 20px 30px;
+	box-sizing: border-box;
+	width: 80%;
+	margin: 0 10%;
+	
+	/*stacking fieldsets above each other*/
+	position: relative;
+}
+
 
 </style>
 
@@ -99,8 +124,10 @@ div.order input.addr{
 <%@ include file="/front-end/front-end-nav.jsp" %>
 
 <main>
+	
+	
 	<div class="container">
-	<div class="orTitle">訂單明細</div>
+	<div class="orTitle"><h4>訂單明細</h4></div>
 		<table class="table table-striped table-bordered">
 			<thead class="thead-light">
 				<tr>
@@ -124,9 +151,10 @@ div.order input.addr{
 			</tbody>
 		</table>
 		<div class="checkdiv">
-			<p id="total">總金額:${totalPrice}</p>
+			<p id="total">總金額:${totalPrice}元</p>
 		</div>	
 	</div>
+	
 	
 		<%	
 			String mbract = (String)session.getAttribute("account");
@@ -134,26 +162,27 @@ div.order input.addr{
 			MbrpfVO mbrpfVo=mbrpfSvc.checkLogin(mbract);
 			pageContext.setAttribute("mbrpfVo",mbrpfVo);
 		%>
-	
-	<form action="<%= request.getContextPath()%>/MallOr/MallOrServlet" method="post">
-	<div class="container  order">
-		<div class="row justify-content-center">
-			<div class="col-12 col-md-6 information border">
-				<div>會員姓名:<input type="text" value="${mbrpfVo.mbrname}" readonly></div>
-				<div>取貨方式: <input name="take" type="radio" value="超商取貨" ${"超商取貨"==take?"checked":""}>超商取貨    <input name="take" type="radio" value="住家取貨" ${"住家取貨"==take?"checked":""}>住家取貨</div>	
-				<div>取貨地點:</div>
-				<select name="city" id="縣市1"></select>
-				<select name="area" id="鄉鎮市區1"></select>
-				<input type="text" name="addr" class="addr" value="${not empty addr?addr:""}" placeholder="請輸入地址">
-				<div><p id="total">總金額:${totalPrice}元</p></div>
-				<input  type="hidden" name="price" value="${totalPrice}">
-			</div>
+		
+		
+<form id="msform" action="<%= request.getContextPath()%>/MallOr/MallOrServlet" method="post">
+  <fieldset>
+    <h4 class="fs-title">訂單資訊</h4>
+    	<div>
+			<label>會員姓名：<input class="mbrName" type="text" value="${mbrpfVo.mbrname}" readonly>
+			取貨方式： <input name="take" type="radio" value="超商取貨" ${"超商取貨"==take?"checked":""}>超商取貨      <input style="margin-left:3px;" name="take" type="radio" value="住家取貨" ${"住家取貨"==take?"checked":""}>住家取貨</label>	
+			<label>取貨地點：
+			<select name="city" id="縣市2"></select>
+			<select name="area" id="鄉鎮市區2"></select>
+			</label>
+						<input type="text" name="addr" class="addr" value="${not empty addr?addr:''}" placeholder="請輸入地址">
+			<div><p id="total">總金額：${totalPrice}元</p></div>
 		</div>
-	</div>
-	
-	<input type="hidden" name="action" value="checkOut">
-	<div class="paydiv"><input type="submit" class="paybtn" value="確定付款"><button type="button">取消</button></div>
-	</form>
+				<input  type="hidden" name="price" value="${totalPrice}">
+				<input type="hidden" name="action" value="checkOut">
+    <div class="paydiv"><input type="submit" class="paybtn" value="確定付款"><a href="<%= request.getContextPath()%>/front-end/mall/mallGetAllUp.jsp"><input type="button" class="cancel" value="取消"></a></div>
+  </fieldset>
+</form>
+		
 	
 </main>	
 	<script
@@ -182,12 +211,15 @@ div.order input.addr{
 		   window.onload = function () {
 		       //當頁面載完之後，用AddressSeleclList.Initialize()，
 		       //傳入要綁定的縣市下拉選單ID及鄉鎮市區下拉選單ID
-		       AddressSeleclList.Initialize('縣市1', '鄉鎮市區1');
+		       //AddressSeleclList.Initialize('縣市1', '鄉鎮市區1');
 		       //後面四個參數分別是兩個下拉選單的預設文字跟值
-		      AddressSeleclList.Initialize('縣市2', '鄉鎮市區2', 'Please Select City', '0', 'Please Select Area', '0');
+		      AddressSeleclList.Initialize('縣市2', '鄉鎮市區2', '請選擇縣市', '0', '請選擇地區', '0');
+		      <c:if test="${not empty erroList}">
+		      	AddressSeleclList.erroAdd("${city}","${area}")
+		      </c:if> 
 		  }
 
-		
+		  
 		
 	</script>
 
