@@ -12,14 +12,21 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	
+<div id="Modal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      	<h2>修改商品</h2>
+       		 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     <div class="modal-body"> 
+     
 	<div class="commDiv" id="updateDiv" title="mallAdd">
-
-
 		<form method="post" action="<%=request.getContextPath()%>/Mall/BackMallServlet" enctype="multipart/form-data">
-			
-			<fieldset>
-				<div>--修改商品--</div>
+		
 				
 			<!--有錯誤就自動展開 -->
 			<c:if test="${not empty updateerroMsg}">
@@ -84,12 +91,22 @@
 				<input type="hidden" name="isGetOne" value="${param.isGetOne}">
 				<input type="hidden" name="action" value="update">
 				<input  type="hidden" name="whichPage" value="${param.whichPage}">
-				<input type="submit" value="修改" class="btn">
-				<button class="btn cancel" type="button">取消</button>
+				<input  type="hidden" name="call" value="updateModel">
 				
-			</fieldset>
+				<div class="modal-footer">
+					<input type="submit" value="修改" class="btn">
+        			<button type="button" class="btn btn-secondary cancel" data-dismiss="modal">取消</button>
+      			</div>
 		</form>
 	</div>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+	
 	<%request.removeAttribute("updateTampTypeNolist"); %>
 	<%request.removeAttribute("updateMallVo"); %>
 </body>

@@ -17,10 +17,11 @@
 
 
 
-<body>
+<body style="font-size:18px;">
 
 	<div id="commaction">
-		<button id="callGmType" style="margin-right:10px;">遊戲類型</button><button id="create-user">新增商品</button>
+		<button id="callGmType" style="margin-right:10px;">遊戲類型</button>
+		<a href="<%= request.getContextPath()%>/back-end/mall/mallGetAll.jsp?call=addModel&whichPage=${param.whichPage}"><button id="addMall">新增商品</button></a>
 		<div style="display:inline"><b>收尋商品:</b><form method="post" action="<%= request.getContextPath()%>/Mall/BackMallServlet" style="display:inline"><input type="text" name="selName">
 		<input  type="hidden" name="action" value="selectone">
 		<input type="submit" value="搜尋">
@@ -65,7 +66,7 @@
 									<input class="upda" type="submit"value="修改">
 									<input type="hidden" name="commNo" value="${mallVo.commNo}">
 									<!-- 叫出修改介面 -->
-									<input type="hidden" name="showupdate" value="showupdate">
+									<input type="hidden" name="call" value="updateModel">
 									<!-- 確定頁面 -->
 									<input  type="hidden" name="whichPage" value="${param.whichPage}">
 								</form>
@@ -96,9 +97,12 @@
 		</div>
 
 
-
+<c:if test="${param.call=='addModel'}">
 <%@ include file="/back-end/mall/mallAdd.jsp" %>
+</c:if>
+<c:if test="${param.call=='updateModel'}">
 <%@ include file="/back-end/mall/mallUpdate.jsp" %>
+</c:if>
 <%@ include file="/back-end/gmType/gmTypeGetAll.jsp" %>
 
 
@@ -115,31 +119,22 @@
 
 <%session.removeAttribute("selNameMallVoSet"); //移除掉搜尋商品時會留的session%>
 
-
-
-
 <!-- 有成功訊息就啟動 -->
 <c:if test="${not empty successMsg}">
 	swal({text:"${successMsg}" });
+	<%session.removeAttribute("successMsg");%>
 </c:if>
 
-<!-- 當點擊修改時會傳的參數 有此參數會呼叫修改頁面 -->
-<!-- 點擊修改時會啟動傳回錯誤訊息時也會啟動 -->
-<c:if test="${'showupdate'==param.showupdate || 'showupdate'==showupdate }">
-	<%= "$(document).ready(function() {showupdate();});"%>
-	<% pageContext.removeAttribute("action"); %>
+<c:if test="${not empty param.call}">
+	$("#Modal").modal({show: true});
 </c:if>
-<!-- 新增有錯誤訊息時啟動叫出新增介面 -->
-<c:if test="${not empty erroMsg}">
-	<%= "$(document).ready(function() {$('#create-user').click()})"%>
-</c:if>
-
 
 <!-- 查詢時有錯誤啟動 -->
 
 <c:if test="${not empty selErroMsg}">
 		swal({text:"${selErroMsg}" });
-</c:if>							
+		<% session.removeAttribute("selErroMsg");%>
+</c:if>					
 
 </script>
 

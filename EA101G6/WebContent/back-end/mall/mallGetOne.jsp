@@ -14,9 +14,9 @@
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mallCss/mallcss.css">
 </head>
-<body>
+<body style="font-size:18px;">
 	
-	<div id="commaction">
+	<div id="commaction" >
 		<button onclick="javascript:location.href='<%= request.getContextPath() %>/back-end/mall/mallGetAll.jsp'">商品頁面</button>
 	</div>
 	
@@ -45,10 +45,10 @@
 						<tr>
 							<td>
 							<form action= "<%= request.getContextPath()%>/back-end/mall/mallGetOne.jsp" method="post">
-							<input id="upda" type="submit"value="修改">
+							<input class="upda" type="submit"value="修改">
 							<input type="hidden" name="commNo" value="${mallVo.commNo}">
 							<!-- 叫出修改介面 -->
-							<input type="hidden" name="showupdate" value="showupdate">
+							<input type="hidden" name="call" value="updateModel">
 							<!-- 讓update確認是getone -->
 							<input  type="hidden" name="isGetOne" value="isGetOne">
 							</form></td>
@@ -75,33 +75,41 @@
 
 
 
-
+<c:if test="${param.call=='updateModel'}">
 <%@ include file="/back-end/mall/mallUpdate.jsp" %>
+</c:if>
 
 
 
+<script>var ctx ="<%=request.getContextPath()%>"</script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <script src="<%= request.getContextPath() %>/js/malljs.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<% pageContext.setAttribute("showupdate",request.getParameter("showupdate")); %>
+
+<script>
 
 <!-- 有成功訊息就啟動 -->
 <c:if test="${not empty successMsg}">
-	<script>swal({text:"${successMsg}" });</script>
+	swal({text:"${successMsg}" });
+	<%session.removeAttribute("successMsg");%>
 </c:if>
 
-<!-- 點擊修改時會啟動傳回錯誤訊息時也會啟動 -->
-<c:if test="${'showupdate'==showupdate}">
-	<%= "<script>$(document).ready(function() {showupdate();});</script>"%>
-	<% pageContext.removeAttribute("action"); %>
+<c:if test="${not empty param.call}">
+	$("#Modal").modal({show: true});
 </c:if>
+
 <!-- 查詢時有錯誤啟動 -->
+
 <c:if test="${not empty selErroMsg}">
-	<script>swal({text:"${selErroMsg}" });</script>
+		swal({text:"${selErroMsg}" });
+		<% session.removeAttribute("selErroMsg");%>
 </c:if>							
+
+</script>					
 
 
 </body>

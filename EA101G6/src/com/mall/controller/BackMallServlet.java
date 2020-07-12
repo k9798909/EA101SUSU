@@ -48,7 +48,6 @@ public class BackMallServlet extends HttpServlet {
 		/*****************************************************/
 		if ("mallAdd".equals(action)) {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-	
 				MallVO mallVo = new MallVO();
 				List<String> tampTypeNolist = new ArrayList<String>();
 				// commName部分
@@ -157,11 +156,10 @@ public class BackMallServlet extends HttpServlet {
 						GmTypeDtSvc.add(typeNoArr[i], addMall.getCommNo());
 					}
 					/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-					// 讓前台list能更新
-					req.setAttribute("successMsg","新增成功");
-					req.getRequestDispatcher("/back-end/mall/mallGetAll.jsp").forward(req, res);
+					session.setAttribute("successMsg","新增成功");
+					String whichPage="?whichPage="+req.getParameter("whichPage");
+					res.sendRedirect(req.getContextPath()+"/back-end/mall/mallGetAll.jsp"+whichPage); 
 					return;
-					// req.getRequestDispatcher("/back-end/Mall/MallGetAll.jsp").forward(req, res);
 				}
 
 
@@ -288,7 +286,6 @@ public class BackMallServlet extends HttpServlet {
 					//可以拿到前一次輸入的值，並且傳到修改頁面並顯示
 					req.setAttribute("updateMallVo", mallVo);
 					req.setAttribute("updateTampTypeNolist", updateTampTypeNolist);
-					req.setAttribute("showupdate", "showupdate");
 					req.setAttribute("updateerroMsg", erroMsg);
 					if(req.getParameter("isGetOne").trim().length()!=0) {
 						req.getRequestDispatcher("/back-end/mall/mallGetOne.jsp").forward(req, res);
@@ -310,17 +307,18 @@ public class BackMallServlet extends HttpServlet {
 							GmTypeDtSvc.add(typeNoArr[i], commNo);
 						}
 					/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
-					req.setAttribute("successMsg", "更新成功");
+					session.setAttribute("successMsg", "更新成功");
+					String whichPage="?whichPage="+req.getParameter("whichPage");
 					//確認他是哪個頁面傳的，是空字串就傳到getall，並把session.remove掉讓他更新，
 					//如果不是把action="selectone"在搜尋一次
 					if(req.getParameter("isGetOne").trim().length()!=0) {
 						String selName=(String)session.getAttribute("selName");
 						Set<MallVO> selNameMallVoSet = mallSvc.findByName(selName);
 						session.setAttribute("selNameMallVoSet", selNameMallVoSet);
-						req.getRequestDispatcher("/back-end/mall/mallGetOne.jsp").forward(req, res);
+						res.sendRedirect(req.getContextPath()+"/back-end/mall/mallGetOne.jsp"+whichPage); 
 						return;
 					}else{
-						req.getRequestDispatcher("/back-end/mall/mallGetAll.jsp").forward(req, res);
+						res.sendRedirect(req.getContextPath()+"/back-end/mall/mallGetAll.jsp"+whichPage); 
 						return;
 					}
 					
