@@ -62,7 +62,7 @@
 	
 	button#customerBtn{
 		position:absolute;
-		right:50px;
+		right:70px;
 		bottom:50px;
 		border:0px;
 		border-width: 0px;
