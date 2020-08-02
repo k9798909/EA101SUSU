@@ -28,13 +28,7 @@
 		<form method="post" action="<%=request.getContextPath()%>/Mall/BackMallServlet" enctype="multipart/form-data">
 		
 				
-			<!--有錯誤就自動展開 -->
-			<c:if test="${not empty updateerroMsg}">
-				<c:forEach var="msg" items="${updateerroMsg}">
-					<p class="erroMsg" style="color: red;">${msg}</p>
-					<%request.removeAttribute("updateerroMsg"); %>
-				</c:forEach>
-			</c:if>
+
 				
 				<%
 				if(request.getAttribute("updateMallVo")==null){

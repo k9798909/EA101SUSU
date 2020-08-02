@@ -24,10 +24,6 @@ import com.mbrpf.model.MbrpfVO;
 
 public class MallOrServlet extends HttpServlet{
 
-	public MallOrServlet() {
-
-	}
-
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -51,7 +47,7 @@ public class MallOrServlet extends HttpServlet{
 				Integer totalPrice=buyCarList.stream()
 						.mapToInt(p -> p.getPrice()*p.getQuantity())
 						.sum();
-				req.setAttribute("totalPrice", totalPrice);
+				session.setAttribute("totalPrice", totalPrice);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/mallOr/mallOr.jsp");
 				dispatcher.forward(req, res);
 				return;
@@ -83,10 +79,10 @@ public class MallOrServlet extends HttpServlet{
 					dispatcher.forward(req, res);
 					return;
 				}
-
+				Boolean pointErro=false;
 				List<String> erroList = new LinkedList<String>();
 				MallOrService mallOrSvc = new MallOrService();
-
+							
 				// 時間的部分現在時間 並不是讓使用者輸入沒有錯誤驗證
 				java.sql.Timestamp orDate = new java.sql.Timestamp(System.currentTimeMillis());
 				// 取貨方式
@@ -133,6 +129,7 @@ public class MallOrServlet extends HttpServlet{
 					mbrpfVo.setPoints(mbrpfVo.getPoints()-price);
 				} else{
 					erroList.add("點數不夠請儲值");
+					pointErro=true;
 				}
 
 				if (!erroList.isEmpty()) {
@@ -142,6 +139,8 @@ public class MallOrServlet extends HttpServlet{
 					req.setAttribute("area", area);
 					req.setAttribute("addr", addr);
 					req.setAttribute("take", take);
+					req.setAttribute("totalPrice", price);
+					req.setAttribute("pointErro",pointErro);
 					dispatcher.forward(req, res);
 					return;
 				}
@@ -209,7 +208,7 @@ public class MallOrServlet extends HttpServlet{
 			    //因為傳送郵件需要時間所以我改成多執行緒版
 				
 				MbrpfService mbrpfSvc = new MbrpfService();
-				MbrpfVO mbrpfVo=mbrpfSvc.getOneMbrpf(mallOrNo);
+				MbrpfVO mbrpfVo=mbrpfSvc.getOneMbrpf(mbrNo);
 				if(mbrpfVo.getMail()!=null) {
 					String to = mbrpfVo.getMail();  
 					String subject = "您好!您的訂單"+mallOrNo+"已出貨"; 
@@ -219,13 +218,13 @@ public class MallOrServlet extends HttpServlet{
 					orderMail.start();
 				}
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/back-end/mallOr/mallOrGet.jsp");
-				dispatcher.forward(req, res);
-				
+				session.setAttribute("msg","出貨成功");
+				res.sendRedirect(req.getContextPath() + "/back-end/mallOr/mallOrGet.jsp?active=getByBox");
 				return;
 			} catch (Exception e) {
 				e.printStackTrace();
-				res.sendRedirect(req.getContextPath() + "/back-end/mallOr/mallOrGet.jsp");
+				session.setAttribute("msg","系統忙碌中請稍後在試!");
+				res.sendRedirect(req.getContextPath() + "/back-end/mallOr/mallOrGet.jsp?active=getByBox");
 				return;
 			}
 
@@ -241,11 +240,15 @@ public class MallOrServlet extends HttpServlet{
 				Integer boxStatus = null;
 				String mallOrNo = null;
 				try {
-					// 訂單狀態
+					//會員編號
+					if (req.getParameter("mallOrNo") != null && req.getParameter("mallOrNo").trim().length() != 0) {
+						mallOrNo = req.getParameter("mallOrNo");
+					}
+					// 訂單狀態如果是取消順便把款項還給會員
 					if (req.getParameter("status") != null && req.getParameter("status").trim().length() != 0) {
 						status = new Integer(req.getParameter("status"));
 					}
-					// 繳款
+					// 繳款狀態
 					if (req.getParameter("payStatus") != null && req.getParameter("payStatus").trim().length() != 0) {
 						payStatus = new Integer(req.getParameter("payStatus"));
 					}
@@ -253,25 +256,83 @@ public class MallOrServlet extends HttpServlet{
 					if (req.getParameter("boxStatus") != null && req.getParameter("boxStatus").trim().length() != 0) {
 						boxStatus = new Integer(req.getParameter("boxStatus"));
 					}
-					if (req.getParameter("mallOrNo") != null && req.getParameter("mallOrNo").trim().length() != 0) {
-						mallOrNo = req.getParameter("mallOrNo");
-					}
+
 				} catch (NumberFormatException e) {
 					e.getStackTrace();
 				}
 				/********************************************
 				 * 2.開始修改,
 				 ********************************************/
-
 				MallOrService mallOrSvc = new MallOrService();
 				mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
-				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/mallOr/mallOrGetAll.jsp");
+				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/front-end/mallOr/mbrMallOr.jsp");
 				dispatcher.forward(req, res);
 				return;
 			} catch (Exception e) {
 				e.printStackTrace();
-				res.sendRedirect(req.getContextPath() + "/front-end/mallOr/mallOrGetAll.jsp");
+				res.sendRedirect(req.getContextPath() + "/front-end/mallOr/mbrMallOr.jsp");
+				return;
+			}
+
+		}
+		
+		if ("cancelOr".equals(action))
+
+		{
+			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+			try {
+				Integer payStatus = null;
+				Integer status = null;
+				Integer boxStatus = null;
+				String mallOrNo = null;
+				Integer price = null;
+				String mbrNo=null;
+				try {
+					//訂單編號
+					if (req.getParameter("mallOrNo") != null && req.getParameter("mallOrNo").trim().length() != 0) {
+						mallOrNo = req.getParameter("mallOrNo");
+					}
+					// 訂單狀態如果是取消順便把款項還給會員
+					if (req.getParameter("status") != null && req.getParameter("status").trim().length() != 0) {
+						status = new Integer(req.getParameter("status"));
+					}
+					// 繳款狀態
+					if (req.getParameter("payStatus") != null && req.getParameter("payStatus").trim().length() != 0) {
+						payStatus = new Integer(req.getParameter("payStatus"));
+					}
+					// 出貨的狀態
+					if (req.getParameter("boxStatus") != null && req.getParameter("boxStatus").trim().length() != 0) {
+						boxStatus = new Integer(req.getParameter("boxStatus"));
+					}
+					//總價錢
+					if(req.getParameter("price") != null && req.getParameter("price").trim().length() != 0) {
+						price=new Integer(req.getParameter("price"));
+					}
+					//會員編號
+					if(req.getParameter("mbrNo") != null && req.getParameter("mbrNo").trim().length() != 0) {
+						mbrNo=req.getParameter("mbrNo");
+					}
+				} catch (NumberFormatException e) {
+					e.getStackTrace();
+				}
+				/********************************************
+				 * 2.開始修改以及退款
+				 ********************************************/
+				MbrpfService mbrSvc=new MbrpfService();
+				MbrpfVO mbrpfVO = mbrSvc.getOneMbrpf(mbrNo);
+				mbrpfVO.setPoints(mbrpfVO.getPoints()+price);
+				mbrSvc.updateMbrpf(mbrpfVO);
+				MallOrService mallOrSvc = new MallOrService();
+				mallOrSvc.update(mallOrNo, status, payStatus, boxStatus);
+				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
+				session.setAttribute("msg","取消訂單成功，退款成功，會員目前點數:"+mbrpfVO.getPoints()+"點");
+				res.sendRedirect(req.getContextPath()+"/front-end/mallOr/mbrMallOr.jsp");
+				return;
+			} catch (Exception e) {
+				e.printStackTrace();
+				session.setAttribute("msg","發生錯誤請稍後在試");
+				res.sendRedirect(req.getContextPath() + "/front-end/mallOr/mbrMallOr.jsp");
 				return;
 			}
 
@@ -289,7 +350,6 @@ public class MallOrServlet extends HttpServlet{
 			String mbrNo= req.getParameter("mbrNo");
 			MbrpfService mbrpfSvc = new MbrpfService();
 			MbrpfVO mbrpfVo=mbrpfSvc.getOneMbrpf(mbrNo);
-
 			/***************************
 			 * 2.開始查詢,
 			 ********************************************/

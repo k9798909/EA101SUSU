@@ -161,6 +161,8 @@
 	transition: left 0.3s;
 }
 
+
+
 div.box{
 	margin-right:20px;
 	display:inline-block;
@@ -215,16 +217,24 @@ div.intro{
 	height:30px;
 }
 
-div.modal-footer{
+div#Model div.modal-footer{
 	text-align:center;
 	
 }
 
-button.btn,input.btn {
+ button.btn,input.btn {
 	border-radius: 4px;
 	background-color: #e7e7e7;
 	color: #000000;
 	font-size: 16px;
 	margin-right: 20px;
 	margin-left: 50px;
+	border:solid 1px;
 }
+
+div.modal-footer input.btn:hover{
+	background-color: #6c757d;
+	color: #ffffff;
+	border:solid 1px;
+}
+

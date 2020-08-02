@@ -430,7 +430,8 @@ h1, h2, h3, h4, h5,
       .sticky-wrapper.is-sticky .site-navbar ul li a.active {
         color: #ff8b00 !important; }
   .sticky-wrapper .shrink {
-    padding-top: 0px !important;
+/*   7/12註解掉了解決抖動 */
+/*     padding-top: 0px !important; */
     padding-bottom: 0px !important; }
     @media (max-width: 991.98px) {
       .sticky-wrapper .shrink {

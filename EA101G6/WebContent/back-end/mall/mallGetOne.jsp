@@ -15,13 +15,16 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mallCss/mallcss.css">
 </head>
 <body style="font-size:18px;">
-	
-	<div id="commaction" >
+
+<%@ include file="/back-end/back-end-nav-susu.jsp" %>
+
+	<div id="commaction"  >
+
 		<button onclick="javascript:location.href='<%= request.getContextPath() %>/back-end/mall/mallGetAll.jsp'">商品頁面</button>
 	</div>
 	
 	
-			<table id="comm" class="table table-bordered ">
+			<table id="comm" class="table table-bordered " style="margin-bottom:50px;">
 				<thead>
 					<tr class="">
 						<th></th>
@@ -88,14 +91,21 @@
 
 <script src="<%= request.getContextPath() %>/js/malljs.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 
 <script>
 
 <!-- 有成功訊息就啟動 -->
-<c:if test="${not empty successMsg}">
-	swal({text:"${successMsg}" });
-	<%session.removeAttribute("successMsg");%>
+<c:if test="${not empty successMsg}"> 
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: '${successMsg}',
+  showConfirmButton: false,
+  timer: 1500
+})
+<%session.removeAttribute("successMsg");%>
 </c:if>
 
 <c:if test="${not empty param.call}">
@@ -105,9 +115,38 @@
 <!-- 查詢時有錯誤啟動 -->
 
 <c:if test="${not empty selErroMsg}">
-		swal({text:"${selErroMsg}" });
-		<% session.removeAttribute("selErroMsg");%>
-</c:if>							
+	Swal.fire({
+	  icon: 'error',
+	  title: '錯誤訊息',
+	  text:"${selErroMsg}"
+	})
+</c:if>		
+
+<!-- //有錯誤就自動展開  -->
+<c:if test="${not empty erroMsg}">
+	let erroMsg='';
+	<c:forEach var="msg" items="${erroMsg}">
+		erroMsg+='<div style="color:red; text-align:left;padding:0px 35px;">${msg}<br></div>';
+	</c:forEach>
+	Swal.fire({
+		  icon: 'error',
+		  title: '錯誤訊息',
+		  html:erroMsg
+		})
+</c:if>
+
+<!--有錯誤就自動展開 -->
+<c:if test="${not empty updateerroMsg}">
+	let erroMsg='';
+	<c:forEach var="msg" items="${updateerroMsg}">
+		erroMsg+='<div style="color:red; text-align:left;padding:0px 35px;">${msg}<br></div>';
+	</c:forEach>
+	Swal.fire({
+		  icon: 'error',
+		  title: '錯誤訊息',
+		  html:erroMsg
+		})
+</c:if>	
 
 </script>					
 

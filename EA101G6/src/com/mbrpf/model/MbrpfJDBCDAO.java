@@ -624,5 +624,17 @@ public class MbrpfJDBCDAO implements MbrpfDAO_interface {
 			}
 		}
 	}
+
+	@Override
+	public MbrpfVO findByMail(String mail, String mbract) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String forgetPwd(String mail, String mbract) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

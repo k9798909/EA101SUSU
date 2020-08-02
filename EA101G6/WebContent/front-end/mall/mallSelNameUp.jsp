@@ -59,10 +59,11 @@
 			</div>
 		</div>
 
-		<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp" class="shopcar"><img src="<%= request.getContextPath()%>/image/buyCar.jpg"></a>
+		<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp" class="shopcar"><img src="<%= request.getContextPath()%>/image/buyCar.png"></a>
 
 	</main>
-
+	
+	
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- 查詢時有錯誤啟動 -->
 <c:if test="${not empty selErroMsg}">

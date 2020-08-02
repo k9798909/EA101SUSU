@@ -57,9 +57,21 @@ h5.modal-title{
 	
 }
 
-.bg-gray{
-	background-color:#E0E0E0;
+.bg-yellow{
+	background-color:#ffc107;
 }
+
+div.navdiv{
+	margin:40px 10%;
+	border-radius:10px;
+}
+
+@media screen and (min-width: 992px){
+	div.navdiv .navbar-expand-lg .navbar-nav .nav-link {
+    	padding:10px;
+	}
+}
+
 
 </style>
 
@@ -67,28 +79,27 @@ h5.modal-title{
 </head>
 <body>
 
+<%@ include file="/back-end/back-end-nav-susu.jsp" %>
 
-
+<div class="bg-light navdiv">
 <nav class="orNav navbar navbar-expand-lg navbar-light  ">
-  <a class="navbar-brand" href="#">商城訂單</a>
-
+  <a class="navbar-brand" href="#"><b>商城訂單</b></a>
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item ${param.active=='getByBox'?'active bg-gray rounded border border-dark':''}">
+      <li class="nav-item ${param.active=='getByBox'?'active bg-yellow rounded border border-dark':''}">
         <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?active=getByBox">未出貨 <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item ${param.active=='getAll'?'active bg-gray rounded border border-dark':''}">
+      <li class="nav-item ${param.active=='getAll' || empty param.active?'active bg-yellow rounded border border-dark':''}">
         <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?active=getAll">所有訂單 <span class="sr-only">(current)</span></a>
       </li>
-       	<li class="nav-item ${param.active=='getByStatus'?'active bg-gray rounded border border-dark':''}">
+       	<li class="nav-item ${param.active=='getByStatus'?'active bg-yellow rounded border border-dark':''}">
         <a class="nav-link" href="<%= request.getContextPath()%>/back-end/mallOr/mallOrGet.jsp?active=getByStatus">訂單取消 <span class="sr-only">(current)</span></a>
       </li>
     </ul>
   </div>
 </nav>
 
-
-<c:if test="${param.active=='getAll'}">
+<c:if test="${param.active=='getAll' || empty param.active}">
 <%@ include file="/back-end/mallOr/mallOrGetAll.jsp"%>
 </c:if>
 
@@ -100,7 +111,7 @@ h5.modal-title{
 <%@ include file="/back-end/mallOr/mallOrGetByStatus.jsp"%>
 </c:if>
 
-
+</div>
 <!-- -- -->
 
 <div id="basicModal" class="modal" tabindex="-1" role="dialog">
@@ -197,15 +208,20 @@ h5.modal-title{
 	<script src="<%=request.getContextPath()%>/js/model/jquery-3.3.1.min.js"></script>
 	<script src="<%=request.getContextPath()%>/js/model/popper.min.js"></script>
 	<script src="<%=request.getContextPath()%>/js/model/bootstrap.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-    <script>
-    <c:if test="${showDetail}">
-	 	$("#basicModal").modal({show: true});
-	 </c:if>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	
+	
+	<script>
+	<c:if test="${not empty msg}">
+	Swal.fire('${msg}');
+	</c:if>	
 	</script>
-
-
-
+	<%session.removeAttribute("msg");%>
+	
+    <script>
+    	<c:if test="${showDetail}">
+	 		$("#basicModal").modal({show: true});
+		 </c:if>
+	</script>
 </body>
 </html>

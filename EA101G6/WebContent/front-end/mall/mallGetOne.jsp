@@ -12,21 +12,30 @@
 <title>商品</title>
 
 <!-- 個人CSS -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/mallCss/mallGetOne.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/mallCss/mallGetOne.css">
 
 
 </head>
 <body>
 
-<%@ include file="/front-end/front-end-nav.jsp" %>
+<jsp:include page="/front-end/front-end-nav.jsp"/>
 
-	<%
-		String commNo = request.getParameter("commNo");
-		MallService mallSvc = new MallService();
-		request.setAttribute("mallSvc", mallSvc);
-		MallVO mallVo = mallSvc.findOneByNo(commNo);
-		pageContext.setAttribute("mallVo", mallVo);
+	<%	
+	
+		if(request.getParameter("commNo")!=null){
+			String commNo = request.getParameter("commNo");
+			MallService mallSvc = new MallService();
+			request.setAttribute("mallSvc", mallSvc);
+			MallVO mallVo = mallSvc.findOneByNo(commNo);
+			pageContext.setAttribute("mallVo", mallVo);
+			session.setAttribute("tempCommNo",commNo);
+		}else{
+			String commNo = (String)session.getAttribute("tempCommNo");
+			MallService mallSvc = new MallService();
+			request.setAttribute("mallSvc", mallSvc);
+			MallVO mallVo = mallSvc.findOneByNo(commNo);
+			pageContext.setAttribute("mallVo", mallVo);
+		}
 	%>
 
 	<main>
@@ -87,9 +96,8 @@
 
 
 	</main>
-	<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp" class="shopcar"><img src="<%= request.getContextPath()%>/image/buyCar.jpg"></a>
-
-
+	<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp" class="shopcar"><img src="<%= request.getContextPath()%>/image/buyCar.png"></a>
+		
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- 查詢時有錯誤啟動 -->

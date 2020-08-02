@@ -15,21 +15,21 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/mallCss/mallGetAllUpFornt.css">
 
 <style>
-	.img-bg-section{
-		width: 100%;
-		height: 120%;
-	}
-	.owl-carousel{
-		margin-bottom: 90px;
-		margin-top: 90px;
-	}
+.img-bg-section{
+	width: 100%;
+	height: 120%;
+}
+.owl-carousel{
+	margin-bottom: 90px;
+	margin-top: 90px;
+}
 	
 </style>
 
 </head>
 <body>
 
-	<%@ include file="/front-end/front-end-nav.jsp"%>
+	<jsp:include page="/front-end/front-end-nav.jsp"/>
 
 	<main class="mall">
 
@@ -39,6 +39,27 @@
 	
 	%>
 	
+	<!-- additional -->
+	<jsp:useBean id="malladSvc" scope="page" class="com.mallad.model.MalladService" />
+
+		<div class="owl-carousel slide-one-item col-md-10 offset-md-1">
+		
+			<c:forEach var="malladVO" items="${malladSvc.all}">
+			<a href="<%=request.getContextPath()%>/front-end/mall/mallGetOne.jsp?commNo=${malladVO.commno}">
+			<img class="site-section-cover  img-bg-section"
+				style="background-image: url('<%=request.getContextPath()%>/mallad/malladpic.do?malladno=${malladVO.malladno}');">
+			</a>
+			
+			</c:forEach>
+			
+		</div>
+
+
+
+
+
+
+
 
 
 		<!-- original -->
@@ -99,9 +120,11 @@
 				file="/front-end/mall/page2.file"%></div>
 
 		<a href="<%=request.getContextPath()%>/front-end/buyCar/buyCar.jsp" class="shopcar">
-			<img src="<%= request.getContextPath()%>/image/buyCar.jpg"></a>
+			<img src="<%= request.getContextPath()%>/image/buyCar.png"></a>
 
 	</main>
+	
+	<jsp:include page="/front-end/footer.jsp"/>
 
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 

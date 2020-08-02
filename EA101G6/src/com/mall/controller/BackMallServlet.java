@@ -83,10 +83,10 @@ public class BackMallServlet extends HttpServlet {
 
 				// intro部分
 				String intro = req.getParameter("intro").trim();
-				if (intro.length() != 0 && intro.length() <= 150)
+				if (intro.length() != 0 && intro.length() <= 200)
 					mallVo.setIntro(intro);
 				else
-					erroMsg.add("商品介紹請不要輸入小於0或大於150");
+					erroMsg.add("商品介紹請不要輸入小於0或大於200");
 
 				// age部分
 				String age = req.getParameter("age").trim();
@@ -216,10 +216,10 @@ public class BackMallServlet extends HttpServlet {
 
 				// intro部分
 				String intro = req.getParameter("intro").trim();
-				if (intro.length() != 0 && intro.length() <= 150)
+				if (intro.length() != 0 && intro.length() <= 200)
 					mallVo.setIntro(intro);
 				else
-					erroMsg.add("商品介紹請不要輸入小於0或大於150字");
+					erroMsg.add("商品介紹請不要輸入小於0或大於200字");
 
 				// age部分
 				String age = req.getParameter("age").trim();

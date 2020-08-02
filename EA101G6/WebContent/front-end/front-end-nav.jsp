@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="BIG5"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Gameing on Board</title>
+<title>Gaming on Board</title>
 
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,7 +15,7 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Rubik:300,400,700|Oswald:400,700"
 	rel="stylesheet">
-<!-- µn¤J¹Ï¥Ü -->
+<!-- ç™»å…¥åœ–ç¤º -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/fonts/icomoon/style.css">
 <link rel="stylesheet"
@@ -30,18 +31,37 @@
 <!-- MAIN CSS -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/model/style.css">
+<!-- é¡¯ç¤ºè¨Šæ¯çš„css -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/cssForShgm/alert-area.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/cssForShgm/btn.css">
 
 <style>
 .icon {
-	width: 20px;
-	height: 20px;
+	width: 30px;
+	height: 30px;
+	margin-right: 3px;
+}
+.reg1{
+	width: 30px;
+	height: 30px;
+	margin-right: 10px;
 }
 </style>
 
 
 
+
+
+
 </head>
 <body>
+<%
+	HttpServletRequest req = (HttpServletRequest)request;
+	HttpServletResponse res = (HttpServletResponse)response;
+	
+	session.setAttribute("location",req.getRequestURI());	
+%>
+
 	<div class="site-wrap" id="home-section">
 		<div class="site-mobile-menu site-navbar-target">
 			<div class="site-mobile-menu-header">
@@ -58,29 +78,57 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="float-left">
-						<a href="" class="text-white"><span class="d-md-inline-block">
-								<img class="icon"
-								src="<%=request.getContextPath()%>/front-end/images/add-icon.png">µù¥U
+						<c:if test="${empty shopAcount}">
+						<c:choose>
+						<c:when test="${mbrpfVO.mbrname != null}">
+						<input type="hidden" id="mbrno" value="${mbrpfVO.mbrno}"/>
+						<span id="mbrname" class="d-md-inline-block text-white">æ­¡è¿ä½ ï¼${mbrpfVO.mbrname}</span>
+						</c:when>
+						<c:otherwise>
+						<a href="<%= request.getContextPath()%>/front-end/mbrpf/addMbrpf.jsp" class="text-white"><span class="d-md-inline-block">
+								<img class="icon reg1"
+								src="<%=request.getContextPath()%>/images/reg3.png">è¨»å†Š
 						</span></a>
+						</c:otherwise>
+						</c:choose>
+						</c:if>
+						<c:if test="${not empty shopAcount}">
+						<span id="mbrname" class="d-md-inline-block text-white">æ­¡è¿ä½ ï¼${shopAcount.shopname}</span>
+						<a href="<%=request.getContextPath()%>/front-end/shop/shopArea.jsp" class="text-white"><img
+									class="icon"
+									src="<%=request.getContextPath()%>/images/shop.png">åº—å®¶å°ˆå€</a>
+						</c:if>
 					</div>
 
 					<div class="float-right">
-						<a href="#" class="text-white"><span class="d-md-inline-block">
+						
+						<c:choose>
+						<c:when test="${mbrpfVO.mbrname != null || shopAcount.shopname != null}">
+						<a <c:if test="${mbrpfVO.mbrname != null}"> href="<%= request.getContextPath()%>/mbrpf/mbrpf.do?action=logout"</c:if>
+						   <c:if test="${shopAcount.shopname != null}"> href="<%= request.getContextPath()%>/front-end/shop/shop.do?action=logout&requestURL=<%=request.getServletPath()%>"</c:if>
+							 id="logout" class="d-md-inline-block text-white"><img class="icon"
+								src="<%=request.getContextPath()%>/images/logout.png">ç™»å‡º</a>
+						</c:when>
+						<c:otherwise>
+						<c:if test="${empty shopAcount}">
+							<a href="<%= request.getContextPath()%>/front-end/login.jsp" class="text-white"><span class="d-md-inline-block">
 								<img class="icon"
-								src="<%=request.getContextPath()%>/front-end/images/User-icon.png">·|­ûµn¤J
-						</span></a><c:if test="${not empty shopAccount}">
-							<span class="mx-md-2 d-inline-block"></span>
-							<a href="<%=request.getContextPath()%>/front-end/shop/update_shop_input.jsp" class="text-white"> <span
-								class="mr-2 text-white icon-instagram"></span> <span
-								class="d-none d-md-inline-block"></span>
-														
-						</c:if>
-						<c:if test="${empty shopAccount}">
+								src="<%=request.getContextPath()%>/images/ghost.png">æœƒå“¡ç™»å…¥
+							</span></a>
 							<a href="<%=request.getContextPath()%>/front-end/shop/login.jsp"
 								class="text-white"> <span class="d-md-inline-block"><img
 									class="icon"
-									src="<%=request.getContextPath()%>/front-end/images/man-icon.png">©±®aµn¤J</span></a>
+									src="<%=request.getContextPath()%>/images/shop.png">åº—å®¶ç™»å…¥</span></a>
+						</c:if>					
+						<c:if test="${not empty shopAcount}">
+							<span class="mx-md-2 d-inline-block"></span>
+							<a href="<%=request.getContextPath()%>/front-end/shop/shopArea.jsp" class="text-white"> <span
+								class="mr-2 text-white icon-instagram"></span> <span
+								class="d-none d-md-inline-block">${shopAcount.shopname}</span></a>
 						</c:if>
+						
+						</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
@@ -96,7 +144,7 @@
 
 				<div class="site-logo">
 					<a href="<%= request.getContextPath()%>/front-end/index.jsp" class="text-black"><span
-						class="text-primary">Gameing on Board</span></a>
+						class="text-primary">Gaming on Board</span></a>
 				</div>
 
 				<div class="col-12">
@@ -104,26 +152,39 @@
 
 						<ul
 							class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-							<li><a href="" class="nav-link">­º­¶</a></li>
+							<li><a href="<%=request.getContextPath()%>/front-end/index.jsp" class="nav-link">é¦–é </a></li>
 
-							<li class="has-children"><a href="" class="nav-link">·|­û±M°Ï</a>
+							<li class="has-children"><a href="" class="nav-link">æœƒå“¡å°ˆå€</a>
 								<ul class="dropdown arrow-top">
-									<li><a href="#team-section" class="nav-link">Team</a></li>
-									<li><a href="#pricing-section" class="nav-link">Pricing</a></li>
-									<li><a href="#faq-section" class="nav-link">FAQ</a></li>
-									<li class="has-children"><a href="#">More Links</a>
-										<ul class="dropdown">
-											<li><a href="#">Menu One</a></li>
-											<li><a href="#">Menu Two</a></li>
-											<li><a href="#">Menu Three</a></li>
-										</ul></li>
+									<li><a href="<%= request.getContextPath()%>/front-end/mallOr/mbrMallOr.jsp" class="nav-link">æŸ¥è©¢è¨‚å–®</a></li>
+									<li><a href="<%= request.getContextPath()%>/front-end/tfcord/listOneMbrtf.jsp" class="nav-link">å¸³æˆ¶ç®¡ç†</a></li>
+									<li><a href="<%=request.getContextPath()%>/front-end/tfcord/buyPoint.jsp" class="nav-link">è³¼è²·é»æ•¸</a></li>
+									<li><a href="<%=request.getContextPath()%>/front-end/tfcord/tfMoney.jsp" class="nav-link">å…Œæ›ç¾é‡‘</a></li>
+									<c:choose>
+										<c:when test="${mbrpfVO.mbrname != null}">
+											<li><a href="<%=request.getContextPath()%>/front-end/mbrpf/listMyMbrpf.jsp" class="nav-link">å€‹äººè³‡è¨Š</a></li>																	
+										</c:when>
+									</c:choose>
 								</ul></li>
 
-							<li><a href="<%=request.getContextPath()%>/front-end/mall/mallGetAllUp.jsp" class="nav-link">°Ó«°</a></li>
-							<li><a href="<%=request.getContextPath()%>/front-end/shgm/mainPage.jsp" class="nav-link">¥«¶°</a></li>
-							<li><a href="<%=request.getContextPath()%>/front-end/room/joinRoom.jsp" class="nav-link">´ª¹Î°Ï</a></li>
-							<li><a href="<%=request.getContextPath()%>/front-end/shop/listAllShop.jsp" class="nav-link">©±®a¦Cªí</a></li>
-							<li><a href="<%=request.getContextPath()%>/front-end/art/listAllArt.jsp" class="nav-link">°Q½×°Ï</a></li>
+							<li><a href="<%=request.getContextPath()%>/front-end/mall/mallGetAllUp.jsp" class="nav-link">å•†åŸ</a></li>
+							<li><a href="<%=request.getContextPath()%>/front-end/shgm/mainPage.jsp" class="nav-link">å¸‚é›†</a></li>
+							<li class="has-children"><a href="#" class="nav-link">æªåœ˜å€</a>
+								<ul class="dropdown arrow-top">
+									<li><a href="<%=request.getContextPath()%>/front-end/room/create.jsp" class="nav-link">æˆ¿é–“åˆ—è¡¨</a></li>
+									<li><a href="<%=request.getContextPath()%>/front-end/room/myRoom.jsp" class="nav-link">æˆ‘çš„æˆ¿é–“</a></li>
+								</ul>
+							</li>
+							<li class="has-children"><a href="<%=request.getContextPath()%>/front-end/shop/listAllShop.jsp" class="nav-link">åº—å®¶åˆ—è¡¨</a>
+							<ul class="dropdown arrow-top">
+							<li><a href="<%= request.getContextPath()%>/front-end/gmlist/listAllGmlist.jsp" class="nav-link">åº—å®¶éŠæˆ²</a></li>
+							<li><a href="<%= request.getContextPath()%>/front-end/shopbk/listAllShopbk.jsp" class="nav-link">åº—å®¶è¨‚ä½</a></li>
+							</ul></li>
+							<li class="has-children"><a href="<%=request.getContextPath()%>/front-end/art/listAllArt.jsp" class="nav-link">è¨è«–å€</a>
+							<c:if test="${mbrpfVO != null}">
+							<ul class="dropdown arrow-top">
+							<li><a href="<%= request.getContextPath()%>/front-end/art/listOwnArt.jsp" class="nav-link">å€‹äººæ–‡ç« </a></li>
+							</ul></c:if></li>
 						</ul>
 					</nav>
 
@@ -137,31 +198,41 @@
 		</div>
 	</header>
 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/js/model/jquery-3.3.1.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/js/model/popper.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/js/model/bootstrap.min.js"></script>
-	<!-- ­«­n¼s§i¬É­± -->
-	<script
 		src="<%=request.getContextPath()%>/js/model/owl.carousel.min.js"></script>
 	<!--...-->
 	<script
 		src="<%=request.getContextPath()%>/js/model/jquery.sticky.js"></script>
-	<script
+	<script	
 		src="<%=request.getContextPath()%>/js/model/jquery.waypoints.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/js/model/jquery.animateNumber.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/js/model/jquery.fancybox.min.js"></script>
-	<!-- ¤W¤¶­±³sµ²°Êµe -->
+	<!-- ä¸Šä»‹é¢é€£çµå‹•ç•« -->
 	<script
 		src="<%=request.getContextPath()%>/js/model/jquery.easing.1.3.js"></script>
-	<!-- ­«­n¼s§i¬É­± -->
+	<!-- é‡è¦å»£å‘Šç•Œé¢ -->
 	<script src="<%=request.getContextPath()%>/js/model/aos.js"></script>
 	<script src="<%=request.getContextPath()%>/js/model/main.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	<script
+		src="<%=request.getContextPath()%>/js/model/bootstrap.min.js"></script>
+	<!-- é‡è¦å»£å‘Šç•Œé¢ -->
 
+		<!-- 	åº—å®¶ç™»å‡ºjs -->
+	<script>
+		$(document).ready(function() {
+			$("#goLogout").click(function() {
+				$("#logout").submit();
+			})
+		})
+	</script>
 </body>
 </html>

@@ -11,22 +11,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/model/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/model/bootstrap.min.css">
 
 <style>
 .margin-center {
   margin:0px auto;
 }
 div.dtMain{
- margin:20px auto;
+ 	margin:20px auto;
 }
 
 div.dtMain table.table th{
- font-size:16px;
+ 	font-size:16px;
 }
 div.dtMain table.table td{
- font-size:14px;
+ 	font-size:14px;
 }
 
 main{
@@ -38,6 +37,12 @@ main{
 	text-align:center;
 }
 
+main div.thank{
+	text-align:center;
+	margin:30px 0px;
+}
+
+
 </style>
 
 
@@ -48,6 +53,8 @@ main{
 <%@ include file="/front-end/front-end-nav.jsp"%>
 
 <main>
+
+<div class="thank"><h1></h1></div>
 	<div class="container">
 		<div class="row">
 			<table class="table col-6 text-center margin-center">
@@ -99,28 +106,6 @@ main{
 			</div>
 		</div>
 		
-	
-	<div class="container dtMain">
-		<div class="row">
-		<div class="col-8 margin-center">
-			<table class="table text-center margin-center ">
-				<thead>
-				<tr> <th>商品名稱</th><th>數量</th><th>價錢</th><th>小計</th></tr>
-				</thead>
-				
-				<jsp:useBean id="mallSvc" class="com.mall.model.MallService" />
-				
-				<tbody>
-				<c:forEach var="mallOrDt" items="${mallOrDtList}" varStatus="count">
-				<tr> <td>${mallSvc.findOneByNo(mallOrDt.commNo).commName}</td><td>${mallOrDt.quantity}</td><td>${mallOrDt.price}</td><td>${mallOrDt.price*mallOrDt.quantity}</td></tr>
-				</c:forEach>
-				</tbody>
-
-			</table>
-			</div>
-			</div>
-		</div>
-		
 		<div class="for"><a href="<%= request.getContextPath()%>/front-end/mallOr/mbrMallOr.jsp"><button class="btn btn-secondary">前往訂單頁面</button></a></div>
 </main>		
 
@@ -132,7 +117,17 @@ main{
 			src="<%=request.getContextPath()%>/js/model/popper.min.js"></script>
 		<script
 			src="<%=request.getContextPath()%>/js/model/bootstrap.min.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 		
+		<script>
+		Swal.fire({
+	  		icon: 'success',
+	  		title: '謝謝您的購買！',
+	  		showConfirmButton: false,
+	  		timer: 1500
+		})
+		</script>
 			
 </body>
 </html>

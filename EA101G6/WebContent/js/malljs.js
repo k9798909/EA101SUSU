@@ -67,20 +67,6 @@ $(document).ready(function() {
 
 	}
 
-	$("#addDiv .addtypebtn").click(function() {
-		let gmtype = $("#addDiv .gmtype")[0];
-		let clone = $(gmtype).clone();
-		$(clone).css({
-			"margin" : "0px 3px"
-		});
-		$(gmtype).after(clone);
-
-	})
-	$("#addDiv .removetypebtn").click(function() {
-		let gmtype = $("#addDiv .gmtype").last();
-		if ($("#addDiv .gmtype").length != 1)
-			$(gmtype).remove();
-	})
 
 	// 預覽圖片function
 	$("#updateDiv .upload").change(function() {
@@ -99,23 +85,6 @@ $(document).ready(function() {
 		reader.readAsDataURL(myfile[0]);
 	});
 
-
-	$("#updateDiv .addtypebtn").click(function() {
-		let gmtype = $("#updateDiv .gmtype")[0];
-		let clone = $(gmtype).clone();
-		$(clone).css({
-			"margin" : "0px 3px"
-		});
-		$("#d1").before(clone);
-
-	})
-	
-	
-	$("#updateDiv .removetypebtn").click(function() {
-		let gmtype = $("#updateDiv .gmtype").last();
-		if ($("#updateDiv .gmtype").length != 1)
-			$(gmtype).remove();
-	})
 	
 	//叫出遊戲類型
 	$("button#callGmType").click(function(){
@@ -151,7 +120,13 @@ $(document).ready(function() {
 					function(data,status){
 						if(status=="success"){
 							$("div."+typeNo+"").remove();
-							swal({text:data });
+							Swal.fire({
+								  position: 'center',
+								  icon: 'success',
+								  title: data,
+								  showConfirmButton: false,
+								  timer: 1500
+								})
 						}	
 					}
 			)
@@ -166,6 +141,15 @@ $(document).ready(function() {
 		});
 	//遊戲類型確定
 	  $("div.gmtypezone button.confirm").click(function(){
+		  if($("#typeNameInput").val().length==0||$("#typeNameInput").val().length>10){
+				Swal.fire({
+					  icon: 'error',
+					  title: '錯誤訊息',
+					  text:"請確認長度"
+					})
+					return;
+		  }
+		  
 		  
 		  $.ajax({
 			  dataType: "json",
@@ -176,13 +160,19 @@ $(document).ready(function() {
 		  			typeName:$("#typeNameInput").val()
 				},
 			  success:function(data){
-						swal({text:data.msg});
+						Swal.fire({
+						  position: 'center',
+						  icon: 'success',
+						  title: data.msg,
+						  showConfirmButton: false,
+						  timer: 1500
+						})
 						let tampDiv=document.createElement("div");
 						let tampP=document.createElement("p");
 						let tampButton=document.createElement("button");
 						$(tampDiv).addClass(data.typeNo);
 						$(tampButton).val(data.typeNo);
-						$(tampButton).addClass("deltypebtn");
+						$(tampButton).addClass("deltypebtn btn btn-secondary");
 						$(tampButton).text("刪除");
 						$(tampP).text(data.typeName);
 						$("#tampAddDiv").before(tampDiv);

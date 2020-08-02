@@ -19,20 +19,12 @@ public class MbrimgServlet extends HttpServlet {
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
 
-		//讀一次後存到session裡讓效能好一點
-			HttpSession session = req.getSession();	
 			MbrpfVO mbrpfVO = null;
 			String mbrno = req.getParameter("mbrno");
-			System.out.println(mbrno);
-			if(session.getAttribute(mbrno)==null) {
-				MbrpfService ser = new MbrpfService();
-				mbrpfVO = ser.getOneMbrpf(mbrno);
-				out.write(mbrpfVO.getMbrimg());
-				session.setAttribute(mbrno, mbrpfVO);
-			}else {
-				mbrpfVO=(MbrpfVO)session.getAttribute(mbrno);
-				out.write(mbrpfVO.getMbrimg());
-			}
+			MbrpfService ser = new MbrpfService();
+			mbrpfVO = ser.getOneMbrpf(mbrno);
+			out.write(mbrpfVO.getMbrimg());
+
 
 			
 			

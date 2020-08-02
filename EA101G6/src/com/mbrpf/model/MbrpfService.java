@@ -96,5 +96,11 @@ public class MbrpfService {
 	public void updateMbrpf(MbrpfVO mbrpfVO) {
 		dao.updatePoint(mbrpfVO);
 	}
+	public MbrpfVO getOneMbrByMail(String mail, String mbract) {
+		return dao.findByMail(mail, mbract);
+	}
+	public String getNewPwd(String mail, String mbract) {
+		return dao.forgetPwd(mail,mbract);
+	}
 
 }

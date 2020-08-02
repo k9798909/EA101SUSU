@@ -40,8 +40,8 @@ input.mbrName{
 	border-radius: 4px;
  }
  
-  #msform input.paybtn:hover{ 
-opacity:0.8;
+#msform input.paybtn:hover{ 
+	opacity:0.8;
  } 
   
 #msform input.cancel{ 
@@ -56,8 +56,8 @@ opacity:0.8;
 	border:none;
 	border-radius: 4px;
  	}
- 	#msform input.cancel:hover{ 
-opacity:0.8;
+ #msform input.cancel:hover{ 
+	opacity:0.8;
  	}  
 
 #msform div{
@@ -69,29 +69,29 @@ opacity:0.8;
 	height:25px;
 }
 
-		.table img{
-			width: 40px;
-			height:40px;
-			border: solid 1px;
-			display: inline-block;
-			margin:0px 10px; 
-		}
+.table img{
+	width: 40px;
+	height:40px;
+	border: solid 1px;
+	display: inline-block;
+	margin:0px 10px; 
+}
 		
-	div.orTitle{
-		text-align:center;
-		margin:10px 0px;
-		font-size:18px;
-	}
+div.orTitle{
+	text-align:center;
+	margin:10px 0px;
+	font-size:18px;
+}
 	
-	div.checkdiv{
-		text-align:right;
-	}
+div.checkdiv{
+	text-align:right;
+}
 	
-		div.checkdiv p{
-			display: inline-block;
-			margin:0px 30px;
-			font-size: 26px;
-		}
+div.checkdiv p{
+	display: inline-block;
+	margin:0px 30px;
+	font-size: 26px;
+}
 		
 
 /*form styles*/
@@ -121,7 +121,7 @@ opacity:0.8;
 </head>
 <body>
 
-<%@ include file="/front-end/front-end-nav.jsp" %>
+<jsp:include page="/front-end/front-end-nav.jsp"/>
 
 <main>
 	
@@ -169,17 +169,19 @@ opacity:0.8;
     <h4 class="fs-title">訂單資訊</h4>
     	<div>
 			<label>會員姓名：<input class="mbrName" type="text" value="${mbrpfVo.mbrname}" readonly>
-			取貨方式： <input name="take" type="radio" value="超商取貨" ${"超商取貨"==take?"checked":""}>超商取貨      <input style="margin-left:3px;" name="take" type="radio" value="住家取貨" ${"住家取貨"==take?"checked":""}>住家取貨</label>	
+<%-- 			<INPUT NAME="TAKE" TYPE="RADIO" VALUE="超商取貨" ${"超商取貨"==TAKE?"CHECKED":""}>超商取貨 --%>
+			取貨方式:<input style="margin-left:3px;" name="take" type="radio" value="住家取貨" checked>住家取貨</label>	
 			<label>取貨地點：
 			<select name="city" id="縣市2"></select>
 			<select name="area" id="鄉鎮市區2"></select>
 			</label>
-						<input type="text" name="addr" class="addr" value="${not empty addr?addr:''}" placeholder="請輸入地址">
+			<input id="addr" type="text" name="addr" class="addr" value="${not empty addr?addr:''}" placeholder="請輸入地址">
 			<div><p id="total">總金額：${totalPrice}元</p></div>
 		</div>
 				<input  type="hidden" name="price" value="${totalPrice}">
 				<input type="hidden" name="action" value="checkOut">
     <div class="paydiv"><input type="submit" class="paybtn" value="確定付款"><a href="<%= request.getContextPath()%>/front-end/mall/mallGetAllUp.jsp"><input type="button" class="cancel" value="取消"></a></div>
+    	<button id="magicBtn" style="height:20px;padding:0px; width:80px;font-size:12px;" class="btn btn-light" type="button">神奇海螺</button>	
   </fieldset>
 </form>
 		
@@ -194,19 +196,23 @@ opacity:0.8;
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/js/address.js"></script>	
-	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	
 	
 	<script>
 		
 		<c:if test="${not empty erroList}">	
-		 	var erromsg="";
+		 	let erromsg="";
+		 	let pointUrl="<%=request.getContextPath()%>/front-end/tfcord/buyPoint.jsp";
 			<c:forEach var="erromsg" items="${erroList}">
-					erromsg+="${erromsg}\n"
+					erromsg+="<p>${erromsg}</p>"
 			</c:forEach>
-			swal({text:erromsg });
+				Swal.fire({
+					icon: 'error',
+					html:erromsg,
+					${pointErro?"footer:'<a href='+pointUrl+'>移至點數儲值網頁</a>'":""}
+				})
 		</c:if>
-		
 		
 		   window.onload = function () {
 		       //當頁面載完之後，用AddressSeleclList.Initialize()，
@@ -219,7 +225,13 @@ opacity:0.8;
 		      </c:if> 
 		  }
 
-		  
+		  $(document).ready(function(){
+			  $("#magicBtn").click(function(){
+				  $("#addr").val("中大路300號");
+				  AddressSeleclList.erroAdd("桃園市","320中壢區");
+			
+			  })
+		  })
 		
 	</script>
 
